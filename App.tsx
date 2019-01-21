@@ -8,17 +8,9 @@
  * @format
  */
 import React, { Component } from 'react'
-import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper'
+import { Provider as PaperProvider } from 'react-native-paper'
 import AppContainer from './utils/AppContainer'
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'tomato',
-    accent: 'yellow',
-  },
-}
+import { theme } from './styles/theme'
 
 interface Props {}
 export default class App extends Component<Props> {
