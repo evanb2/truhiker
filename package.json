@@ -4,6 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
+    "ios": "react-native run-ios",
+    "clean npm": "rm -rf node_modules",
+    "clean build": "rm -rf ios/build",
+    "reset": "yarn clean npm && yarn clean build && yarn ios",
     "test": "jest",
     "tsc": "tsc"
   },

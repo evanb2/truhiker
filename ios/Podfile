@@ -6,7 +6,10 @@ target 'TruHiker' do
   # use_frameworks!
 
   # Pods for TruHiker
+  pod 'Firebase/Auth'
   pod 'Firebase/Core'
+  pod 'Crashlytics'
+  pod 'Fabric'
 
   target 'TruHikerTests' do
     inherit! :search_paths
