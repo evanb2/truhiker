@@ -12,8 +12,7 @@ import { Provider as PaperProvider } from 'react-native-paper'
 import AppContainer from './utils/AppContainer'
 import { theme } from './styles/theme'
 
-interface Props {}
-export default class App extends Component<Props> {
+export default class App extends Component {
   render() {
     return (
       <PaperProvider theme={theme}>

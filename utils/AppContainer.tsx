@@ -8,9 +8,9 @@ import {
 } from 'react-navigation'
 
 /** SCREENS */
-import AuthLoadingScreen from '../screens/AuthLoadingScreen'
-import AuthScreen from '../screens/AuthScreen'
-import HomeScreen from '../screens/HomeScreen'
+import { AuthLoadingScreen } from '../components/AuthLoadingScreen'
+import { AuthScreen } from '../components/AuthScreen'
+import { HomeScreen } from '../components/HomeScreen'
 
 const AppStack = createStackNavigator({ Home: HomeScreen })
 const AuthStack = createStackNavigator({ Auth: AuthScreen })

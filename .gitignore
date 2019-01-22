@@ -1,9 +1,7 @@
 # OSX
-#
 .DS_Store
 
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -23,7 +21,6 @@ DerivedData
 project.xcworkspace
 
 # Android/IntelliJ
-#
 build/
 .idea
 .gradle
@@ -31,11 +28,9 @@ local.properties
 *.iml
 
 # Visual Studio Code
-#
 .vscode/
 
 # node.js
-#
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -60,8 +55,10 @@ buck-out/
 *.jsbundle
 
 # RNFirebase specific
-#
 .expo/
 /ios/Pods/
 google-services.json
 /ios/GoogleService-Info.plist
+
+# Testing
+.jest/
