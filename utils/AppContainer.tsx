@@ -1,7 +1,11 @@
 /**
  * App Navigation
  */
-import { createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import {
+  createAppContainer,
+  createStackNavigator,
+  createSwitchNavigator,
+} from 'react-navigation'
 
 /** SCREENS */
 import { AuthLoadingScreen } from '../components/AuthLoadingScreen'
@@ -12,13 +16,15 @@ const AppStack = createStackNavigator({ Home: HomeScreen })
 const AuthStack = createStackNavigator({ Auth: AuthScreen })
 
 // Now AppContainer is the main component for React to render
-export default createSwitchNavigator(
-  {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
-    Auth: AuthStack,
-  },
-  {
-    initialRouteName: 'AuthLoading',
-  }
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack,
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
+  )
 )
