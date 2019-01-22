@@ -2,11 +2,8 @@ import React, { Component } from 'react'
 import firebase from 'react-native-firebase'
 import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native'
 
-interface Props {
-  navigation: object;
-}
-export class AuthLoadingScreen extends Component<Props> {
-  constructor(props: Props) {
+export class AuthLoadingScreen extends Component {
+  constructor(props) {
     super(props)
 
     this._bootstrapAsync()
