@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
-import firebase from 'react-native-firebase'
 import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native'
+import firebase from 'react-native-firebase'
 
 export class AuthLoadingScreen extends Component {
   constructor(props) {
     super(props)
 
-    this._bootstrapAsync()
+    this.bootstrapAsync()
   }
 
   // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
+  bootstrapAsync = async () => {
     try {
       firebase.auth().onAuthStateChanged(user => {
         // This will switch to the App screen or Auth screen and this loading

@@ -37,7 +37,7 @@
     // disable checking of semi-colon for class bound methods
     "semicolon": [
       true,
-      "always",
+      "never",
       "ignore-bound-class-methods"
     ],
     "object-literal-sort-keys": false,
@@ -56,5 +56,19 @@
     "max-classes-per-file": [true, 1],
     // disable rule for requiring interface names to begin with "I"
     "interface-name": false,
+    // enforce single quotes everywhere except JSX attributes
+    "quotemark": [
+      true,
+      "single",
+      "jsx-double"
+    ],
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-leading-underscore"
+    ],
+    // allows console statements, can be remove later for production
+    "no-console": [false]
   }
 }
