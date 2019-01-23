@@ -1,7 +1,14 @@
 import React, { Component } from 'react'
 import { View } from 'react-native'
-import { Button, Text, TextInput, Title } from 'react-native-paper'
+import {
+  Button,
+  Text,
+  TextInput,
+  Title,
+  TouchableRipple,
+} from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
+import { theme } from '../styles/theme'
 
 interface State {
   email: string
@@ -45,7 +52,12 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
           autoCorrect={false}
           secureTextEntry={true}
         />
-        <Button mode="contained">Sign Up</Button>
+        <TouchableRipple
+          rippleColor={theme.colors.primary}
+          onPress={() => console.log('sign up')}
+        >
+          <Button mode="contained">Sign Up</Button>
+        </TouchableRipple>
       </View>
     )
   }
