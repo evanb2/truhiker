@@ -9,8 +9,8 @@
  */
 import React, { Component } from 'react'
 import { Provider as PaperProvider } from 'react-native-paper'
-import AppContainer from './utils/AppContainer'
 import { theme } from './styles/theme'
+import AppContainer from './utils/AppContainer'
 
 export default class App extends Component {
   render() {
