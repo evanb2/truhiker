@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Text, View } from 'react-native'
+import { NavigationScreenProps } from 'react-navigation'
 
-interface Props {}
-export class HomeScreen extends Component<Props> {
-  constructor(props: Props) {
+export class HomeScreen extends Component<NavigationScreenProps> {
+  constructor(props: NavigationScreenProps) {
     super(props)
   }
 
