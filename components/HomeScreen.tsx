@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { View } from 'react-native'
+import { Title } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 
 export class HomeScreen extends Component<NavigationScreenProps> {
@@ -9,8 +10,8 @@ export class HomeScreen extends Component<NavigationScreenProps> {
 
   render() {
     return (
-      <View>
-        <Text>Home Screen</Text>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Title>Home</Title>
       </View>
     )
   }
