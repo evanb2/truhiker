@@ -3,11 +3,6 @@
     "tslint:latest",
     "tslint-react"
   ],
-  "linterOptions": {
-    "exclude": [
-      "node_modules/**",
-    ]
-  },
   "rules": {
     // import statements should be alphabetically arranged
     "ordered-imports": [
