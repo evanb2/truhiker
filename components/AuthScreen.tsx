@@ -75,6 +75,15 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
           >
             <Button mode="contained">Sign Up</Button>
           </TouchableRipple>
+          <TouchableRipple
+            style={{ width: '100%' }}
+            rippleColor={theme.colors.primary}
+            onPress={() => console.log('sign up')}
+          >
+            <Button mode="outlined" icon="google">
+              Google
+            </Button>
+          </TouchableRipple>
         </View>
       </TouchableWithoutFeedback>
     )
