@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
+import firebase from 'react-native-firebase'
 import {
   Button,
   Text,
@@ -13,6 +14,7 @@ import {
   NavigationScreenProps,
 } from 'react-navigation'
 import { theme } from '../styles/theme'
+import googleSignin from '../utils/googleSignin'
 
 interface State {
   email: string
@@ -37,6 +39,20 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
 
   handlePassword = (password: string) => {
     this.setState({ password })
+  }
+
+  signin = () => {
+    const { email, password } = this.state
+    const { navigation } = this.props
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        navigation.navigate('Home')
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 
   render() {
@@ -79,7 +95,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
           <TouchableRipple
             style={{ width: '100%' }}
             rippleColor={theme.colors.primary}
-            onPress={() => console.log('sign up')}
+            onPress={googleSignin}
           >
             <Button
               mode="outlined"
