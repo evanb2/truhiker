@@ -35,6 +35,7 @@
 		84511120EB0C43EAB6121F45 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AE8482E53005486B8C1CCDB8 /* Octicons.ttf */; };
 		873BFFA610C44293B66BE6B9 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E11C738E0F6547C78BF66CD1 /* MaterialIcons.ttf */; };
 		948506DF9AFE4AC4A77F3BFF /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2B37A1313E0B4D7EA088A786 /* SimpleLineIcons.ttf */; };
+		A2019F6821F9846100223841 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2019F6521F9844D00223841 /* libRNGoogleSignin.a */; };
 		A267F85621F5B62D00C60255 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A267F85521F5B62D00C60255 /* GoogleService-Info.plist */; };
 		A2E0263B21F7827E0098F93A /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E0263A21F7824B0098F93A /* libRNGestureHandler.a */; };
 		A2E0264521F7858B0098F93A /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A2E0264221F7857F0098F93A /* libRNVectorIcons.a */; };
@@ -308,6 +309,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		A2019F6421F9844D00223841 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2019F3921F9844D00223841 /* RNGoogleSignin.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9FD355121D3E4A2900D06170;
+			remoteInfo = RNGoogleSignin;
+		};
 		A267F7D721F5802F00C60255 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D8EF4CA2282A44EFA0699E2E /* RNFirebase.xcodeproj */;
@@ -376,6 +384,7 @@
 		78D38FB3ACFE47A2B9EF94E7 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		938A7C0C7FDF42FFBC4B1255 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
+		A2019F3921F9844D00223841 /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
 		A267F85521F5B62D00C60255 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A2E0260F21F7824A0098F93A /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		A2E0263C21F7857F0098F93A /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -428,6 +437,7 @@
 				BCD438C8F4AA4F9EBE52866F /* libRNFirebase.a in Frameworks */,
 				A2E0263B21F7827E0098F93A /* libRNGestureHandler.a in Frameworks */,
 				A2E0264521F7858B0098F93A /* libRNVectorIcons.a in Frameworks */,
+				A2019F6821F9846100223841 /* libRNGoogleSignin.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,6 +614,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				A2019F3921F9844D00223841 /* RNGoogleSignin.xcodeproj */,
 				A2E0263C21F7857F0098F93A /* RNVectorIcons.xcodeproj */,
 				A2E0260F21F7824A0098F93A /* RNGestureHandler.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
@@ -667,6 +678,14 @@
 				B8A9A037180A03972FA84DF3 /* Pods-TruHikerTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		A2019F3A21F9844D00223841 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A2019F6521F9844D00223841 /* libRNGoogleSignin.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		A267F7AE21F5802E00C60255 /* Recovered References */ = {
@@ -742,6 +761,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				3412AF8AAA62EC1B19DE050B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -837,6 +857,10 @@
 				{
 					ProductGroup = A2E0261021F7824A0098F93A /* Products */;
 					ProjectRef = A2E0260F21F7824A0098F93A /* RNGestureHandler.xcodeproj */;
+				},
+				{
+					ProductGroup = A2019F3A21F9844D00223841 /* Products */;
+					ProjectRef = A2019F3921F9844D00223841 /* RNGoogleSignin.xcodeproj */;
 				},
 				{
 					ProductGroup = A2E0263D21F7857F0098F93A /* Products */;
@@ -1104,6 +1128,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		A2019F6521F9844D00223841 /* libRNGoogleSignin.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGoogleSignin.a;
+			remoteRef = A2019F6421F9844D00223841 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		A267F7D821F5802F00C60255 /* libRNFirebase.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1190,6 +1221,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		3412AF8AAA62EC1B19DE050B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TruHiker/Pods-TruHiker-resources.sh",
+				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TruHiker/Pods-TruHiker-resources.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		5C6606AD01AC600A32E6FBAF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

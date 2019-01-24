@@ -10,6 +10,7 @@ target 'TruHiker' do
   pod 'Firebase/Core'
   pod 'Crashlytics'
   pod 'Fabric'
+  pod 'GoogleSignIn'
 
   target 'TruHikerTests' do
     inherit! :search_paths
