@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
 import {
   Button,
   Text,
@@ -7,7 +7,10 @@ import {
   Title,
   TouchableRipple,
 } from 'react-native-paper'
-import { NavigationScreenProps } from 'react-navigation'
+import {
+  NavigationScreenOptions,
+  NavigationScreenProps,
+} from 'react-navigation'
 import { theme } from '../styles/theme'
 
 interface State {
@@ -15,6 +18,9 @@ interface State {
   password: string
 }
 export class AuthScreen extends Component<NavigationScreenProps, State> {
+  static navigationOptions: NavigationScreenOptions = {
+    header: null,
+  }
   constructor(props: NavigationScreenProps) {
     super(props)
 
@@ -34,31 +40,43 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
 
   render() {
     return (
-      <View>
-        <Title>truHiker</Title>
-        <TextInput
-          mode="outlined"
-          label="Email"
-          value={this.state.email}
-          onChangeText={this.handleEmail}
-          keyboardType="email-address"
-          autoCorrect={false}
-        />
-        <TextInput
-          mode="outlined"
-          label="Password"
-          value={this.state.password}
-          onChangeText={this.handlePassword}
-          autoCorrect={false}
-          secureTextEntry={true}
-        />
-        <TouchableRipple
-          rippleColor={theme.colors.primary}
-          onPress={() => console.log('sign up')}
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View
+          style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginHorizontal: 8,
+          }}
         >
-          <Button mode="contained">Sign Up</Button>
-        </TouchableRipple>
-      </View>
+          <Title style={{ width: '100%', textAlign: 'center' }}>truHiker</Title>
+          <TextInput
+            style={{ width: '100%' }}
+            mode="outlined"
+            label="Email"
+            value={this.state.email}
+            onChangeText={this.handleEmail}
+            keyboardType="email-address"
+            autoCorrect={false}
+          />
+          <TextInput
+            style={{ width: '100%' }}
+            mode="outlined"
+            label="Password"
+            value={this.state.password}
+            onChangeText={this.handlePassword}
+            autoCorrect={false}
+            secureTextEntry={true}
+          />
+          <TouchableRipple
+            style={{ width: '100%' }}
+            rippleColor={theme.colors.primary}
+            onPress={() => console.log('sign up')}
+          >
+            <Button mode="contained">Sign Up</Button>
+          </TouchableRipple>
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }
