@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
 import firebase from 'react-native-firebase'
-import {
-  Button,
-  Text,
-  TextInput,
-  Title,
-  TouchableRipple,
-} from 'react-native-paper'
+import { Button, TextInput, Title, TouchableRipple } from 'react-native-paper'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {
   NavigationScreenOptions,
@@ -41,7 +35,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
     this.setState({ password })
   }
 
-  signin = () => {
+  signIn = () => {
     const { email, password } = this.state
     const { navigation } = this.props
     firebase
@@ -85,25 +79,28 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             autoCorrect={false}
             secureTextEntry={true}
           />
-          <TouchableRipple
-            style={{ width: '100%' }}
-            rippleColor={theme.colors.primary}
-            onPress={() => console.log('sign up')}
-          >
-            <Button mode="contained">Sign Up</Button>
-          </TouchableRipple>
-          <TouchableRipple
-            style={{ width: '100%' }}
-            rippleColor={theme.colors.primary}
-            onPress={googleSignin}
-          >
-            <Button
-              mode="outlined"
-              icon={() => <FontAwesome5 name={'google'} solid />}
+          <View style={{ marginVertical: 8 }}>
+            <TouchableRipple
+              style={{ width: 200, marginVertical: 8 }}
+              rippleColor={theme.colors.primary}
+              onPress={this.signIn}
             >
-              Google
-            </Button>
-          </TouchableRipple>
+              <Button mode="contained">Sign In</Button>
+            </TouchableRipple>
+            <TouchableRipple
+              style={{ width: 200, marginVertical: 8 }}
+              rippleColor={theme.colors.primary}
+              onPress={googleSignin}
+            >
+              <Button
+                mode="outlined"
+                icon={() => <FontAwesome5 name={'google'} solid />}
+              >
+                Google
+              </Button>
+            </TouchableRipple>
+          </View>
+          <Button style={{ position: 'absolute', bottom: 36 }}>Sign Up</Button>
         </View>
       </TouchableWithoutFeedback>
     )
