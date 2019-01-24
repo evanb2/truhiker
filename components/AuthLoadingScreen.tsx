@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ActivityIndicator, StatusBar, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, StatusBar, View } from 'react-native'
 import firebase from 'react-native-firebase'
 import { NavigationScreenProps } from 'react-navigation'
 
@@ -42,7 +42,3 @@ export class AuthLoadingScreen extends Component<NavigationScreenProps> {
     )
   }
 }
-
-const _styles = StyleSheet.create({
-  //
-})

@@ -1,6 +1,6 @@
 import React, { Props } from 'react'
-import renderer from 'react-test-renderer'
 import { withNavigation } from 'react-navigation'
+import renderer from 'react-test-renderer'
 
 import { HomeScreen } from '../HomeScreen'
 

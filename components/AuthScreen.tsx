@@ -42,7 +42,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(res => {
+      .then(() => {
         navigation.navigate('Home')
       })
       .catch(error => {
