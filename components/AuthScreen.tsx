@@ -90,14 +90,19 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             </TouchableRipple>
             <TouchableRipple
               style={{ width: 200, marginVertical: 8 }}
-              rippleColor={theme.colors.primary}
+              rippleColor={colors.googleRed}
               onPress={googleSignin}
             >
               <Button
-                color="white"
-                style={{ backgroundColor: colors.googleRed }}
+                color={colors.googleRed}
+                mode="outlined"
+                style={{ backgroundColor: 'white' }}
                 icon={() => (
-                  <FontAwesome5 color="white" name={'google'} solid />
+                  <FontAwesome5
+                    color={colors.googleRed}
+                    name={'google'}
+                    solid
+                  />
                 )}
               >
                 Google
