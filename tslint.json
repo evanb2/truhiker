@@ -48,7 +48,7 @@
     // disallow function binding in JSX attributes
     "jsx-no-bind": true,
     // disallow creation of anonymous functions inside the render method
-    "jsx-no-lambda": true,
+    "jsx-no-lambda": false,
     // disable checking of multi-line JavaScript inside JSX
     "jsx-no-multiline-js": false,
     // disables requiring someProp={true}
