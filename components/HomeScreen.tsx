@@ -3,6 +3,9 @@ import { Text, View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
 
 export class HomeScreen extends Component<NavigationScreenProps> {
+  static navigationOptions = {
+    title: 'Home',
+  }
   constructor(props: NavigationScreenProps) {
     super(props)
   }
