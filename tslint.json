@@ -51,6 +51,8 @@
     "jsx-no-lambda": true,
     // disable checking of multi-line JavaScript inside JSX
     "jsx-no-multiline-js": false,
+    // disables requiring someProp={true}
+    "jsx-boolean-value": false,
     // disable rule for limiting the number of classes per file
     "max-classes-per-file": [true, 1],
     // disable rule for requiring interface names to begin with "I"

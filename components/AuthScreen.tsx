@@ -7,6 +7,7 @@ import {
   Title,
   TouchableRipple,
 } from 'react-native-paper'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {
   NavigationScreenOptions,
   NavigationScreenProps,
@@ -80,7 +81,10 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             rippleColor={theme.colors.primary}
             onPress={() => console.log('sign up')}
           >
-            <Button mode="outlined" icon="google">
+            <Button
+              mode="outlined"
+              icon={() => <FontAwesome5 name={'google'} solid />}
+            >
               Google
             </Button>
           </TouchableRipple>
