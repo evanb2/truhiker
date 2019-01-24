@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator \"iPhone 8 Plus\"",
     "clean-build": "rm -r ./ios/build",
     "clean-npm": "rm -r ./node_modules",
     "restart": "yarn clean-build && yarn clean-npm && yarn install && yarn ios",
