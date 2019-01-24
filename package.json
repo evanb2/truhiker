@@ -8,6 +8,7 @@
     "clean-build": "rm -r ./ios/build",
     "clean-npm": "rm -r ./node_modules",
     "restart": "yarn clean-build && yarn clean-npm && yarn install && yarn ios",
+    "pod-install": "cd ios/ && pod install && cd ..",
     "test": "jest",
     "tsc": "tsc"
   },
