@@ -7,6 +7,7 @@ import {
   NavigationScreenOptions,
   NavigationScreenProps,
 } from 'react-navigation'
+import { colors } from '../styles/colors'
 import { theme } from '../styles/theme'
 import googleSignin from '../utils/googleSignin'
 
@@ -93,8 +94,11 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
               onPress={googleSignin}
             >
               <Button
-                mode="outlined"
-                icon={() => <FontAwesome5 name={'google'} solid />}
+                color="white"
+                style={{ backgroundColor: colors.googleRed }}
+                icon={() => (
+                  <FontAwesome5 color="white" name={'google'} solid />
+                )}
               >
                 Google
               </Button>
