@@ -64,17 +64,17 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
           <Title style={{ width: '100%', textAlign: 'center' }}>truHiker</Title>
           <TextInput
             style={{ width: '100%' }}
-            mode="outlined"
-            label="Email"
+            mode={'outlined'}
+            label={'Email'}
             value={this.state.email}
             onChangeText={this.handleEmail}
-            keyboardType="email-address"
+            keyboardType={'email-address'}
             autoCorrect={false}
           />
           <TextInput
             style={{ width: '100%' }}
-            mode="outlined"
-            label="Password"
+            mode={'outlined'}
+            label={'Password'}
             value={this.state.password}
             onChangeText={this.handlePassword}
             autoCorrect={false}
@@ -86,7 +86,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
               rippleColor={theme.colors.primary}
               onPress={this.signIn}
             >
-              <Button mode="contained">Sign In</Button>
+              <Button mode={'contained'}>Sign In</Button>
             </TouchableRipple>
             <TouchableRipple
               style={{ width: 200, marginVertical: 8 }}
@@ -95,7 +95,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             >
               <Button
                 color={colors.googleRed}
-                mode="outlined"
+                mode={'outlined'}
                 style={{ backgroundColor: 'white' }}
                 icon={() => (
                   <FontAwesome5
