@@ -24,20 +24,40 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
     password: '',
   }
 
-  handleEmail = (email: string) => {
+  handleEmail = (email: string): void => {
     this.setState({ email })
   }
 
-  handlePassword = (password: string) => {
+  handlePassword = (password: string): void => {
     this.setState({ password })
   }
 
-  signIn = () => {
+  /**
+   * Register new user using email/password.
+   */
+  signUp = (): void => {
     const { email, password } = this.state
     const { navigation } = this.props
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.navigate('Register')
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  /**
+   * SignIn user using email/password.
+   */
+  signIn = (): void => {
+    const { email, password } = this.state
+    const { navigation } = this.props
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
       .then(() => {
         navigation.navigate('Home')
       })
@@ -59,16 +79,17 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
         >
           <Title style={{ width: '100%', textAlign: 'center' }}>truHiker</Title>
           <TextInput
-            style={{ width: '100%' }}
+            style={{ width: '100%', marginVertical: 4 }}
             mode={'outlined'}
             label={'Email'}
             value={this.state.email}
             onChangeText={this.handleEmail}
             keyboardType={'email-address'}
             autoCorrect={false}
+            autoCapitalize={'none'}
           />
           <TextInput
-            style={{ width: '100%' }}
+            style={{ width: '100%', marginVertical: 4 }}
             mode={'outlined'}
             label={'Password'}
             value={this.state.password}
@@ -78,14 +99,14 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
           />
           <View style={{ marginVertical: 8 }}>
             <TouchableRipple
-              style={{ width: 200, marginVertical: 8 }}
+              style={{ width: 200, marginVertical: 8, borderRadius: 4 }}
               rippleColor={theme.colors.primary}
               onPress={this.signIn}
             >
               <Button mode={'contained'}>Sign In</Button>
             </TouchableRipple>
             <TouchableRipple
-              style={{ width: 200, marginVertical: 8 }}
+              style={{ width: 200, marginVertical: 8, borderRadius: 4 }}
               rippleColor={colors.googleRed}
               onPress={googleSignin}
             >
@@ -105,7 +126,13 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
               </Button>
             </TouchableRipple>
           </View>
-          <Button style={{ position: 'absolute', bottom: 36 }}>Sign Up</Button>
+          <TouchableRipple
+            style={{ position: 'absolute', bottom: 36, borderRadius: 4 }}
+            onPress={this.signUp}
+            rippleColor={theme.colors.primary}
+          >
+            <Button>Sign Up</Button>
+          </TouchableRipple>
         </View>
       </TouchableWithoutFeedback>
     )
