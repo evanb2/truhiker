@@ -1,4 +1,6 @@
 import { DefaultTheme, Theme } from 'react-native-paper'
+import { colors } from './colors'
+
 /**
  * Paper UI Theme
  */
@@ -7,6 +9,7 @@ export const theme: Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: 'rgb(104, 88, 77)',
-    // accent: 'yellow',
+    accent: 'rgb(64, 155, 99)',
+    error: colors.danger,
   },
 }

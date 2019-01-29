@@ -13,10 +13,14 @@ import { AppDrawer } from './AppDrawer'
 /** SCREENS */
 import { AuthLoadingScreen } from './AuthLoadingScreen'
 import { AuthScreen } from './AuthScreen'
+import { CreateListScreen } from './CreateListScreen'
 import { HomeScreen } from './HomeScreen'
 
 const AppStack = createDrawerNavigator(
-  { Home: HomeScreen },
+  {
+    Home: HomeScreen,
+    CreateList: CreateListScreen,
+  },
   {
     contentComponent: props => <AppDrawer {...props} />,
   }
