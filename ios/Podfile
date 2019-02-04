@@ -8,6 +8,7 @@ target 'TruHiker' do
   # Pods for TruHiker
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
+  pod 'Firebase/Firestore'
   pod 'Crashlytics'
   pod 'Fabric'
   pod 'GoogleSignIn'

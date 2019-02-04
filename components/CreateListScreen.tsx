@@ -5,6 +5,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
+import firebase from 'react-native-firebase'
 import {
   Button,
   Card,
@@ -61,6 +62,8 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     headerTitle: 'New Gear List',
   }
 
+  ref = firebase.firestore().collection('gearlist')
+
   state = {
     name: '',
     description: '',
@@ -82,8 +85,13 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     this.setState({ isPublic: !this.state.isPublic })
   }
 
-  saveGearList = () => {
-    console.log(this.state)
+  saveGearList = async () => {
+    try {
+      const res = await this.ref.add({ ...this.state })
+      console.log(res)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
