@@ -19,6 +19,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
   static navigationOptions: NavigationScreenOptions = {
     header: null,
   }
+
   state = {
     email: '',
     password: '',
