@@ -56,10 +56,10 @@ interface State {
 }
 
 export class CreateListScreen extends Component<NavigationScreenProps, State> {
-  static navigationOptions = {
-    title: 'Create new Gear List',
-    headerTitle: 'New Gear List',
-  }
+  // static navigationOptions = {
+  //   title: 'Create new Gear List',
+  //   headerTitle: 'New Gear List',
+  // }
 
   ref = firebase.firestore().collection('gearlist')
 
