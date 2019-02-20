@@ -15,6 +15,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configure];
+
   NSURL *jsCodeLocation;
 
   #ifdef DEBUG
@@ -22,8 +24,6 @@
   #else
     jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   #endif
-  
-  [FIRApp configure];
 
   RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
                                                       moduleName:@"TruHiker"

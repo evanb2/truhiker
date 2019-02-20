@@ -4,7 +4,9 @@ Create and share your pack lists, submit your lists for community shakedowns.
 
 ### Proposed Feature List:
 
-- [ ] Google Auth
+- [x] Google Auth
+- [ ] Create and manage gear lists
+- [ ] Add to and manage gear closet
 - [ ] Facebook Auth (?)
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
