@@ -4977,9 +4977,9 @@ react-native-gesture-handler@^1.0.12, react-native-gesture-handler@~1.0.14:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
-"react-native-google-signin@https://github.com/invertase/react-native-google-signin.git#v0.12.1":
+"react-native-google-signin@https://github.com/invertase/react-native-google-signin.git#v0.12.2":
   version "0.11.0"
-  resolved "https://github.com/invertase/react-native-google-signin.git#718e31040e0557d8d26590d0a94a66c02a88bf59"
+  resolved "https://github.com/invertase/react-native-google-signin.git#0ee22e31624747625119c1c86d899eb525fbfc5d"
 
 react-native-paper@^2.5.0:
   version "2.11.1"

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "react-native run-ios --simulator \"iPhone 8 Plus\"",
+    "ios": "react-native run-ios --simulator \"iPhone XR\"",
     "clean-build": "rm -r ./ios/build",
     "clean-npm": "rm -r ./node_modules",
     "restart": "yarn clean-build && yarn clean-npm && yarn install && yarn ios",
@@ -19,7 +19,7 @@
     "react-native": "0.58.5",
     "react-native-firebase": "^5.2.1",
     "react-native-gesture-handler": "^1.0.12",
-    "react-native-google-signin": "https://github.com/invertase/react-native-google-signin.git#v0.12.1",
+    "react-native-google-signin": "https://github.com/invertase/react-native-google-signin.git#v0.12.2",
     "react-native-paper": "^2.5.0",
     "react-native-vector-icons": "^6.2.0",
     "react-navigation": "^3.0.9"
