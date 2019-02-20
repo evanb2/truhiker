@@ -14,3 +14,10 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Subscribe to receive notifications when a user is planning a hike near you
 - [ ] Allow users to search pack list db for lists containing a specific item
 - [ ] Allow users to rate public pack lists (?)
+
+### Bugs / Solutions
+```bash
+Undefined symbols for architecture x86_64:
+  "_JSClassCreate", referenced from ... libReact.a
+```
+Solution: Make sure `JavascriptCore.framework` is added above `libReact.a` under "Linked Frameworks and Libraries"
