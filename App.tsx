@@ -8,6 +8,7 @@
  * @format
  */
 import React, { Component } from 'react'
+import { SafeAreaView } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import AppContainer from './components/AppContainer'
 import { theme } from './styles/theme'
@@ -16,7 +17,9 @@ export default class App extends Component {
   render() {
     return (
       <PaperProvider theme={theme}>
-        <AppContainer />
+        <SafeAreaView style={{ flex: 1 }}>
+          <AppContainer />
+        </SafeAreaView>
       </PaperProvider>
     )
   }
