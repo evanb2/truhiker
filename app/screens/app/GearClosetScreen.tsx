@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { IconButton, List, Title } from 'react-native-paper'
@@ -50,12 +50,13 @@ export class GearClosetScreen extends Component<Props> {
 
     return (
       <SafeAreaView style={_styles.screenContainer}>
-        <Title>My Gear Closet</Title>
-        <IconButton
-          style={_styles.addItemButton}
-          icon="add"
-          onPress={() => navigation.navigate('ItemForm')}
-        />
+        <View style={_styles.headerRow}>
+          <Title>My Gear Closet</Title>
+          <IconButton
+            icon="add"
+            onPress={() => navigation.navigate('ItemForm')}
+          />
+        </View>
         {/* SEARCH INPUT HERE */}
         <FlatList
           data={[{ id: 'ahdua62hd7', name: 'Test' }]}
@@ -69,9 +70,9 @@ export class GearClosetScreen extends Component<Props> {
 
 const _styles = StyleSheet.create({
   screenContainer: { flex: 1, backgroundColor: 'white', marginHorizontal: 16 },
-  addItemButton: {
-    position: 'absolute',
-    top: 16,
-    right: 8,
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
 })
