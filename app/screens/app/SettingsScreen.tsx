@@ -1,4 +1,3 @@
-import { FontAwesome5 } from '@expo/vector-icons'
 import firebase from 'firebase'
 import 'firebase/auth'
 import React, { Component } from 'react'
@@ -7,10 +6,6 @@ import { Button } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 
 export class SettingsScreen extends Component<NavigationScreenProps> {
-  static navigationOptions = {
-    tabBarIcon: () => <FontAwesome5 name={'cog'} solid size={25} />,
-  }
-
   logout = () => {
     firebase.auth().signOut()
   }
