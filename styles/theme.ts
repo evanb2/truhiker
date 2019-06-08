@@ -11,5 +11,6 @@ export const theme: Theme = {
     primary: 'rgb(104, 88, 77)',
     accent: 'rgb(64, 155, 99)',
     error: colors.danger,
+    background: 'white',
   },
 }
