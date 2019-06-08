@@ -1,9 +1,9 @@
+import { FontAwesome5 } from '@expo/vector-icons'
 import firebase from 'firebase'
 import 'firebase/auth'
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { NavigationScreenProps } from 'react-navigation'
 
 export class SettingsScreen extends Component<NavigationScreenProps> {

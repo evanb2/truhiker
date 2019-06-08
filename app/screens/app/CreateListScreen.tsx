@@ -15,8 +15,8 @@ import {
   TouchableRipple,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { CategoryTable } from './CategoryTable'
-import { theme } from '../styles/theme'
+import { CategoryTable } from 'screens/app/CategoryTable'
+import { theme } from 'styles/theme'
 
 enum Region {
   NONE = '',

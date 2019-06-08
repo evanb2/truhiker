@@ -1,9 +1,9 @@
 import * as firebase from 'firebase'
 import React, { Component } from 'react'
-import { Platform, SafeAreaView } from 'react-native'
+import { Platform } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
-import AppContainer from './components/AppContainer'
-import { theme } from './styles/theme'
+import AppContainer from 'screens/AppContainer'
+import { theme } from 'styles/theme'
 
 if (Platform.OS !== 'web') {
   window = undefined
@@ -25,9 +25,7 @@ export default class App extends Component {
   render() {
     return (
       <PaperProvider theme={theme}>
-        <SafeAreaView style={{ flex: 1 }}>
-          <AppContainer />
-        </SafeAreaView>
+        <AppContainer />
       </PaperProvider>
     )
   }

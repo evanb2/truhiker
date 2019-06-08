@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Button, Title, TouchableRipple } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { theme } from '../styles/theme'
+import { theme } from 'styles/theme'
 
 export class HomeScreen extends Component<NavigationScreenProps> {
   goToCreateListScreen = () => {

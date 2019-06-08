@@ -1,15 +1,15 @@
+import { FontAwesome5 } from '@expo/vector-icons'
 import * as firebase from 'firebase'
 import React, { Component } from 'react'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
 import { Button, TextInput, Title, TouchableRipple } from 'react-native-paper'
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {
   NavigationScreenOptions,
   NavigationScreenProps,
 } from 'react-navigation'
-import { colors } from '../styles/colors'
-import { theme } from '../styles/theme'
-import googleSignin from '../utils/googleSignin'
+import { colors } from 'styles/colors'
+import { theme } from 'styles/theme'
+import googleSignin from 'utils/googleSignin'
 
 interface State {
   email: string

@@ -6,14 +6,14 @@ import {
   createMaterialTopTabNavigator,
   createSwitchNavigator,
 } from 'react-navigation'
-import { theme } from '../styles/theme'
+import { theme } from 'styles/theme'
 
 /** SCREENS */
-import { AuthLoadingScreen } from './AuthLoadingScreen'
-import { AuthScreen } from './AuthScreen'
-import { CreateListScreen } from './CreateListScreen'
-import { HomeScreen } from './HomeScreen'
-import { SettingsScreen } from './SettingsScreen'
+import { CreateListScreen } from 'screens/app/CreateListScreen'
+import { HomeScreen } from 'screens/app/HomeScreen'
+import { SettingsScreen } from 'screens/app/SettingsScreen'
+import { AuthLoadingScreen } from 'screens/auth/AuthLoadingScreen'
+import { AuthScreen } from 'screens/auth/AuthScreen'
 
 const AppTabNav = createMaterialTopTabNavigator(
   {
