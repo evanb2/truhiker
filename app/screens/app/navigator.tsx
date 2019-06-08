@@ -1,5 +1,6 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
 import React from 'react'
+import { Button } from 'react-native-paper'
 import {
   createMaterialTopTabNavigator,
   createStackNavigator,
@@ -81,6 +82,21 @@ const AppStack = createStackNavigator(
   {
     initialRouteName: 'AppTabNav',
     mode: 'modal',
+    defaultNavigationOptions: {
+      headerBackImage: (
+        <SimpleLineIcons
+          name="close"
+          size={20}
+          style={{ paddingHorizontal: 16 }}
+        />
+      ),
+      headerBackTitle: null,
+      headerRight: (
+        <Button mode="text" uppercase={false}>
+          Add
+        </Button>
+      ),
+    },
   }
 )
 
