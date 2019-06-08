@@ -21,3 +21,5 @@ Undefined symbols for architecture x86_64:
   "_JSClassCreate", referenced from ... libReact.a
 ```
 Solution: Make sure `JavascriptCore.framework` is added above `libReact.a` under "Linked Frameworks and Libraries"
+
+Keep an eye on [this](https://github.com/firebase/firebase-js-sdk/issues/1824) firebase issue.

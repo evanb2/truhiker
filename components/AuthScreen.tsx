@@ -1,6 +1,6 @@
+import * as firebase from 'firebase'
 import React, { Component } from 'react'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
-import firebase from 'react-native-firebase'
 import { Button, TextInput, Title, TouchableRipple } from 'react-native-paper'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {

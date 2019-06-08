@@ -1,17 +1,25 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/emin93/react-native-template-typescript
- *
- * @format
- */
+import * as firebase from 'firebase'
 import React, { Component } from 'react'
-import { SafeAreaView } from 'react-native'
+import { Platform, SafeAreaView } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import AppContainer from './components/AppContainer'
 import { theme } from './styles/theme'
+
+if (Platform.OS !== 'web') {
+  window = undefined
+}
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyALAYTG4il_c_yUSkyuNBnCLzBByxcRDz8',
+  authDomain: 'truhiker.firebaseapp.com',
+  databaseURL: 'https://truhiker.firebaseio.com',
+  projectId: 'truhiker',
+  storageBucket: 'truhiker.appspot.com',
+  messagingSenderId: '755812740277',
+  appId: '1:755812740277:web:4149dd07611e36aa',
+}
+
+firebase.initializeApp(firebaseConfig)
 
 export default class App extends Component {
   render() {

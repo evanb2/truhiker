@@ -1,3 +1,5 @@
+import firebase from 'firebase/app'
+import 'firebase/firestore'
 import React, { Component } from 'react'
 import {
   Keyboard,
@@ -5,7 +7,6 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native'
-import firebase from 'react-native-firebase'
 import {
   Button,
   Switch,
@@ -14,8 +15,8 @@ import {
   TouchableRipple,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { theme } from '../styles/theme'
 import { CategoryTable } from './CategoryTable'
+import { theme } from '../styles/theme'
 
 enum Region {
   NONE = '',
@@ -61,8 +62,6 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
   //   headerTitle: 'New Gear List',
   // }
 
-  ref = firebase.firestore().collection('gearlist')
-
   state = {
     name: '',
     description: '',
@@ -70,6 +69,19 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     region: Region.NONE,
     units: Units.POUND,
     listItems: [],
+  }
+
+  componentDidMount() {
+    this.getAllGearLists()
+  }
+
+  getAllGearLists = async () => {
+    // console.log(db)
+    const querySnapshot = await firebase
+      .firestore()
+      .collection('gearlist')
+      .get()
+    querySnapshot.forEach(doc => console.log(doc.id, ' => ', doc.data()))
   }
 
   handleNameChange = (name: string) => {
@@ -84,14 +96,14 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     this.setState({ isPublic: !this.state.isPublic })
   }
 
-  saveGearList = async () => {
-    try {
-      const res = await this.ref.add({ ...this.state })
-      console.log(res)
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // saveGearList = async () => {
+  //   try {
+  //     const res = await this.ref.add({ ...this.state })
+  //     console.log(res)
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   render() {
     const { name, description, isPublic, listItems } = this.state
