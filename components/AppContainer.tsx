@@ -13,11 +13,13 @@ import { AuthLoadingScreen } from './AuthLoadingScreen'
 import { AuthScreen } from './AuthScreen'
 import { CreateListScreen } from './CreateListScreen'
 import { HomeScreen } from './HomeScreen'
+import { SettingsScreen } from './SettingsScreen'
 
 const AppTabNav = createMaterialTopTabNavigator(
   {
     Home: HomeScreen,
     CreateList: CreateListScreen,
+    Settings: SettingsScreen,
   },
   {
     initialRouteName: 'Home',
@@ -29,6 +31,7 @@ const AppTabNav = createMaterialTopTabNavigator(
         backgroundColor: '#f2f2f2',
       },
       showIcon: true,
+      showLabel: false,
     },
   }
 )
