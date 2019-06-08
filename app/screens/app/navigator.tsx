@@ -1,4 +1,4 @@
-import { SimpleLineIcons, MaterialCommunityIcons } from '@expo/vector-icons'
+import { SimpleLineIcons } from '@expo/vector-icons'
 import React from 'react'
 import {
   createMaterialTopTabNavigator,
@@ -56,9 +56,8 @@ const AppTabNav = createMaterialTopTabNavigator(
         const { routeName } = navigation.state
         switch (routeName) {
           case 'GearCloset':
-            return (
-              <MaterialCommunityIcons name="door" size={25} color={tintColor} />
-            )
+            iconName = 'home'
+            break
           case 'MyGearLists':
             iconName = 'notebook'
             break
