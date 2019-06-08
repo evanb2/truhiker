@@ -1,76 +1,28 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-react"
-  ],
+  "extends": ["tslint:latest", "tslint-react"],
   "rules": {
-    // import statements should be alphabetically arranged
-    "ordered-imports": [
-      true
-    ],
-    // don't require explicit visibility declarations for class members
-    "member-access": [
-      false
-    ],
-    // don't check for keeping related groups of classes together
-    "member-ordering": [
-      false
-    ],
+    "ordered-imports": [true],
+    "member-access": [false],
+    "member-ordering": [false],
     "trailing-comma": false,
-    // allow empty blocks
     "no-empty": false,
-    // allow importing of submodules
     "no-submodule-imports": false,
-    // allow importing of modules that aren't listed under the package.jsons dependency list
     "no-implicit-dependencies": false,
     "no-constant-condition": false,
-    // always use triple equals when comparing values, except for checking undefined values
-    "triple-equals": [
-      true,
-      "allow-undefined-check"
-    ],
-    // disable checking of parenthesis for single argument arrow functions
-    "arrow-parens": [
-      false
-    ],
-    // disable checking of semi-colon for class bound methods
-    "semicolon": [
-      true,
-      "never",
-      "ignore-bound-class-methods"
-    ],
+    "triple-equals": [true, "allow-undefined-check"],
+    "arrow-parens": [false],
+    "semicolon": [true, "never", "ignore-bound-class-methods"],
     "object-literal-sort-keys": false,
-    // disallow repeating of imports from the same module
     "no-duplicate-imports": true,
-    // react specific rules (more info here: https://github.com/palantir/tslint-react#rules)
-    // enforces a consistent style for multiline JSX elements
     "jsx-alignment": true,
-    // disallow function binding in JSX attributes
     "jsx-no-bind": true,
-    // disallow creation of anonymous functions inside the render method
     "jsx-no-lambda": false,
-    // disable checking of multi-line JavaScript inside JSX
     "jsx-no-multiline-js": false,
-    // disables requiring someProp={true}
     "jsx-boolean-value": false,
-    // disable rule for limiting the number of classes per file
     "max-classes-per-file": [true, 1],
-    // disable rule for requiring interface names to begin with "I"
     "interface-name": false,
-    // enforce single quotes everywhere except JSX attributes
-    "quotemark": [
-      true,
-      "single",
-      "jsx-double"
-    ],
-    "variable-name": [
-      true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore",
-      "allow-pascal-case"
-    ],
-    // allows console statements, can be remove later for production
+    "quotemark": [true, "single", "jsx-double"],
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-pascal-case"],
     "no-console": [false]
   }
 }
