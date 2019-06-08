@@ -1,5 +1,6 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
 import React from 'react'
+import { Dimensions } from 'react-native'
 import { Button } from 'react-native-paper'
 import {
   createMaterialTopTabNavigator,
@@ -10,6 +11,10 @@ import { ItemFormScreen } from 'screens/app/ItemFormScreen'
 import { MyGearListsScreen } from 'screens/app/MyGearListsScreen'
 import { SettingsScreen } from 'screens/app/SettingsScreen'
 import { theme } from 'styles/theme'
+
+const { height: SCREEN_HEIGHT } = Dimensions.get('window')
+
+export const IS_IPHONE_X = SCREEN_HEIGHT === 812 || SCREEN_HEIGHT === 896
 
 const AppTabNav = createMaterialTopTabNavigator(
   {
@@ -44,7 +49,10 @@ const AppTabNav = createMaterialTopTabNavigator(
       activeTintColor: theme.colors.primary,
       inactiveTintColor: 'grey',
       style: {
-        backgroundColor: '#f2f2f2',
+        backgroundColor: 'white',
+        borderTopColor: 'black',
+        borderTopWidth: 1,
+        height: IS_IPHONE_X ? 80 : 73,
       },
       showIcon: true,
       indicatorStyle: {
