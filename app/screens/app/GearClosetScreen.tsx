@@ -1,3 +1,5 @@
+import firebase from 'firebase'
+import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
@@ -33,6 +35,39 @@ interface Props {
 }
 
 export class GearClosetScreen extends Component<Props> {
+  state = {
+    gearItems: [],
+  }
+
+  componentDidMount() {
+    this.loadGear()
+  }
+
+  loadGear = async () => {
+    try {
+      // const gear = await firebase
+      //   .firestore()
+      //   .collection('gear')
+      //   .onSnapshot(res => {
+      //     console.dir(res)
+      //   })
+      firebase
+        .firestore()
+        .collection('gear')
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            // doc.data() is never undefined for query doc snapshots
+            this.setState({ gearItems: doc.data() })
+            console.log(doc.id, ' => ', doc.data())
+          })
+        })
+      // console.log('gear', ' => ', gear)
+    } catch (error) {
+      console.log('fetch gear closet error: ', error)
+    }
+  }
+
   _renderItem = ({ item }: { item: ListItem }) => {
     return (
       <Swipeable>
@@ -47,6 +82,7 @@ export class GearClosetScreen extends Component<Props> {
 
   render() {
     const { navigation } = this.props
+    const { gearItems } = this.state
 
     return (
       <SafeAreaView style={_styles.screenContainer}>
@@ -59,7 +95,7 @@ export class GearClosetScreen extends Component<Props> {
         </View>
         {/* SEARCH INPUT HERE */}
         <FlatList
-          data={[{ id: 'ahdua62hd7', name: 'Test' }]}
+          data={[]}
           renderItem={this._renderItem}
           keyExtractor={item => String(item.id)}
         />

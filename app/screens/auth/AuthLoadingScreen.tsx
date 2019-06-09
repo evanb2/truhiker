@@ -18,7 +18,7 @@ export class AuthLoadingScreen extends Component<NavigationScreenProps> {
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
         this.props.navigation.navigate(user ? 'App' : 'Auth')
-        console.log(user)
+        // console.log(user)
       })
     } catch (error) {
       console.log(error)
