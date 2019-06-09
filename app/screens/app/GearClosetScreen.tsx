@@ -83,6 +83,8 @@ export class GearClosetScreen extends Component<Props> {
           data={gearItems}
           renderItem={this._renderItem}
           keyExtractor={item => String(item.name)}
+          contentContainerStyle={{ paddingTop: 16 }}
+          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         />
       </SafeAreaView>
     )
