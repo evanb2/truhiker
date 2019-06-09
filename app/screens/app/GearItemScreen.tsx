@@ -2,7 +2,7 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native-paper'
 import {
@@ -104,6 +104,9 @@ export class GearItemScreen extends Component<Props, State> {
     return (
       <View style={_styles.screenContainer}>
         <TextInput
+          autoFocus
+          autoCapitalize="sentences"
+          maxLength={40}
           style={_styles.textInputContainer}
           label="Name"
           error={errorFields.includes('name')}
@@ -111,6 +114,8 @@ export class GearItemScreen extends Component<Props, State> {
           onChangeText={val => this.setState({ name: val })}
         />
         <TextInput
+          autoCapitalize="sentences"
+          maxLength={40}
           style={_styles.textInputContainer}
           label="Description"
           value={description}
@@ -118,12 +123,16 @@ export class GearItemScreen extends Component<Props, State> {
         />
         <View style={_styles.textInputRow}>
           <TextInput
+            keyboardType="decimal-pad"
+            maxLength={7}
             style={[_styles.textInputContainer, { flex: 1, marginRight: 4 }]}
             label="Price"
             value={price}
             onChangeText={val => this.setState({ price: val })}
           />
           <TextInput
+            keyboardType="decimal-pad"
+            maxLength={8}
             style={[_styles.textInputContainer, { flex: 1, marginLeft: 4 }]}
             label="Weight"
             value={weight}
@@ -131,6 +140,9 @@ export class GearItemScreen extends Component<Props, State> {
           />
         </View>
         <TextInput
+          keyboardType={Platform.OS === 'ios' ? 'url' : 'default'}
+          autoCorrect={false}
+          autoCapitalize="none"
           style={_styles.textInputContainer}
           label="Link"
           value={linkURL}
