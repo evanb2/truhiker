@@ -5,7 +5,11 @@ import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { IconButton, List, Title } from 'react-native-paper'
-import { NavigationScreenProp } from 'react-navigation'
+import {
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+} from 'react-navigation'
 
 enum Units {
   OUNCE = 'oz',
@@ -30,8 +34,8 @@ interface ListItem {
 }
 
 interface Props {
-  navigation: { navigate: (routeName: string) => any }
   items: ListItem[]
+  navigation: NavigationScreenProp<NavigationState, NavigationParams>
 }
 
 export class GearClosetScreen extends Component<Props> {
