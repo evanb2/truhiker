@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { IconButton, List, Title } from 'react-native-paper'
+import { IconButton, List, Title, Searchbar } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -21,6 +21,7 @@ interface Props {
 export class GearClosetScreen extends Component<Props> {
   state = {
     gearItems: [],
+    searchQuery: '',
   }
 
   componentDidMount() {
@@ -57,7 +58,7 @@ export class GearClosetScreen extends Component<Props> {
 
   render() {
     const { navigation } = this.props
-    const { gearItems } = this.state
+    const { gearItems, searchQuery } = this.state
 
     return (
       <SafeAreaView style={_styles.screenContainer}>
@@ -68,6 +69,11 @@ export class GearClosetScreen extends Component<Props> {
             onPress={() => navigation.navigate(Routes.GearItem)}
           />
         </View>
+        <Searchbar
+          placeholder="Search"
+          value={searchQuery}
+          onChangeText={query => this.setState({ searchQuery: query })}
+        />
         {/* SEARCH INPUT HERE */}
         <FlatList
           data={gearItems}
