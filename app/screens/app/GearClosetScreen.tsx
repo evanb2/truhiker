@@ -91,7 +91,7 @@ export class GearClosetScreen extends Component<Props> {
         <FlatList
           data={gearItems}
           renderItem={this._renderItem}
-          keyExtractor={item => String(item.id)}
+          keyExtractor={item => String(item.name)}
         />
       </SafeAreaView>
     )
