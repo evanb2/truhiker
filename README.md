@@ -4,6 +4,7 @@ Create and share your pack lists, submit your lists for community shakedowns.
 
 ### Proposed Feature List:
 
+- [ ] Update GearItem
 - [ ] Anon signin
 - [ ] Google Auth
 - [ ] Create and manage gear lists
