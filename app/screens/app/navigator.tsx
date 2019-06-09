@@ -6,8 +6,9 @@ import {
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation'
+import { Routes } from 'routes'
 import { GearClosetScreen } from 'screens/app/GearClosetScreen'
-import { ItemFormScreen } from 'screens/app/ItemFormScreen'
+import { GearItemScreen } from 'screens/app/GearItemScreen'
 import { MyGearListsScreen } from 'screens/app/MyGearListsScreen'
 import { SettingsScreen } from 'screens/app/SettingsScreen'
 import { theme } from 'styles/theme'
@@ -18,19 +19,19 @@ export const IS_IPHONE_X = SCREEN_HEIGHT === 812 || SCREEN_HEIGHT === 896
 
 const AppTabNav = createMaterialTopTabNavigator(
   {
-    GearCloset: {
+    [Routes.GearCloset]: {
       screen: GearClosetScreen,
       navigationOptions: {
         tabBarLabel: 'Gear Closet',
       },
     },
-    MyGearLists: {
+    [Routes.MyGearLists]: {
       screen: MyGearListsScreen,
       navigationOptions: {
         tabBarLabel: 'Lists',
       },
     },
-    Settings: {
+    [Routes.Settings]: {
       screen: SettingsScreen,
       navigationOptions: {
         tabBarLabel: 'Settings',
@@ -85,8 +86,8 @@ const AppTabNav = createMaterialTopTabNavigator(
 const AppStack = createStackNavigator(
   {
     AppTabNav,
-    ItemForm: {
-      screen: ItemFormScreen,
+    [Routes.GearItem]: {
+      screen: GearItemScreen,
       navigationOptions: {
         title: 'Add Item',
       },
