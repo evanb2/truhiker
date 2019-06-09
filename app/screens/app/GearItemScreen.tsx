@@ -25,6 +25,7 @@ interface State {
   linkURL: string
   worn: boolean
   consumable: boolean
+  errorFields: string[]
 }
 
 interface Props {
@@ -44,6 +45,7 @@ export class GearItemScreen extends Component<Props, State> {
     units: WeightUnits.OUNCES,
     quantity: 0,
     photoURL: '',
+    errorFields: [],
   }
 
   componentDidMount() {
@@ -55,6 +57,13 @@ export class GearItemScreen extends Component<Props, State> {
 
   addGearItem = () => {
     const { navigation } = this.props
+    const { name } = this.state
+
+    if (!name) {
+      this.setState({ errorFields: ['name'] })
+      return
+    }
+
     try {
       firebase
         .firestore()
@@ -89,6 +98,7 @@ export class GearItemScreen extends Component<Props, State> {
       linkURL,
       worn,
       consumable,
+      errorFields,
     } = this.state
 
     return (
@@ -96,6 +106,7 @@ export class GearItemScreen extends Component<Props, State> {
         <TextInput
           style={_styles.textInputContainer}
           label="Name"
+          error={errorFields.includes('name')}
           value={name}
           onChangeText={val => this.setState({ name: val })}
         />
