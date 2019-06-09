@@ -10,6 +10,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation'
+import { Routes } from 'screens/routes'
 import { GearItem } from 'utils/types'
 
 interface Props {
@@ -64,7 +65,7 @@ export class GearClosetScreen extends Component<Props> {
           <Title>My Gear Closet</Title>
           <IconButton
             icon="add"
-            onPress={() => navigation.navigate('ItemForm')}
+            onPress={() => navigation.navigate(Routes.GearItem)}
           />
         </View>
         {/* SEARCH INPUT HERE */}
