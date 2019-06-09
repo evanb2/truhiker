@@ -17,43 +17,14 @@ import {
 import { NavigationScreenProps } from 'react-navigation'
 import { CategoryTable } from 'screens/app/CategoryTable'
 import { theme } from 'styles/theme'
+import { GearItem, WeightUnits } from 'utils/types'
 
-enum Region {
-  NONE = '',
-  EASTCOAST = 'east_coast',
-  ROCKIES = 'rockies',
-  PNW = 'pnw',
-  CALIFORNIA = 'california',
-}
-enum Units {
-  OUNCE = 'oz',
-  POUND = 'lb',
-  GRAM = 'g',
-}
-// enum Seasons {
-//   SUMMER = 'summer',
-//   SPRING = 'spring',
-//   FALL = 'fall',
-//   WINTER = 'winter',
-// }
-interface ListItem {
-  description: string
-  price: number
-  weight: number
-  units: Units
-  quantity: number
-  photoUrl: string
-  linkUrl: string
-  worn: boolean
-  consumable: boolean
-}
 interface State {
   name: string
   description: string
   isPublic: boolean
-  region: Region
-  units: Units
-  listItems: ListItem[]
+  units: WeightUnits
+  listItems: GearItem[]
 }
 
 export class CreateListScreen extends Component<NavigationScreenProps, State> {
@@ -66,8 +37,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     name: '',
     description: '',
     isPublic: false,
-    region: Region.NONE,
-    units: Units.POUND,
+    units: WeightUnits.OUNCES,
     listItems: [],
   }
 

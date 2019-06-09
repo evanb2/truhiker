@@ -10,28 +10,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation'
-
-enum Units {
-  OUNCE = 'oz',
-  POUND = 'lb',
-  GRAM = 'g',
-}
-
-interface GearItem {
-  name: string
-  description: string
-  price: string
-  weight: string
-  units: Units
-  quantity: number
-  photoURL: string
-  linkURL: string
-  worn: boolean
-  consumable: boolean
-  // category,
-  // belongsToLists,
-  // user/owner
-}
+import { GearItem } from 'utils/types'
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
@@ -55,6 +34,7 @@ export class GearClosetScreen extends Component<Props> {
         .onSnapshot(querySnapshot => {
           const gearItems: firebase.firestore.DocumentData[] = []
           querySnapshot.forEach(doc => gearItems.push(doc.data()))
+          console.log(gearItems)
           this.setState({ gearItems })
         })
     } catch (error) {

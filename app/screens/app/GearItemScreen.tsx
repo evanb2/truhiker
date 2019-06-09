@@ -12,19 +12,14 @@ import {
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
-
-enum Units {
-  OUNCE = 'oz',
-  POUND = 'lb',
-  GRAM = 'g',
-}
+import { GearItem, WeightUnits } from 'utils/types'
 
 interface State {
   name: string
   description: string
   price: string
   weight: string
-  units: Units
+  units: WeightUnits
   quantity: number
   photoURL: string
   linkURL: string
@@ -34,6 +29,7 @@ interface State {
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  gearItem: GearItem
 }
 
 export class GearItemScreen extends Component<Props, State> {
@@ -45,7 +41,7 @@ export class GearItemScreen extends Component<Props, State> {
     linkURL: '',
     worn: false,
     consumable: false,
-    units: Units.OUNCE,
+    units: WeightUnits.OUNCES,
     quantity: 0,
     photoURL: '',
   }
