@@ -6,11 +6,11 @@ import {
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation'
-import { Routes } from 'routes'
 import { GearClosetScreen } from 'screens/app/GearClosetScreen'
 import { GearItemScreen } from 'screens/app/GearItemScreen'
 import { MyGearListsScreen } from 'screens/app/MyGearListsScreen'
 import { SettingsScreen } from 'screens/app/SettingsScreen'
+import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window')

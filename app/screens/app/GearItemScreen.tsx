@@ -10,7 +10,7 @@ import {
   NavigationScreenProp,
   NavigationState,
 } from 'react-navigation'
-import { Routes } from 'routes'
+import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
 
 enum Units {
