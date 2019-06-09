@@ -53,7 +53,7 @@ export class GearClosetScreen extends Component<Props> {
         .firestore()
         .collection('gear')
         .onSnapshot(querySnapshot => {
-          const gearItems: GearItem[] = []
+          const gearItems: firebase.firestore.DocumentData[] = []
           querySnapshot.forEach(doc => gearItems.push(doc.data()))
           this.setState({ gearItems })
         })
