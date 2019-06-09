@@ -85,7 +85,12 @@ const AppTabNav = createMaterialTopTabNavigator(
 const AppStack = createStackNavigator(
   {
     AppTabNav,
-    ItemForm: ItemFormScreen,
+    ItemForm: {
+      screen: ItemFormScreen,
+      navigationOptions: {
+        title: 'Add Item',
+      },
+    },
   },
   {
     initialRouteName: 'AppTabNav',
