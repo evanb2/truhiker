@@ -1,8 +1,11 @@
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import firebase from 'firebase'
+import 'firebase/firestore'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { TouchableOpacity, State } from 'react-native-gesture-handler'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native-paper'
+import { NavigationProp } from 'react-navigation'
 import { theme } from 'styles/theme'
 
 enum Units {
@@ -14,17 +17,21 @@ enum Units {
 interface State {
   name: string
   description: string
-  price: number
-  weight: number
+  price: string
+  weight: string
   units: Units
   quantity: number
-  photoUrl: string
-  linkUrl: string
+  photoURL: string
+  linkURL: string
   worn: boolean
   consumable: boolean
 }
 
-export class ItemFormScreen extends Component<State> {
+interface Props {
+  navigation: NavigationProp<State>
+}
+
+export class ItemFormScreen extends Component<Props, State> {
   state = {
     name: '',
     description: '',
@@ -33,6 +40,31 @@ export class ItemFormScreen extends Component<State> {
     linkURL: '',
     worn: false,
     consumable: false,
+    units: Units.OUNCE,
+    quantity: 0,
+    photoURL: '',
+  }
+
+  componentDidMount() {
+    const { navigation } = this.props
+    const { setParams } = navigation
+
+    setParams({ rightAction: this.addGearItem })
+  }
+
+  addGearItem = () => {
+    const { navigation } = this.props
+    try {
+      firebase
+        .firestore()
+        .collection('gear')
+        .add({
+          ...this.state,
+        })
+      navigation.navigate('GearCloset')
+    } catch (error) {
+      console.dir(error)
+    }
   }
 
   toggleWorn = () => {
@@ -64,28 +96,33 @@ export class ItemFormScreen extends Component<State> {
           style={_styles.textInputContainer}
           label="Name"
           value={name}
+          onChangeText={val => this.setState({ name: val })}
         />
         <TextInput
           style={_styles.textInputContainer}
           label="Description"
           value={description}
+          onChangeText={val => this.setState({ description: val })}
         />
         <View style={_styles.textInputRow}>
           <TextInput
             style={[_styles.textInputContainer, { flex: 1, marginRight: 4 }]}
             label="Price"
             value={price}
+            onChangeText={val => this.setState({ price: val })}
           />
           <TextInput
             style={[_styles.textInputContainer, { flex: 1, marginLeft: 4 }]}
             label="Weight"
             value={weight}
+            onChangeText={val => this.setState({ weight: val })}
           />
         </View>
         <TextInput
           style={_styles.textInputContainer}
           label="Link"
           value={linkURL}
+          onChangeText={val => this.setState({ linkURL: val })}
         />
         <View style={_styles.buttonsRow}>
           <TouchableOpacity onPress={this.toggleWorn} style={_styles.button}>
