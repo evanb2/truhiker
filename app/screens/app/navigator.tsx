@@ -95,20 +95,24 @@ const AppStack = createStackNavigator(
   {
     initialRouteName: 'AppTabNav',
     mode: 'modal',
-    defaultNavigationOptions: {
-      headerBackImage: (
-        <SimpleLineIcons
-          name="close"
-          size={20}
-          style={{ paddingHorizontal: 16 }}
-        />
-      ),
-      headerBackTitle: null,
-      headerRight: (
-        <Button mode="text" uppercase={false}>
-          Add
-        </Button>
-      ),
+    defaultNavigationOptions: ({ navigation }) => {
+      const { getParam } = navigation
+      const rightAction = getParam('rightAction', () => {})
+      return {
+        headerBackImage: (
+          <SimpleLineIcons
+            name="close"
+            size={20}
+            style={{ paddingHorizontal: 16 }}
+          />
+        ),
+        headerBackTitle: null,
+        headerRight: (
+          <Button mode="text" uppercase={false} onPress={rightAction}>
+            Add
+          </Button>
+        ),
+      }
     },
   }
 )
