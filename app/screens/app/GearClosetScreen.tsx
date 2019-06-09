@@ -17,15 +17,15 @@ enum Units {
   GRAM = 'g',
 }
 
-interface ListItem {
+interface GearItem {
   name: string
   description: string
   price: string
-  weight: number
+  weight: string
   units: Units
   quantity: number
-  photoUrl: string
-  linkUrl: string
+  photoURL: string
+  linkURL: string
   worn: boolean
   consumable: boolean
   // category,
@@ -34,8 +34,8 @@ interface ListItem {
 }
 
 interface Props {
-  items: ListItem[]
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
+  items: GearItem[]
 }
 
 export class GearClosetScreen extends Component<Props> {
@@ -44,35 +44,25 @@ export class GearClosetScreen extends Component<Props> {
   }
 
   componentDidMount() {
-    this.loadGear()
+    this.attachGearCollectionListener()
   }
 
-  loadGear = async () => {
+  attachGearCollectionListener = () => {
     try {
-      // const gear = await firebase
-      //   .firestore()
-      //   .collection('gear')
-      //   .onSnapshot(res => {
-      //     console.dir(res)
-      //   })
       firebase
         .firestore()
         .collection('gear')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            // doc.data() is never undefined for query doc snapshots
-            this.setState({ gearItems: doc.data() })
-            console.log(doc.id, ' => ', doc.data())
-          })
+        .onSnapshot(querySnapshot => {
+          const gearItems: GearItem[] = []
+          querySnapshot.forEach(doc => gearItems.push(doc.data()))
+          this.setState({ gearItems })
         })
-      // console.log('gear', ' => ', gear)
     } catch (error) {
       console.log('fetch gear closet error: ', error)
     }
   }
 
-  _renderItem = ({ item }: { item: ListItem }) => {
+  _renderItem = ({ item }: { item: GearItem }) => {
     return (
       <Swipeable>
         <List.Item
@@ -99,7 +89,7 @@ export class GearClosetScreen extends Component<Props> {
         </View>
         {/* SEARCH INPUT HERE */}
         <FlatList
-          data={[]}
+          data={gearItems}
           renderItem={this._renderItem}
           keyExtractor={item => String(item.id)}
         />
