@@ -89,7 +89,7 @@ const AppStack = createStackNavigator(
     [Routes.GearItem]: {
       screen: GearItemScreen,
       navigationOptions: {
-        title: 'Add Item',
+        title: 'Gear Item',
       },
     },
   },
