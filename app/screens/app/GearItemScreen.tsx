@@ -2,7 +2,7 @@ import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
-import { StyleSheet, View, Platform } from 'react-native'
+import { Platform, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native-paper'
 import {
@@ -30,7 +30,6 @@ interface State {
 
 interface Props {
   navigation: NavigationScreenProp<NavigationState, NavigationParams>
-  gearItem: GearItem
 }
 
 export class GearItemScreen extends Component<Props, State> {
@@ -50,7 +49,24 @@ export class GearItemScreen extends Component<Props, State> {
 
   componentDidMount() {
     const { navigation } = this.props
-    const { setParams } = navigation
+    const { setParams, getParam } = navigation
+
+    const gearItem: GearItem = getParam('gearItem')
+
+    if (gearItem) {
+      this.setState({
+        name: gearItem.name,
+        description: gearItem.description,
+        price: gearItem.price,
+        weight: gearItem.price,
+        linkURL: gearItem.linkURL,
+        worn: gearItem.worn,
+        consumable: gearItem.consumable,
+        units: gearItem.units,
+        quantity: gearItem.quantity,
+        photoURL: gearItem.photoURL,
+      })
+    }
 
     setParams({ rightAction: this.addGearItem })
   }

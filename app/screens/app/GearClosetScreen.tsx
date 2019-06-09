@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { IconButton, List, Title, Searchbar } from 'react-native-paper'
+import { IconButton, List, Searchbar, Title } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -45,12 +45,16 @@ export class GearClosetScreen extends Component<Props> {
   }
 
   _renderItem = ({ item }: { item: GearItem }) => {
+    const { navigation } = this.props
+
     return (
       <Swipeable>
         <List.Item
           title={item.name}
           titleEllipsizeMode="tail"
-          onPress={() => console.log('tapped: ', item.name)}
+          onPress={() =>
+            navigation.navigate(Routes.GearItem, { gearItem: item })
+          }
         />
       </Swipeable>
     )
