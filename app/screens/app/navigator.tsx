@@ -99,6 +99,7 @@ const AppStack = createStackNavigator(
     defaultNavigationOptions: ({ navigation }) => {
       const { getParam } = navigation
       const rightAction = getParam('rightAction', () => {})
+
       return {
         headerBackImage: (
           <SimpleLineIcons
@@ -110,7 +111,7 @@ const AppStack = createStackNavigator(
         headerBackTitle: null,
         headerRight: (
           <Button mode="text" uppercase={false} onPress={rightAction}>
-            Add
+            Done
           </Button>
         ),
       }
