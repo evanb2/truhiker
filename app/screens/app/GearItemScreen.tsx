@@ -47,7 +47,7 @@ export class GearItemScreen extends Component<Props, State> {
     units: WeightUnits.OUNCES,
     quantity: 0,
     photoURL: '',
-    errorFields: [],
+    errorFields: [''],
   }
 
   componentWillMount() {
