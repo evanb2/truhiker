@@ -4,6 +4,7 @@ export enum WeightUnits {
   OUNCES = 'oz',
   POUNDS = 'lb',
   GRAMS = 'g',
+  KILOGRAMS = 'kg',
 }
 
 export interface GearItem {
