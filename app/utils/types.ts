@@ -7,6 +7,7 @@ export enum WeightUnits {
 }
 
 export interface GearItem {
+  uid: string
   name: string
   description: string
   price: string
