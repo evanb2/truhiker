@@ -4,11 +4,15 @@ Create and share your pack lists, submit your lists for community shakedowns.
 
 ### Proposed Feature List:
 
-- [ ] Update GearItem
+- [x] Add GearItem
+- [x] Update GearItem
+- [ ] Delete GearItem
+- [ ] Style GearItem in list
+- [ ] Search Gear Closet
+- [ ] Display + Upload GearItem image
+- [ ] Create and manage gear lists
 - [ ] Anon signin
 - [ ] Google Auth
-- [ ] Create and manage gear lists
-- [ ] Add to and manage gear closet
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
 - [ ] Share planned hikes/trips with users near your designated location.
