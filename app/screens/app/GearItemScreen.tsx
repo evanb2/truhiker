@@ -1,10 +1,14 @@
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import {
+  AntDesign,
+  MaterialCommunityIcons,
+  SimpleLineIcons,
+} from '@expo/vector-icons'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { TextInput } from 'react-native-paper'
+import { Text, TextInput } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -27,6 +31,8 @@ interface State {
   worn: boolean
   consumable: boolean
   errorFields: string[]
+  weightUnits: WeightUnits[]
+  selectedWeightUnit: number
 }
 
 interface Props {
@@ -47,6 +53,13 @@ export class GearItemScreen extends Component<Props, State> {
     quantity: 0,
     photoURL: '',
     errorFields: [],
+    weightUnits: [
+      WeightUnits.GRAMS,
+      WeightUnits.KILOGRAMS,
+      WeightUnits.OUNCES,
+      WeightUnits.POUNDS,
+    ],
+    selectedWeightUnit: 2,
   }
 
   componentDidMount() {
@@ -175,6 +188,18 @@ export class GearItemScreen extends Component<Props, State> {
     }))
   }
 
+  decrementWeightUnit = () => {
+    this.setState(state => ({
+      selectedWeightUnit: state.selectedWeightUnit - 1,
+    }))
+  }
+
+  incrementWeightUnit = () => {
+    this.setState(state => ({
+      selectedWeightUnit: state.selectedWeightUnit + 1,
+    }))
+  }
+
   render() {
     const {
       name,
@@ -184,8 +209,32 @@ export class GearItemScreen extends Component<Props, State> {
       linkURL,
       worn,
       consumable,
+      units,
       errorFields,
+      selectedWeightUnit,
+      weightUnits,
     } = this.state
+
+    const unitsIcon = () => {
+      let iconName
+      switch (weightUnits[selectedWeightUnit]) {
+        case WeightUnits.GRAMS:
+          iconName = 'gram'
+          break
+        case WeightUnits.KILOGRAMS:
+          iconName = 'kilogram'
+          break
+        case WeightUnits.POUNDS:
+          iconName = 'pound'
+          break
+        case WeightUnits.OUNCES:
+          return <Text>OZ</Text>
+        default:
+          iconName = 'pound'
+          break
+      }
+      return <MaterialCommunityIcons name={`weight-${iconName}`} size={25} />
+    }
 
     return (
       <View style={_styles.screenContainer}>
@@ -207,6 +256,15 @@ export class GearItemScreen extends Component<Props, State> {
           value={description}
           onChangeText={val => this.setState({ description: val })}
         />
+        <TextInput
+          keyboardType={Platform.OS === 'ios' ? 'url' : 'default'}
+          autoCorrect={false}
+          autoCapitalize="none"
+          style={_styles.textInputContainer}
+          label="Link"
+          value={linkURL}
+          onChangeText={val => this.setState({ linkURL: val })}
+        />
         <View style={_styles.textInputRow}>
           <TextInput
             keyboardType="decimal-pad"
@@ -224,16 +282,25 @@ export class GearItemScreen extends Component<Props, State> {
             value={weight}
             onChangeText={val => this.setState({ weight: val })}
           />
+          <View style={{ flex: 1 }}>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-evenly',
+                alignItems: 'center',
+              }}
+            >
+              <TouchableOpacity onPress={this.decrementWeightUnit}>
+                <SimpleLineIcons name="arrow-left" size={25} />
+              </TouchableOpacity>
+              {unitsIcon()}
+              <TouchableOpacity onPress={this.incrementWeightUnit}>
+                <SimpleLineIcons name="arrow-right" size={25} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-        <TextInput
-          keyboardType={Platform.OS === 'ios' ? 'url' : 'default'}
-          autoCorrect={false}
-          autoCapitalize="none"
-          style={_styles.textInputContainer}
-          label="Link"
-          value={linkURL}
-          onChangeText={val => this.setState({ linkURL: val })}
-        />
         <View style={_styles.buttonsRow}>
           <TouchableOpacity onPress={this.toggleWorn} style={_styles.button}>
             <AntDesign
