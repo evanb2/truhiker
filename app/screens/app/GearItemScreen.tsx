@@ -1,14 +1,11 @@
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-} from '@expo/vector-icons'
+import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
+import { WeightUnitSelector } from 'components/WeightUnitSelector'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Text, TextInput } from 'react-native-paper'
+import { TextInput } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -31,8 +28,6 @@ interface State {
   worn: boolean
   consumable: boolean
   errorFields: string[]
-  weightUnits: WeightUnits[]
-  selectedWeightUnit: number
 }
 
 interface Props {
@@ -53,16 +48,9 @@ export class GearItemScreen extends Component<Props, State> {
     quantity: 0,
     photoURL: '',
     errorFields: [],
-    weightUnits: [
-      WeightUnits.GRAMS,
-      WeightUnits.KILOGRAMS,
-      WeightUnits.OUNCES,
-      WeightUnits.POUNDS,
-    ],
-    selectedWeightUnit: 2,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { navigation } = this.props
     const { setParams, getParam } = navigation
 
@@ -77,7 +65,7 @@ export class GearItemScreen extends Component<Props, State> {
         name: gearItem.name,
         description: gearItem.description,
         price: gearItem.price,
-        weight: gearItem.price,
+        weight: gearItem.weight,
         linkURL: gearItem.linkURL,
         worn: gearItem.worn,
         consumable: gearItem.consumable,
@@ -188,16 +176,8 @@ export class GearItemScreen extends Component<Props, State> {
     }))
   }
 
-  decrementWeightUnit = () => {
-    this.setState(state => ({
-      selectedWeightUnit: state.selectedWeightUnit - 1,
-    }))
-  }
-
-  incrementWeightUnit = () => {
-    this.setState(state => ({
-      selectedWeightUnit: state.selectedWeightUnit + 1,
-    }))
+  handleUnitSelect = (units: WeightUnits) => {
+    this.setState({ units })
   }
 
   render() {
@@ -206,35 +186,12 @@ export class GearItemScreen extends Component<Props, State> {
       description,
       price,
       weight,
+      units,
       linkURL,
       worn,
       consumable,
-      units,
       errorFields,
-      selectedWeightUnit,
-      weightUnits,
     } = this.state
-
-    const unitsIcon = () => {
-      let iconName
-      switch (weightUnits[selectedWeightUnit]) {
-        case WeightUnits.GRAMS:
-          iconName = 'gram'
-          break
-        case WeightUnits.KILOGRAMS:
-          iconName = 'kilogram'
-          break
-        case WeightUnits.POUNDS:
-          iconName = 'pound'
-          break
-        case WeightUnits.OUNCES:
-          return <Text>OZ</Text>
-        default:
-          iconName = 'pound'
-          break
-      }
-      return <MaterialCommunityIcons name={`weight-${iconName}`} size={25} />
-    }
 
     return (
       <View style={_styles.screenContainer}>
@@ -270,7 +227,7 @@ export class GearItemScreen extends Component<Props, State> {
             keyboardType="decimal-pad"
             maxLength={7}
             style={[_styles.textInputContainer, { flex: 1, marginRight: 4 }]}
-            label="Price"
+            label="$"
             value={price}
             onChangeText={val => this.setState({ price: val })}
           />
@@ -283,22 +240,10 @@ export class GearItemScreen extends Component<Props, State> {
             onChangeText={val => this.setState({ weight: val })}
           />
           <View style={{ flex: 1 }}>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'space-evenly',
-                alignItems: 'center',
-              }}
-            >
-              <TouchableOpacity onPress={this.decrementWeightUnit}>
-                <SimpleLineIcons name="arrow-left" size={25} />
-              </TouchableOpacity>
-              {unitsIcon()}
-              <TouchableOpacity onPress={this.incrementWeightUnit}>
-                <SimpleLineIcons name="arrow-right" size={25} />
-              </TouchableOpacity>
-            </View>
+            <WeightUnitSelector
+              onValueChange={this.handleUnitSelect}
+              initialValue={units}
+            />
           </View>
         </View>
         <View style={_styles.buttonsRow}>
