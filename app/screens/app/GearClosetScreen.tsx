@@ -1,4 +1,5 @@
 import firebase from 'firebase'
+import 'firebase/auth'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
@@ -30,12 +31,16 @@ export class GearClosetScreen extends Component<Props> {
 
   attachGearCollectionListener = () => {
     try {
+      const user = firebase.auth().currentUser
       firebase
         .firestore()
         .collection('gear')
+        .where('userId', '==', user && user.uid)
         .onSnapshot(querySnapshot => {
           const gearItems: firebase.firestore.DocumentData[] = []
-          querySnapshot.forEach(doc => gearItems.push(doc.data()))
+          querySnapshot.forEach(doc =>
+            gearItems.push({ uid: doc.id, ...doc.data() })
+          )
           console.log(gearItems)
           this.setState({ gearItems })
         })
