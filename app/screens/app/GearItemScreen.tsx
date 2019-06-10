@@ -15,6 +15,7 @@ import { theme } from 'styles/theme'
 import { GearItem, WeightUnits } from 'utils/types'
 
 interface State {
+  uid: string
   name: string
   description: string
   price: string
@@ -34,6 +35,7 @@ interface Props {
 
 export class GearItemScreen extends Component<Props, State> {
   state = {
+    uid: '',
     name: '',
     description: '',
     price: '',
@@ -53,8 +55,12 @@ export class GearItemScreen extends Component<Props, State> {
 
     const gearItem: GearItem = getParam('gearItem')
 
+    setParams({ rightAction: this.addGearItem })
+
     if (gearItem) {
+      setParams({ rightAction: this.updateGearItem })
       this.setState({
+        uid: gearItem.uid,
         name: gearItem.name,
         description: gearItem.description,
         price: gearItem.price,
@@ -67,13 +73,67 @@ export class GearItemScreen extends Component<Props, State> {
         photoURL: gearItem.photoURL,
       })
     }
-
-    setParams({ rightAction: this.addGearItem })
   }
 
   addGearItem = () => {
     const { navigation } = this.props
-    const { name } = this.state
+    const {
+      name,
+      description,
+      price,
+      weight,
+      linkURL,
+      worn,
+      consumable,
+      units,
+      quantity,
+      photoURL,
+    } = this.state
+
+    if (!name) {
+      this.setState({ errorFields: ['name'] })
+      return
+    }
+
+    try {
+      const user = firebase.auth().currentUser
+      firebase
+        .firestore()
+        .collection('gear')
+        .add({
+          name,
+          description,
+          price,
+          weight,
+          linkURL,
+          worn,
+          consumable,
+          units,
+          quantity,
+          photoURL,
+          userId: user && user.uid,
+        })
+      navigation.navigate(Routes.GearCloset)
+    } catch (error) {
+      console.dir(error)
+    }
+  }
+
+  updateGearItem = () => {
+    const { navigation } = this.props
+    const {
+      uid,
+      name,
+      description,
+      price,
+      weight,
+      linkURL,
+      worn,
+      consumable,
+      units,
+      quantity,
+      photoURL,
+    } = this.state
 
     if (!name) {
       this.setState({ errorFields: ['name'] })
@@ -84,8 +144,18 @@ export class GearItemScreen extends Component<Props, State> {
       firebase
         .firestore()
         .collection('gear')
-        .add({
-          ...this.state,
+        .doc(uid)
+        .update({
+          name,
+          description,
+          price,
+          weight,
+          linkURL,
+          worn,
+          consumable,
+          units,
+          quantity,
+          photoURL,
         })
       navigation.navigate(Routes.GearCloset)
     } catch (error) {
