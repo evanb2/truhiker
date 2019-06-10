@@ -4,10 +4,15 @@ Create and share your pack lists, submit your lists for community shakedowns.
 
 ### Proposed Feature List:
 
-- [x] Google Auth
+- [x] Add GearItem
+- [x] Update GearItem
+- [ ] Delete GearItem
+- [ ] Style GearItem in list
+- [ ] Search Gear Closet
+- [ ] Display + Upload GearItem image
 - [ ] Create and manage gear lists
-- [ ] Add to and manage gear closet
-- [ ] Facebook Auth (?)
+- [ ] Anon signin
+- [ ] Google Auth
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
 - [ ] Share planned hikes/trips with users near your designated location.
@@ -21,3 +26,5 @@ Undefined symbols for architecture x86_64:
   "_JSClassCreate", referenced from ... libReact.a
 ```
 Solution: Make sure `JavascriptCore.framework` is added above `libReact.a` under "Linked Frameworks and Libraries"
+
+Keep an eye on [this](https://github.com/firebase/firebase-js-sdk/issues/1824) firebase issue.

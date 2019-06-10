@@ -2,64 +2,34 @@
   "name": "truhiker",
   "version": "0.0.1",
   "private": true,
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "ios": "react-native run-ios --simulator \"iPhone XR\"",
-    "clean-build": "rm -r ./ios/build",
-    "clean-npm": "rm -r ./node_modules",
-    "restart": "yarn clean-build && yarn clean-npm && yarn install && yarn ios",
-    "pod-install": "cd ios/ && pod install && cd ..",
-    "test": "jest",
-    "tsc": "tsc"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "prop-types": "^15.6.2",
-    "react": "16.6.3",
-    "react-native": "0.58.5",
-    "react-native-firebase": "^5.2.1",
-    "react-native-gesture-handler": "^1.0.12",
-    "react-native-google-signin": "https://github.com/invertase/react-native-google-signin.git#v0.12.2",
-    "react-native-paper": "^2.5.0",
-    "react-native-vector-icons": "^6.2.0",
-    "react-navigation": "^3.0.9"
+    "expo": "^33.0.0",
+    "expo-constants": "~5.0.1",
+    "firebase": "^6.1.1",
+    "react": "16.8.3",
+    "react-dom": "^16.8.6",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-paper": "^2.16.0",
+    "react-native-web": "^0.11.4",
+    "react-navigation": "^3.11.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.13",
-    "@types/react": "^16.7.20",
-    "@types/react-native": "^0.57.29",
-    "@types/react-native-google-signin": "^1.0.1",
-    "@types/react-native-vector-icons": "^4.6.4",
-    "@types/react-navigation": "^3.0.1",
-    "@types/react-test-renderer": "^16.0.3",
-    "babel-jest": "23.6.0",
-    "jest": "23.6.0",
-    "metro-react-native-babel-preset": "0.51.1",
-    "react-addons-test-utils": "^15.6.2",
-    "react-test-renderer": "16.6.3",
-    "ts-jest": "^23.10.5",
-    "tslint": "^5.12.1",
-    "tslint-react": "^3.6.0",
-    "typescript": "^3.2.4"
-  },
-  "jest": {
-    "preset": "react-native",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "transform": {
-      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
-      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
-    },
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "testPathIgnorePatterns": [
-      "\\.snap$",
-      "<rootDir>/node_modules/",
-      "<rootDir>/lib/"
-    ],
-    "cacheDirectory": ".jest/cache"
+    "@types/react": "^16.8.19",
+    "@types/react-native": "^0.57.60",
+    "@types/react-navigation": "^3.0.7",
+    "babel-plugin-module-resolver": "^3.2.0",
+    "babel-preset-expo": "^5.1.1",
+    "tslint": "^5.17.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.5"
   },
   "prettier": {
     "tabWidth": 2,
