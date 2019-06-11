@@ -11,6 +11,7 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Search Gear Closet
 - [ ] Display + Upload GearItem image
 - [ ] Create and manage gear lists
+- [ ] Splash screen
 - [ ] Anon signin
 - [ ] Google Auth
 - [ ] Share public pack lists.
