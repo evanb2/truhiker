@@ -1,19 +1,11 @@
+import { GearListItem } from 'components/GearListItem'
 import firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import Swipeable from 'react-native-gesture-handler/Swipeable'
-import {
-  Caption,
-  Headline,
-  IconButton,
-  Searchbar,
-  Surface,
-  Text,
-  Title,
-} from 'react-native-paper'
+import { FlatList } from 'react-native-gesture-handler'
+import { IconButton, Searchbar, Title } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -37,6 +29,10 @@ export class GearClosetScreen extends Component<Props> {
     this.attachGearCollectionListener()
   }
 
+  componentWillUnmount() {
+    // remove firestore listener
+  }
+
   attachGearCollectionListener = () => {
     try {
       const user = firebase.auth().currentUser
@@ -57,49 +53,14 @@ export class GearClosetScreen extends Component<Props> {
     }
   }
 
-  _renderItem = ({ item }: { item: GearItem }) => {
+  handleGearItemPress = (gearItem: GearItem) => {
     const { navigation } = this.props
 
-    return (
-      <Swipeable>
-        <Surface
-          style={{
-            flex: 1,
-            elevation: 3,
-            borderRadius: 10,
-            padding: 16,
-            margin: 8,
-          }}
-        >
-          <TouchableOpacity
-            style={{ width: '100%' }}
-            hitSlop={{ top: 16, bottom: 16, right: 16, left: 16 }}
-            onPress={() =>
-              navigation.navigate(Routes.GearItem, { gearItem: item })
-            }
-          >
-            <View
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}
-            >
-              <View style={{ flex: 1 }}>
-                <Headline>{item.name}</Headline>
-                <Caption style={{ fontSize: 16 }}>{item.description}</Caption>
-              </View>
-              <View style={{ flex: 1, alignItems: 'flex-end' }}>
-                <Text style={{ fontSize: 16 }}>
-                  {`${item.weight} ${item.units}`}
-                </Text>
-                <Caption style={{ fontSize: 16 }}>{`$${item.price}`}</Caption>
-              </View>
-            </View>
-          </TouchableOpacity>
-        </Surface>
-      </Swipeable>
-    )
+    navigation.navigate(Routes.GearItem, { gearItem })
+  }
+
+  handleGearItemDelete = (gearItem: GearItem) => {
+    console.log('delete', ' => ', gearItem.name)
   }
 
   render() {
@@ -123,7 +84,13 @@ export class GearClosetScreen extends Component<Props> {
         {/* SEARCH INPUT HERE */}
         <FlatList
           data={gearItems}
-          renderItem={this._renderItem}
+          renderItem={({ item }) => (
+            <GearListItem
+              gearItem={item}
+              onPress={this.handleGearItemPress}
+              onDelete={this.handleGearItemDelete}
+            />
+          )}
           keyExtractor={item => String(item.name)}
           contentContainerStyle={{ paddingTop: 16 }}
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
