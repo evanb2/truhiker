@@ -29,7 +29,7 @@ export class WeightUnitSelector extends Component<Props, State> {
   componentDidMount() {
     const { initialValue } = this.props
     const { units } = this.state
-    console.log(initialValue)
+
     if (initialValue) {
       this.setState({ index: units.indexOf(initialValue) })
     }
