@@ -3,9 +3,17 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
-import { FlatList } from 'react-native-gesture-handler'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { IconButton, List, Searchbar, Title } from 'react-native-paper'
+import {
+  Caption,
+  Headline,
+  IconButton,
+  Searchbar,
+  Surface,
+  Text,
+  Title,
+} from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -54,13 +62,42 @@ export class GearClosetScreen extends Component<Props> {
 
     return (
       <Swipeable>
-        <List.Item
-          title={item.name}
-          titleEllipsizeMode="tail"
-          onPress={() =>
-            navigation.navigate(Routes.GearItem, { gearItem: item })
-          }
-        />
+        <Surface
+          style={{
+            flex: 1,
+            elevation: 3,
+            borderRadius: 10,
+            padding: 16,
+            margin: 8,
+          }}
+        >
+          <TouchableOpacity
+            style={{ width: '100%' }}
+            hitSlop={{ top: 16, bottom: 16, right: 16, left: 16 }}
+            onPress={() =>
+              navigation.navigate(Routes.GearItem, { gearItem: item })
+            }
+          >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+            >
+              <View style={{ flex: 1 }}>
+                <Headline>{item.name}</Headline>
+                <Caption style={{ fontSize: 16 }}>{item.description}</Caption>
+              </View>
+              <View style={{ flex: 1, alignItems: 'flex-end' }}>
+                <Text style={{ fontSize: 16 }}>
+                  {`${item.weight} ${item.units}`}
+                </Text>
+                <Caption style={{ fontSize: 16 }}>{`$${item.price}`}</Caption>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </Surface>
       </Swipeable>
     )
   }
