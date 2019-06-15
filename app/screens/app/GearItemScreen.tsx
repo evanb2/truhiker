@@ -207,6 +207,7 @@ export class GearItemScreen extends Component<Props, State> {
         />
         <TextInput
           autoCapitalize="sentences"
+          autoCorrect={false}
           maxLength={40}
           style={_styles.textInputContainer}
           label="Description"

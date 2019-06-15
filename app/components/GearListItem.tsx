@@ -108,9 +108,9 @@ export class GearListItem extends PureComponent<Props> {
                 alignItems: 'center',
               }}
             >
-              <View style={{ flex: 1 }}>
                 <Headline>{gearItem.name}</Headline>
                 <Caption style={{ fontSize: 16 }}>
+              <View style={{ flex: 2 }}>
                   {gearItem.description}
                 </Caption>
               </View>
