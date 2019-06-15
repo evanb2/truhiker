@@ -64,7 +64,15 @@ export class GearClosetScreen extends Component<Props> {
   }
 
   handleGearItemDelete = (gearItem: GearItem) => {
-    console.log('delete', ' => ', gearItem.name)
+    try {
+      firebase
+        .firestore()
+        .collection('gear')
+        .doc(gearItem.uid)
+        .delete()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {

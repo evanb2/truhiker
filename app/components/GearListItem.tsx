@@ -31,7 +31,7 @@ export class GearListItem extends PureComponent<Props> {
   deleteAlert = () => {
     const { gearItem, onDelete } = this.props
 
-    Alert.alert('Delete Post', 'Are you sure you want to delete this item?', [
+    Alert.alert('Delete Gear', 'Are you sure you want to delete this item?', [
       {
         text: 'Cancel',
         onPress: this.close,
