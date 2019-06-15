@@ -35,7 +35,7 @@ export class WeightUnitelector extends Component<Props, State> {
     }
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(_prevProps: Props, prevState: State) {
     const { index, units } = this.state
     const { onValueChange } = this.props
     if (index !== prevState.index) {
