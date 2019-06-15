@@ -6,6 +6,8 @@ import {
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation'
+import { AddGearScreen } from 'screens/app/AddGearScreen'
+import { CreateListScreen } from 'screens/app/CreateListScreen'
 import { GearClosetScreen } from 'screens/app/GearClosetScreen'
 import { GearItemScreen } from 'screens/app/GearItemScreen'
 import { MyGearListsScreen } from 'screens/app/MyGearListsScreen'
@@ -92,6 +94,15 @@ const AppStack = createStackNavigator(
         title: 'Gear Item',
       },
     },
+    [Routes.CreateList]: {
+      screen: CreateListScreen,
+      navigationOptions: {
+        title: 'New Packlist',
+      },
+    },
+    [Routes.AddGear]: {
+      screen: AddGearScreen,
+    },
   },
   {
     initialRouteName: 'AppTabNav',
@@ -99,6 +110,7 @@ const AppStack = createStackNavigator(
     defaultNavigationOptions: ({ navigation }) => {
       const { getParam } = navigation
       const rightAction = getParam('rightAction', () => {})
+      const rightText = getParam('rightText', 'Done')
 
       return {
         headerBackImage: (
@@ -111,7 +123,7 @@ const AppStack = createStackNavigator(
         headerBackTitle: null,
         headerRight: (
           <Button mode="text" uppercase={false} onPress={rightAction}>
-            Done
+            {rightText}
           </Button>
         ),
       }
