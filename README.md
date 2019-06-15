@@ -7,12 +7,15 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Add GearItem
 - [x] Update GearItem
 - [ ] Delete GearItem
+- [ ] Create and manage gear lists
 - [ ] Style GearItem in list
 - [ ] Search Gear Closet
-- [ ] Display + Upload GearItem image
-- [ ] Create and manage gear lists
+- [ ] Landing screen
+- [ ] Signup flow
 - [ ] Splash screen
-- [ ] Anon signin
+- [ ] Anon signin/signup
+
+- [ ] Display + Upload GearItem image
 - [ ] Google Auth
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
