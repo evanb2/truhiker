@@ -1,5 +1,4 @@
-import firebase from 'firebase'
-import 'firebase/firestore'
+import { GearItemsDrawer } from 'components/GearItemsDrawer'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import {
@@ -90,12 +89,13 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     const { categories, newCategory, modalVisible, fabOpen } = this.state
 
     return (
-      <View style={{ flex: 1, padding: 8 }}>
+      <View style={{ flex: 1 }}>
         {categories.map((category: Category) => (
           <View key={category.name}>
             <Subheading>{category.name}</Subheading>
           </View>
         ))}
+        <GearItemsDrawer />
         <Portal>
           <Modal
             visible={modalVisible}
