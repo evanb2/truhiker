@@ -102,14 +102,14 @@ export class WeightUnitSelector extends Component<Props, State> {
         {unitsIcon()}
         <TouchableOpacity
           onPress={this.incrementWeightUnit}
-          disabled={index === units.length}
+          disabled={index === units.length - 1}
           hitSlop={{ top: 10, bottom: 10, left: 8, right: 8 }}
         >
           <SimpleLineIcons
             name="arrow-right"
             size={20}
             color={
-              index === units.length
+              index === units.length - 1
                 ? theme.colors.disabled
                 : theme.colors.primary
             }
