@@ -61,6 +61,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ flex: 1, margin: 16 }}>
           <TextInput
+            autoFocus
             label="Name"
             style={_styles.inputs}
             value={name}
