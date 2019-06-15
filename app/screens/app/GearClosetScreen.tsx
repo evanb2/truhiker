@@ -23,6 +23,7 @@ export class GearClosetScreen extends Component<Props> {
   state = {
     gearItems: [],
     searchQuery: '',
+    gearRef: () => {},
   }
 
   componentDidMount() {
@@ -30,13 +31,15 @@ export class GearClosetScreen extends Component<Props> {
   }
 
   componentWillUnmount() {
-    // remove firestore listener
+    const { gearRef } = this.state
+    // detach firestore listener
+    gearRef()
   }
 
   attachGearCollectionListener = () => {
     try {
       const user = firebase.auth().currentUser
-      firebase
+      const gearRef = firebase
         .firestore()
         .collection('gear')
         .where('userId', '==', user && user.uid)
@@ -48,6 +51,7 @@ export class GearClosetScreen extends Component<Props> {
           console.log(gearItems)
           this.setState({ gearItems })
         })
+      this.setState({ gearRef })
     } catch (error) {
       console.log('fetch gear closet error: ', error)
     }
