@@ -1,6 +1,6 @@
 // PROJECT TYPES
 
-export enum WeightUnits {
+export enum WeightUnit {
   OUNCES = 'oz',
   POUNDS = 'lb',
   GRAMS = 'g',
@@ -13,7 +13,7 @@ export interface GearItem {
   description: string
   price: string
   weight: string
-  units: WeightUnits
+  units: WeightUnit
   quantity: number
   photoURL: string
   linkURL: string
@@ -22,6 +22,22 @@ export interface GearItem {
   // category,
   // belongsToLists,
   // user/owner
+}
+
+export interface Category {
+  name: string
+  items: GearItem[]
+  totalWeight: number
+}
+
+export interface Packlist {
+  name: string
+  categories: Category[]
+  units: WeightUnit
+  totalPackWeight: 0
+  baseWeight: 0
+  totalConsumableWeight: 0
+  totalWornWeight: 0
 }
 
 // export enum Region {

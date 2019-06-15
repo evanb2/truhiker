@@ -3,26 +3,26 @@ import React, { Component } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { theme } from 'styles/theme'
-import { WeightUnits } from 'utils/types'
+import { WeightUnit } from 'utils/types'
 
 interface Props {
-  onValueChange: (val: WeightUnits) => void
-  initialValue?: WeightUnits
+  onValueChange: (val: WeightUnit) => void
+  initialValue?: WeightUnit
 }
 
 interface State {
   index: number
-  units: WeightUnits[]
+  units: WeightUnit[]
 }
 
-export class WeightUnitSelector extends Component<Props, State> {
+export class WeightUnitelector extends Component<Props, State> {
   state = {
     index: 0,
     units: [
-      WeightUnits.GRAMS,
-      WeightUnits.KILOGRAMS,
-      WeightUnits.OUNCES,
-      WeightUnits.POUNDS,
+      WeightUnit.GRAMS,
+      WeightUnit.KILOGRAMS,
+      WeightUnit.OUNCES,
+      WeightUnit.POUNDS,
     ],
   }
 
@@ -61,16 +61,16 @@ export class WeightUnitSelector extends Component<Props, State> {
     const unitsIcon = () => {
       let iconName
       switch (units[index]) {
-        case WeightUnits.GRAMS:
+        case WeightUnit.GRAMS:
           iconName = 'gram'
           break
-        case WeightUnits.KILOGRAMS:
+        case WeightUnit.KILOGRAMS:
           iconName = 'kilogram'
           break
-        case WeightUnits.POUNDS:
+        case WeightUnit.POUNDS:
           iconName = 'pound'
           break
-        case WeightUnits.OUNCES:
+        case WeightUnit.OUNCES:
           return (
             <View style={{ backgroundColor: 'black', borderRadius: 10 }}>
               <Text style={{ fontWeight: 'bold', color: 'white', padding: 4 }}>

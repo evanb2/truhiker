@@ -1,5 +1,5 @@
 import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
-import { WeightUnitSelector } from 'components/WeightUnitSelector'
+import { WeightUnitelector } from 'components/WeightUnitSelector'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
@@ -13,7 +13,7 @@ import {
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
-import { GearItem, WeightUnits } from 'utils/types'
+import { GearItem, WeightUnit } from 'utils/types'
 
 interface State {
   uid: string
@@ -21,7 +21,7 @@ interface State {
   description: string
   price: string
   weight: string
-  units: WeightUnits
+  units: WeightUnit
   quantity: number
   photoURL: string
   linkURL: string
@@ -44,7 +44,7 @@ export class GearItemScreen extends Component<Props, State> {
     linkURL: '',
     worn: false,
     consumable: false,
-    units: WeightUnits.OUNCES,
+    units: WeightUnit.OUNCES,
     quantity: 0,
     photoURL: '',
     errorFields: [] as string[],
@@ -176,7 +176,7 @@ export class GearItemScreen extends Component<Props, State> {
     }))
   }
 
-  handleUnitSelect = (units: WeightUnits) => {
+  handleUnitSelect = (units: WeightUnit) => {
     this.setState({ units })
   }
 
@@ -241,7 +241,7 @@ export class GearItemScreen extends Component<Props, State> {
             onChangeText={val => this.setState({ weight: val })}
           />
           <View style={{ flex: 1 }}>
-            <WeightUnitSelector
+            <WeightUnitelector
               onValueChange={this.handleUnitSelect}
               initialValue={units}
             />

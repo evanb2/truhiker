@@ -29,12 +29,12 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
     setParams({ rightAction: this.createNewList, rightText: 'Next' })
   }
 
-  createNewList = () => {
+  createNewList = async () => {
     const { navigation } = this.props
     const { name, description } = this.state
     const user = firebase.auth().currentUser
 
-    firebase
+    const packlistRef = await firebase
       .firestore()
       .collection('packlists')
       .add({
@@ -43,7 +43,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
         userId: user && user.uid,
       })
 
-    navigation.navigate(Routes.AddGear)
+    navigation.navigate(Routes.AddGear, { packlistRef })
   }
 
   handleNameChange = (name: string) => {

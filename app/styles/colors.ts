@@ -6,4 +6,6 @@ export const colors = {
   success: 'rgb(65, 154, 99)',
   warning: 'rgb(252, 203, 76)',
   danger: 'rgb(234, 26, 33)',
+  lightGreen: '#71CF71',
+  gunmetalGrey: '#1C252A',
 }

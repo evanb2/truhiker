@@ -89,11 +89,11 @@ export class GearClosetScreen extends Component<Props> {
           />
         </View>
         <Searchbar
+          style={{ marginHorizontal: 16, marginBottom: 8 }}
           placeholder="Search"
           value={searchQuery}
           onChangeText={query => this.setState({ searchQuery: query })}
         />
-        {/* SEARCH INPUT HERE */}
         <FlatList
           data={gearItems}
           renderItem={({ item }) => (
@@ -104,7 +104,7 @@ export class GearClosetScreen extends Component<Props> {
             />
           )}
           keyExtractor={item => String(item.name)}
-          contentContainerStyle={{ paddingTop: 16 }}
+          contentContainerStyle={{ paddingTop: 8 }}
           ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         />
       </SafeAreaView>
@@ -113,10 +113,14 @@ export class GearClosetScreen extends Component<Props> {
 }
 
 const _styles = StyleSheet.create({
-  screenContainer: { flex: 1, backgroundColor: 'white', marginHorizontal: 16 },
+  screenContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginHorizontal: 16,
   },
 })
