@@ -4,11 +4,11 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import {
   Button,
+  FAB,
+  Modal,
+  Portal,
   Subheading,
   TextInput,
-  Modal,
-  FAB,
-  Portal,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Category } from 'utils/types'
@@ -17,6 +17,7 @@ interface State {
   categories: Category[]
   newCategory: string
   modalVisible: boolean
+  fabOpen: boolean
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
@@ -24,6 +25,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     categories: [],
     newCategory: '',
     modalVisible: false,
+    fabOpen: false,
   }
 
   componentWillMount() {
@@ -68,14 +70,24 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     packlistRef.update({})
   }
 
+  openGearItemDrawer = () => {
+    console.log('open drawer')
+  }
+
   toggleModal = () => {
     this.setState(state => ({
       modalVisible: !state.modalVisible,
     }))
   }
 
+  toggleFab = () => {
+    this.setState(state => ({
+      fabOpen: !state.fabOpen,
+    }))
+  }
+
   render() {
-    const { categories, newCategory, modalVisible } = this.state
+    const { categories, newCategory, modalVisible, fabOpen } = this.state
 
     return (
       <View style={{ flex: 1, padding: 8 }}>
@@ -84,11 +96,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
             <Subheading>{category.name}</Subheading>
           </View>
         ))}
-        <FAB
-          icon="add"
-          style={{ position: 'absolute', bottom: 8, right: 8 }}
-          onPress={this.toggleModal}
-        />
         <Portal>
           <Modal
             visible={modalVisible}
@@ -113,6 +120,26 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
               Add
             </Button>
           </Modal>
+          <FAB.Group
+            visible
+            actions={[
+              {
+                icon: 'playlist-add',
+                label: 'New Category',
+                onPress: this.toggleModal,
+              },
+              {
+                icon: 'expand-less',
+                label: 'Gear Items',
+                onPress: this.openGearItemDrawer,
+              },
+            ]}
+            open={fabOpen}
+            icon="add"
+            // style={{ position: 'absolute', bottom: 8, right: 8 }}
+            onStateChange={({ open }) => this.setState({ fabOpen: open })}
+            // onPress={this.toggleModal}
+          />
         </Portal>
       </View>
     )
