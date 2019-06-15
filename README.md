@@ -7,8 +7,9 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Add GearItem
 - [x] Update GearItem
 - [x] Delete GearItem
-- [ ] Create and manage gear lists
 - [x] Style GearItem in list
+- [ ] Create and manage packlists
+- [ ] View a packlist
 - [ ] Search Gear Closet
 - [ ] Landing screen
 - [ ] Signup flow
