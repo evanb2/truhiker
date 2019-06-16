@@ -22,6 +22,7 @@ interface Props {
 }
 
 export class GearListItem extends PureComponent<Props> {
+  // SwipeableRow: React.RefObject<Swipeable> = React.createRef()
   /**
    * Animate row back to closed, hides delete button.
    * @returns {void}
