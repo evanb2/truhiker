@@ -41,7 +41,7 @@ export class GearClosetScreen extends Component<Props> {
       const user = firebase.auth().currentUser
       const gearRef = firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .where('userId', '==', user && user.uid)
         .onSnapshot(querySnapshot => {
           const gearItems: firebase.firestore.DocumentData[] = []
@@ -67,7 +67,7 @@ export class GearClosetScreen extends Component<Props> {
     try {
       firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .doc(gearItem.uid)
         .delete()
     } catch (error) {
