@@ -124,7 +124,17 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     })
   }
 
-  openItemsModalForCategory = (category: string) => {
+  handleDeleteCategory = (category: string) => {
+    const { packlistRef } = this.state
+
+    packlistRef
+      .update({
+        categories: firebase.firestore.FieldValue.arrayRemove(category),
+      })
+      .catch((error: Error) => console.log(error))
+  }
+
+  handleAddItems = (category: string) => {
     this.setState({ selectedCategory: category })
     this.toggleItemsModal()
   }
@@ -168,7 +178,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 key={category}
                 categoryName={category}
                 categoryItems={categoryItems}
-                onAddItems={this.openItemsModalForCategory}
+                onAddItems={this.handleAddItems}
+                onDeleteCategory={this.handleDeleteCategory}
               />
             )
           })}
