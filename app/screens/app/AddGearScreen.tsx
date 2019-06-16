@@ -158,7 +158,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
     return (
       <View style={_styles.screenContainer}>
-        <ScrollView contentContainerStyle={_styles.screenContainer}>
+        <ScrollView contentContainerStyle={_styles.scrollContainer}>
           {categories.map((category: string) => {
             const categoryItems = packItems.filter(
               (packItem: PackItem) => packItem.category === category
@@ -225,6 +225,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
 const _styles = StyleSheet.create({
   screenContainer: { flex: 1 },
+  scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
   gearClosetModal: {
