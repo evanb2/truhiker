@@ -105,7 +105,6 @@ export class GearClosetScreen extends Component<Props> {
           )}
           keyExtractor={item => String(item.name)}
           contentContainerStyle={{ paddingTop: 8 }}
-          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
         />
       </SafeAreaView>
     )
