@@ -1,10 +1,8 @@
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
 import { WeightUnitelector } from 'components/WeightUnitSelector'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native-paper'
 import {
   NavigationParams,
@@ -12,7 +10,6 @@ import {
   NavigationState,
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
-import { theme } from 'styles/theme'
 import { GearItem, WeightUnit } from 'utils/types'
 
 interface State {
@@ -67,10 +64,7 @@ export class GearItemScreen extends Component<Props, State> {
         price: gearItem.price,
         weight: gearItem.weight,
         linkURL: gearItem.linkURL,
-        worn: gearItem.worn,
-        consumable: gearItem.consumable,
         units: gearItem.units,
-        quantity: gearItem.quantity,
         photoURL: gearItem.photoURL,
       })
     }
@@ -188,8 +182,6 @@ export class GearItemScreen extends Component<Props, State> {
       weight,
       units,
       linkURL,
-      worn,
-      consumable,
       errorFields,
     } = this.state
 
@@ -247,25 +239,6 @@ export class GearItemScreen extends Component<Props, State> {
             />
           </View>
         </View>
-        <View style={_styles.buttonsRow}>
-          <TouchableOpacity onPress={this.toggleWorn} style={_styles.button}>
-            <AntDesign
-              name="skin"
-              size={35}
-              color={worn ? theme.colors.primary : theme.colors.disabled}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.toggleConsumable}
-            style={_styles.button}
-          >
-            <MaterialCommunityIcons
-              name="silverware-variant"
-              size={35}
-              color={consumable ? theme.colors.primary : theme.colors.disabled}
-            />
-          </TouchableOpacity>
-        </View>
       </View>
     )
   }
@@ -283,14 +256,5 @@ const _styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
-  },
-  button: {
-    marginHorizontal: 16,
   },
 })
