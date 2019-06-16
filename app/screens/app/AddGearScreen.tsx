@@ -15,7 +15,7 @@ import {
   TextInput,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { Category, GearItem, PackItem } from 'utils/types'
+import { GearItem, PackItem } from 'utils/types'
 
 interface State {
   categories: string[]
@@ -51,12 +51,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.attachGearItemsListener()
   }
 
-  // componentDidUpdate(prevState) {
-  //   const { categories } = this.state
-  //   if (prevState.categories !== categories) {
-  //     this.updatePacklist()
-  //   }
-  // }
+  componentDidUpdate(prevState) {
+    const { packItems } = this.state
+    if (prevState.packItems !== packItems) {
+      this.updatePacklist()
+    }
+  }
 
   componentWillUnmount() {
     const { gearCollectionRef } = this.state
@@ -108,17 +108,15 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   addItemToCategory = gearItem => {
-    console.log(gearItem)
-    this.setState(state => ({
-      packItems: [
-        ...state.packItems,
-        {
-          ...gearItem,
-          category: state.selectedCategory,
-        },
-      ],
-    }))
-    this.updatePacklist()
+    const { packItems, selectedCategory } = this.state
+    const _packItems = [
+      ...packItems,
+      {
+        ...gearItem,
+        category: selectedCategory,
+      },
+    ]
+    this.setState({ packItems: _packItems })
   }
 
   toggleCategoryModal = () => {
@@ -143,13 +141,15 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       packItems,
     } = this.state
 
+    const _gearCloset = gearCloset.filter(
+      (gearItem: GearItem) =>
+        !packItems.find((packItem: PackItem) => packItem.name === gearItem.name)
+    )
+
     return (
-      <View style={{ flex: 1 }}>
+      <View style={_styles.screenContainer}>
         {categories.map((category: string) => (
-          <Surface
-            style={{ elevation: 3, padding: 8, margin: 4 }}
-            key={category}
-          >
+          <Surface style={_styles.dataTableSurface} key={category}>
             <DataTable>
               <DataTable.Header>
                 <DataTable.Title>{category}</DataTable.Title>
@@ -168,7 +168,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 ))}
             </DataTable>
             <TouchableOpacity
-              style={{ marginTop: 8 }}
+              style={_styles.addItemButton}
               onPress={() => {
                 this.setState({ selectedCategory: category })
                 this.toggleItemsModal()
@@ -181,7 +181,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
         <FAB
           icon="playlist-add"
-          style={{ position: 'absolute', bottom: 8, right: 8 }}
+          style={_styles.addCategoryButton}
           onPress={this.toggleCategoryModal}
         />
 
@@ -189,20 +189,10 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           <Modal
             visible={itemModal}
             onDismiss={this.toggleItemsModal}
-            contentContainerStyle={{
-              borderTopRightRadius: 20,
-              borderTopLeftRadius: 20,
-              backgroundColor: 'white',
-              height: 400,
-              bottom: 0,
-              right: 0,
-              left: 0,
-              position: 'absolute',
-              paddingTop: 8,
-            }}
+            contentContainerStyle={_styles.gearClosetModal}
           >
             <FlatList
-              data={gearCloset}
+              data={_gearCloset}
               renderItem={({ item }) => (
                 <GearListItem
                   gearItem={item}
@@ -218,12 +208,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           <Modal
             visible={categoryModal}
             onDismiss={this.toggleCategoryModal}
-            contentContainerStyle={{
-              backgroundColor: 'white',
-              margin: 8,
-              padding: 8,
-              borderRadius: 10,
-            }}
+            contentContainerStyle={_styles.addCategoryModal}
           >
             <TextInput
               autoFocus
@@ -247,5 +232,25 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 }
 
 const _styles = StyleSheet.create({
-  //
+  screenContainer: { flex: 1 },
+  dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
+  addItemButton: { marginTop: 8, marginLeft: 16 },
+  addCategoryButton: { position: 'absolute', bottom: 8, right: 8 },
+  gearClosetModal: {
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    backgroundColor: 'white',
+    height: 400,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    position: 'absolute',
+    paddingTop: 8,
+  },
+  addCategoryModal: {
+    backgroundColor: 'white',
+    margin: 8,
+    padding: 8,
+    borderRadius: 10,
+  },
 })
