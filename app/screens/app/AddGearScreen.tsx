@@ -64,8 +64,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   componentWillUnmount() {
-    const { gearCollectionRef, packlistRef } = this.state
-    packlistRef()
+    const { gearCollectionRef } = this.state
     gearCollectionRef()
   }
 
