@@ -212,7 +212,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 <GearListItem
                   gearItem={item}
                   onPress={this.addItemWithCategory}
-                  onDelete={() => {}}
                 />
               )}
               keyExtractor={item => String(item.name)}
