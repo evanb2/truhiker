@@ -14,14 +14,9 @@ export interface GearItem {
   price: string
   weight: string
   units: WeightUnit
-  quantity: number
   photoURL: string
   linkURL: string
-  worn: boolean
-  consumable: boolean
-  // category,
-  // belongsToLists,
-  // user/owner
+  userId: string
 }
 
 export interface Category {
@@ -30,14 +25,23 @@ export interface Category {
   totalWeight: number
 }
 
+export interface PackItem extends GearItem {
+  category: string
+  worn: boolean
+  consumable: boolean
+  quantity: number
+}
+
 export interface Packlist {
   name: string
-  categories: Category[]
+  categories: string[]
+  packItems: PackItem[]
   units: WeightUnit
   totalPackWeight: 0
   baseWeight: 0
   totalConsumableWeight: 0
   totalWornWeight: 0
+  userId: string
 }
 
 // export enum Region {
