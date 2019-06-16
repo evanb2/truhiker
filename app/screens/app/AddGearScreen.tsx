@@ -1,30 +1,43 @@
-import { GearItemsDrawer } from 'components/GearItemsDrawer'
+import { SimpleLineIcons } from '@expo/vector-icons'
+import { GearListItem } from 'components/GearListItem'
+import firebase from 'firebase'
+import 'firebase/firestore'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
 import {
   Button,
+  DataTable,
   FAB,
   Modal,
   Portal,
-  Subheading,
+  Surface,
   TextInput,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { Category } from 'utils/types'
+import { Category, GearItem, PackItem } from 'utils/types'
 
 interface State {
-  categories: Category[]
+  categories: string[]
   newCategory: string
-  modalVisible: boolean
-  fabOpen: boolean
+  selectedCategory: string
+  categoryModal: boolean
+  itemModal: boolean
+  gearCollectionRef: firebase.firestore.DocumentReference | {}
+  packItems: PackItem[]
+  gearCloset: GearItem[]
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
     categories: [],
     newCategory: '',
-    modalVisible: false,
-    fabOpen: false,
+    categoryModal: false,
+    selectedCategory: '',
+    itemModal: false,
+    gearCollectionRef: () => {},
+    gearCloset: [],
+    packItems: [],
   }
 
   componentWillMount() {
@@ -34,72 +47,177 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     setParams({ rightText: 'Done' })
   }
 
-  componentDidUpdate(prevState) {
-    const { categories } = this.state
-    if (prevState.categories !== categories) {
-      this.updatePacklist()
-    }
+  componentDidMount() {
+    this.attachGearItemsListener()
+  }
+
+  // componentDidUpdate(prevState) {
+  //   const { categories } = this.state
+  //   if (prevState.categories !== categories) {
+  //     this.updatePacklist()
+  //   }
+  // }
+
+  componentWillUnmount() {
+    const { gearCollectionRef } = this.state
+    gearCollectionRef()
+  }
+
+  attachGearItemsListener = () => {
+    const user = firebase.auth().currentUser
+    const gearCollectionRef = firebase
+      .firestore()
+      .collection('gearItems')
+      .where('userId', '==', user && user.uid)
+      .onSnapshot(querySnapshot => {
+        const gearCloset: firebase.firestore.DocumentData[] = []
+        querySnapshot.forEach(doc =>
+          gearCloset.push({ uid: doc.id, ...doc.data() })
+        )
+        this.setState({ gearCloset })
+      })
+    this.setState({ gearCollectionRef })
   }
 
   updatePacklist = () => {
-    const { categories } = this.state
+    const { packItems } = this.state
     const { navigation } = this.props
     const { getParam } = navigation
 
     const packlistRef = getParam('packlistRef')
 
-    packlistRef.update({ categories })
+    packlistRef.update({
+      packItems,
+    })
   }
 
   addCategory = () => {
-    const { newCategory } = this.state
+    const { newCategory, categories } = this.state
     const { navigation } = this.props
     const { getParam } = navigation
+
     const packlistRef = getParam('packlistRef')
 
+    packlistRef.update({ categories: [...categories, newCategory] })
+
     this.setState(state => ({
-      categories: [
-        ...state.categories,
-        { name: newCategory, items: [], totalWeight: 0 },
-      ],
+      categories: [...state.categories, newCategory],
       newCategory: '',
-      modalVisible: false,
-    }))
-
-    packlistRef.update({})
-  }
-
-  openGearItemDrawer = () => {
-    console.log('open drawer')
-  }
-
-  toggleModal = () => {
-    this.setState(state => ({
-      modalVisible: !state.modalVisible,
+      categoryModal: false,
     }))
   }
 
-  toggleFab = () => {
+  addItemToCategory = gearItem => {
+    console.log(gearItem)
     this.setState(state => ({
-      fabOpen: !state.fabOpen,
+      packItems: [
+        ...state.packItems,
+        {
+          ...gearItem,
+          category: state.selectedCategory,
+        },
+      ],
+    }))
+    this.updatePacklist()
+  }
+
+  toggleCategoryModal = () => {
+    this.setState(state => ({
+      categoryModal: !state.categoryModal,
+    }))
+  }
+
+  toggleItemsModal = () => {
+    this.setState(state => ({
+      itemModal: !state.itemModal,
     }))
   }
 
   render() {
-    const { categories, newCategory, modalVisible, fabOpen } = this.state
+    const {
+      categories,
+      newCategory,
+      categoryModal,
+      itemModal,
+      gearCloset,
+      packItems,
+    } = this.state
 
     return (
       <View style={{ flex: 1 }}>
-        {categories.map((category: Category) => (
-          <View key={category.name}>
-            <Subheading>{category.name}</Subheading>
-          </View>
+        {categories.map((category: string) => (
+          <Surface
+            style={{ elevation: 3, padding: 8, margin: 4 }}
+            key={category}
+          >
+            <DataTable>
+              <DataTable.Header>
+                <DataTable.Title>{category}</DataTable.Title>
+                <DataTable.Title numeric>Price</DataTable.Title>
+                <DataTable.Title numeric>Weight</DataTable.Title>
+              </DataTable.Header>
+
+              {packItems
+                .filter((packItem: PackItem) => packItem.category === category)
+                .map((gearItem: GearItem) => (
+                  <DataTable.Row key={gearItem.name}>
+                    <DataTable.Cell>{gearItem.name}</DataTable.Cell>
+                    <DataTable.Cell numeric>{gearItem.price}</DataTable.Cell>
+                    <DataTable.Cell numeric>{gearItem.weight}</DataTable.Cell>
+                  </DataTable.Row>
+                ))}
+            </DataTable>
+            <TouchableOpacity
+              style={{ marginTop: 8 }}
+              onPress={() => {
+                this.setState({ selectedCategory: category })
+                this.toggleItemsModal()
+              }}
+            >
+              <SimpleLineIcons name="plus" size={20} />
+            </TouchableOpacity>
+          </Surface>
         ))}
-        <GearItemsDrawer />
+
+        <FAB
+          icon="playlist-add"
+          style={{ position: 'absolute', bottom: 8, right: 8 }}
+          onPress={this.toggleCategoryModal}
+        />
+
         <Portal>
           <Modal
-            visible={modalVisible}
-            onDismiss={this.toggleModal}
+            visible={itemModal}
+            onDismiss={this.toggleItemsModal}
+            contentContainerStyle={{
+              borderTopRightRadius: 20,
+              borderTopLeftRadius: 20,
+              backgroundColor: 'white',
+              height: 400,
+              bottom: 0,
+              right: 0,
+              left: 0,
+              position: 'absolute',
+              paddingTop: 8,
+            }}
+          >
+            <FlatList
+              data={gearCloset}
+              renderItem={({ item }) => (
+                <GearListItem
+                  gearItem={item}
+                  onPress={this.addItemToCategory}
+                  onDelete={() => {}}
+                />
+              )}
+              keyExtractor={item => String(item.name)}
+              contentContainerStyle={{ paddingTop: 8 }}
+              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+            />
+          </Modal>
+          <Modal
+            visible={categoryModal}
+            onDismiss={this.toggleCategoryModal}
             contentContainerStyle={{
               backgroundColor: 'white',
               margin: 8,
@@ -108,6 +226,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
             }}
           >
             <TextInput
+              autoFocus
+              autoCorrect={false}
               label="Category"
               value={newCategory}
               onChangeText={val => this.setState({ newCategory: val })}
@@ -120,26 +240,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
               Add
             </Button>
           </Modal>
-          <FAB.Group
-            visible
-            actions={[
-              {
-                icon: 'playlist-add',
-                label: 'New Category',
-                onPress: this.toggleModal,
-              },
-              {
-                icon: 'expand-less',
-                label: 'Gear Items',
-                onPress: this.openGearItemDrawer,
-              },
-            ]}
-            open={fabOpen}
-            icon="add"
-            // style={{ position: 'absolute', bottom: 8, right: 8 }}
-            onStateChange={({ open }) => this.setState({ fabOpen: open })}
-            // onPress={this.toggleModal}
-          />
         </Portal>
       </View>
     )
