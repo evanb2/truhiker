@@ -100,7 +100,7 @@ export class GearItemScreen extends Component<Props, State> {
       const user = firebase.auth().currentUser
       firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .add({
           name,
           description,
@@ -144,7 +144,7 @@ export class GearItemScreen extends Component<Props, State> {
     try {
       firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .doc(uid)
         .update({
           name,
