@@ -41,9 +41,11 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
         name,
         description,
         userId: user && user.uid,
+        categories: [],
+        packItems: [],
       })
 
-    navigation.navigate(Routes.AddGear, { packlistRef })
+    navigation.navigate(Routes.AddGear, { packlistId: packlistRef.id })
   }
 
   handleNameChange = (name: string) => {

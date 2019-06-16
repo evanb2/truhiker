@@ -43,14 +43,16 @@ export class GearClosetScreen extends Component<Props> {
         .firestore()
         .collection('gearItems')
         .where('userId', '==', user && user.uid)
-        .onSnapshot(querySnapshot => {
-          const gearItems: firebase.firestore.DocumentData[] = []
-          querySnapshot.forEach(doc =>
-            gearItems.push({ uid: doc.id, ...doc.data() })
-          )
-          console.log(gearItems)
-          this.setState({ gearItems })
-        })
+        .onSnapshot(
+          snapshot => {
+            const gearItems: firebase.firestore.DocumentData[] = []
+            snapshot.forEach(doc =>
+              gearItems.push({ uid: doc.id, ...doc.data() })
+            )
+            this.setState({ gearItems })
+          },
+          error => console.log(error)
+        )
       this.setState({ gearRef })
     } catch (error) {
       console.log('fetch gear closet error: ', error)

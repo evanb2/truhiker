@@ -9,7 +9,7 @@ export const theme: Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: colors.gunmetalGrey,
-    accent: 'rgb(64, 155, 99)',
+    accent: colors.lightGreen,
     error: colors.danger,
     background: 'white',
   },

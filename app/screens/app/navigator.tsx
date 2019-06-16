@@ -111,8 +111,10 @@ const AppStack = createStackNavigator(
       const { getParam } = navigation
       const rightAction = getParam('rightAction', () => {})
       const rightText = getParam('rightText', 'Done')
+      const title = getParam('title')
 
       return {
+        headerTitle: title,
         headerBackImage: (
           <SimpleLineIcons
             name="close"

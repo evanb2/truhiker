@@ -19,11 +19,8 @@ interface State {
   price: string
   weight: string
   units: WeightUnit
-  quantity: number
   photoURL: string
   linkURL: string
-  worn: boolean
-  consumable: boolean
   errorFields: string[]
 }
 
@@ -39,10 +36,7 @@ export class GearItemScreen extends Component<Props, State> {
     price: '',
     weight: '',
     linkURL: '',
-    worn: false,
-    consumable: false,
     units: WeightUnit.OUNCES,
-    quantity: 0,
     photoURL: '',
     errorFields: [] as string[],
   }
@@ -78,10 +72,7 @@ export class GearItemScreen extends Component<Props, State> {
       price,
       weight,
       linkURL,
-      worn,
-      consumable,
       units,
-      quantity,
       photoURL,
     } = this.state
 
@@ -101,10 +92,7 @@ export class GearItemScreen extends Component<Props, State> {
           price,
           weight,
           linkURL,
-          worn,
-          consumable,
           units,
-          quantity,
           photoURL,
           userId: user && user.uid,
         })
@@ -123,10 +111,7 @@ export class GearItemScreen extends Component<Props, State> {
       price,
       weight,
       linkURL,
-      worn,
-      consumable,
       units,
-      quantity,
       photoURL,
     } = this.state
 
@@ -146,28 +131,13 @@ export class GearItemScreen extends Component<Props, State> {
           price,
           weight,
           linkURL,
-          worn,
-          consumable,
           units,
-          quantity,
           photoURL,
         })
       navigation.navigate(Routes.GearCloset)
     } catch (error) {
       console.dir(error)
     }
-  }
-
-  toggleWorn = () => {
-    this.setState((state: State) => ({
-      worn: !state.worn,
-    }))
-  }
-
-  toggleConsumable = () => {
-    this.setState((state: State) => ({
-      consumable: !state.consumable,
-    }))
   }
 
   handleUnitSelect = (units: WeightUnit) => {

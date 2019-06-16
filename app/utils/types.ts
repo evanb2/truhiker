@@ -19,12 +19,6 @@ export interface GearItem {
   userId: string
 }
 
-export interface Category {
-  name: string
-  items: GearItem[]
-  totalWeight: number
-}
-
 export interface PackItem extends GearItem {
   category: string
   worn: boolean

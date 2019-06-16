@@ -15,108 +15,141 @@ import {
   TextInput,
 } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
+import { Routes } from 'screens/routes'
 import { GearItem, PackItem } from 'utils/types'
 
 interface State {
-  categories: string[]
   newCategory: string
   selectedCategory: string
   categoryModal: boolean
   itemModal: boolean
   gearCollectionRef: firebase.firestore.DocumentReference | {}
-  packItems: PackItem[]
-  gearCloset: GearItem[]
+  packlistRef: firebase.firestore.DocumentReference | {}
+  gearCloset: firebase.firestore.DocumentData[]
+  packlist: firebase.firestore.DocumentData
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
-    categories: [],
     newCategory: '',
     categoryModal: false,
     selectedCategory: '',
     itemModal: false,
     gearCollectionRef: () => {},
     gearCloset: [],
-    packItems: [],
+    packlistRef: () => {},
+    packlist: {
+      name: '',
+      categories: [],
+      packItems: [],
+    },
   }
 
   componentWillMount() {
     const { navigation } = this.props
-    const { setParams } = navigation
+    const { setParams, getParam } = navigation
 
-    setParams({ rightText: 'Done' })
+    const packlistId = getParam('packlistId')
+
+    this.attachPacklistListener(packlistId)
+
+    setParams({
+      rightText: 'Done',
+      rightAction: () => navigation.navigate(Routes.MyGearLists),
+    })
   }
 
   componentDidMount() {
     this.attachGearItemsListener()
   }
 
-  componentDidUpdate(prevState) {
-    const { packItems } = this.state
-    if (prevState.packItems !== packItems) {
-      this.updatePacklist()
-    }
-  }
+  // componentDidUpdate(prevState) {
+  //   const { packItems } = this.state
+  //   if (prevState.packItems !== packItems) {
+  //     this.updatePacklist()
+  //   }
+  // }
 
   componentWillUnmount() {
-    const { gearCollectionRef } = this.state
+    const { gearCollectionRef, packlistRef } = this.state
+    packlistRef()
     gearCollectionRef()
   }
 
-  attachGearItemsListener = () => {
+  attachPacklistListener = async (packlistId: string) => {
+    const packlistRef = await firebase
+      .firestore()
+      .collection('packlists')
+      .doc(packlistId)
+
+    packlistRef.onSnapshot(
+      snapshot => {
+        this.setState({ packlist: snapshot.data() })
+      },
+      error => {
+        console.log(error)
+      }
+    )
+
+    this.setState({ packlistRef })
+  }
+
+  attachGearItemsListener = async () => {
     const user = firebase.auth().currentUser
-    const gearCollectionRef = firebase
+    const gearCollectionRef = await firebase
       .firestore()
       .collection('gearItems')
       .where('userId', '==', user && user.uid)
-      .onSnapshot(querySnapshot => {
-        const gearCloset: firebase.firestore.DocumentData[] = []
-        querySnapshot.forEach(doc =>
-          gearCloset.push({ uid: doc.id, ...doc.data() })
-        )
-        this.setState({ gearCloset })
-      })
+      .onSnapshot(
+        snapshot => {
+          const gearCloset: firebase.firestore.DocumentData[] = []
+          snapshot.forEach(doc => {
+            const item = { uid: doc.id, ...doc.data() }
+            gearCloset.push(item)
+          })
+          this.setState({ gearCloset })
+        },
+        error => console.log(error)
+      )
     this.setState({ gearCollectionRef })
   }
 
-  updatePacklist = () => {
-    const { packItems } = this.state
-    const { navigation } = this.props
-    const { getParam } = navigation
+  // updatePacklist = () => {
+  //   const { packItems } = this.state
+  //   const { navigation } = this.props
+  //   const { getParam } = navigation
 
-    const packlistRef = getParam('packlistRef')
+  //   const packlistRef = getParam('packlistRef')
+
+  //   packlistRef.update({
+  //     packItems,
+  //   })
+  // }
+
+  addCategory = () => {
+    const { newCategory, packlistRef } = this.state
 
     packlistRef.update({
-      packItems,
+      categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
+    })
+
+    this.setState({
+      newCategory: '',
+      categoryModal: false,
     })
   }
 
-  addCategory = () => {
-    const { newCategory, categories } = this.state
-    const { navigation } = this.props
-    const { getParam } = navigation
+  addItemWithCategory = (gearItem: GearItem) => {
+    const { packlistRef, selectedCategory } = this.state
 
-    const packlistRef = getParam('packlistRef')
+    const packItem = {
+      ...gearItem,
+      category: selectedCategory,
+    }
 
-    packlistRef.update({ categories: [...categories, newCategory] })
-
-    this.setState(state => ({
-      categories: [...state.categories, newCategory],
-      newCategory: '',
-      categoryModal: false,
-    }))
-  }
-
-  addItemToCategory = gearItem => {
-    const { packItems, selectedCategory } = this.state
-    const _packItems = [
-      ...packItems,
-      {
-        ...gearItem,
-        category: selectedCategory,
-      },
-    ]
-    this.setState({ packItems: _packItems })
+    packlistRef.update({
+      packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
+    })
   }
 
   toggleCategoryModal = () => {
@@ -133,13 +166,13 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
   render() {
     const {
-      categories,
       newCategory,
       categoryModal,
       itemModal,
       gearCloset,
-      packItems,
+      packlist,
     } = this.state
+    const { categories, packItems } = packlist
 
     const _gearCloset = gearCloset.filter(
       (gearItem: GearItem) =>
@@ -198,7 +231,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
               renderItem={({ item }) => (
                 <GearListItem
                   gearItem={item}
-                  onPress={this.addItemToCategory}
+                  onPress={this.addItemWithCategory}
                   onDelete={() => {}}
                 />
               )}
@@ -235,7 +268,7 @@ const _styles = StyleSheet.create({
   screenContainer: { flex: 1 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addItemButton: { marginTop: 8, marginLeft: 16 },
-  addCategoryButton: { position: 'absolute', bottom: 8, right: 8 },
+  addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
   gearClosetModal: {
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,

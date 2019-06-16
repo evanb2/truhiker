@@ -4,18 +4,10 @@ import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import { IconButton, List, Title } from 'react-native-paper'
-import {
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationState,
-} from 'react-navigation'
+import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
 
-interface Props {
-  navigation: NavigationScreenProp<NavigationState, NavigationParams>
-}
-
-export class MyGearListsScreen extends Component<Props> {
+export class MyGearListsScreen extends Component<NavigationScreenProps> {
   state = {
     packlists: null,
     packlistsRef: () => {},
@@ -37,25 +29,33 @@ export class MyGearListsScreen extends Component<Props> {
       .firestore()
       .collection('packlists')
       .where('userId', '==', user && user.uid)
-      .onSnapshot(querySnapshot => {
-        const packlists: firebase.firestore.DocumentData[] = []
-        querySnapshot.forEach(doc =>
-          packlists.push({ uid: doc.id, ...doc.data() })
-        )
-        this.setState({ packlists })
-      })
+      .onSnapshot(
+        snapshot => {
+          const packlists: firebase.firestore.DocumentData[] = []
+          snapshot.forEach(doc =>
+            packlists.push({ uid: doc.id, ...doc.data() })
+          )
+          this.setState({ packlists })
+        },
+        error => console.log(error)
+      )
     this.setState({ packlistsRef })
   }
 
-  _renderItem = ({ item }) => (
-    <List.Item
-      title={item.name}
-      description={item.description}
-      descriptionEllipsizeMode="tail"
-      right={props => <List.Icon {...props} icon="chevron-right" />}
-      onPress={() => console.log(item.name)}
-    />
-  )
+  _renderItem = ({ item }) => {
+    const { navigation } = this.props
+    return (
+      <List.Item
+        title={item.name}
+        description={item.description}
+        descriptionEllipsizeMode="tail"
+        right={props => <List.Icon {...props} icon="chevron-right" />}
+        onPress={() =>
+          navigation.navigate(Routes.AddGear, { packlistId: item.uid })
+        }
+      />
+    )
+  }
 
   render() {
     const { navigation } = this.props
