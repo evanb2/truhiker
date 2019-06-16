@@ -3,39 +3,39 @@ import React, { Component } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import { theme } from 'styles/theme'
-import { WeightUnits } from 'utils/types'
+import { WeightUnit } from 'utils/types'
 
 interface Props {
-  onValueChange: (val: WeightUnits) => void
-  initialValue?: WeightUnits
+  onValueChange: (val: WeightUnit) => void
+  initialValue?: WeightUnit
 }
 
 interface State {
   index: number
-  units: WeightUnits[]
+  units: WeightUnit[]
 }
 
-export class WeightUnitSelector extends Component<Props, State> {
+export class WeightUnitelector extends Component<Props, State> {
   state = {
     index: 0,
     units: [
-      WeightUnits.GRAMS,
-      WeightUnits.KILOGRAMS,
-      WeightUnits.OUNCES,
-      WeightUnits.POUNDS,
+      WeightUnit.GRAMS,
+      WeightUnit.KILOGRAMS,
+      WeightUnit.OUNCES,
+      WeightUnit.POUNDS,
     ],
   }
 
   componentDidMount() {
     const { initialValue } = this.props
     const { units } = this.state
-    console.log(initialValue)
+
     if (initialValue) {
       this.setState({ index: units.indexOf(initialValue) })
     }
   }
 
-  componentDidUpdate(prevProps: Props, prevState: State) {
+  componentDidUpdate(_prevProps: Props, prevState: State) {
     const { index, units } = this.state
     const { onValueChange } = this.props
     if (index !== prevState.index) {
@@ -61,16 +61,16 @@ export class WeightUnitSelector extends Component<Props, State> {
     const unitsIcon = () => {
       let iconName
       switch (units[index]) {
-        case WeightUnits.GRAMS:
+        case WeightUnit.GRAMS:
           iconName = 'gram'
           break
-        case WeightUnits.KILOGRAMS:
+        case WeightUnit.KILOGRAMS:
           iconName = 'kilogram'
           break
-        case WeightUnits.POUNDS:
+        case WeightUnit.POUNDS:
           iconName = 'pound'
           break
-        case WeightUnits.OUNCES:
+        case WeightUnit.OUNCES:
           return (
             <View style={{ backgroundColor: 'black', borderRadius: 10 }}>
               <Text style={{ fontWeight: 'bold', color: 'white', padding: 4 }}>
@@ -102,14 +102,14 @@ export class WeightUnitSelector extends Component<Props, State> {
         {unitsIcon()}
         <TouchableOpacity
           onPress={this.incrementWeightUnit}
-          disabled={index === units.length}
+          disabled={index === units.length - 1}
           hitSlop={{ top: 10, bottom: 10, left: 8, right: 8 }}
         >
           <SimpleLineIcons
             name="arrow-right"
             size={20}
             color={
-              index === units.length
+              index === units.length - 1
                 ? theme.colors.disabled
                 : theme.colors.primary
             }

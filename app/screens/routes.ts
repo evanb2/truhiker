@@ -5,4 +5,5 @@ export enum Routes {
   Settings = 'Settings',
   MyGearLists = 'MyGearLists',
   CreateList = 'CreateList',
+  AddGear = 'AddGear',
 }

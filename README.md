@@ -6,12 +6,19 @@ Create and share your pack lists, submit your lists for community shakedowns.
 
 - [x] Add GearItem
 - [x] Update GearItem
-- [ ] Delete GearItem
-- [ ] Style GearItem in list
+- [x] Delete GearItem
+- [x] Style GearItem in list
+- [x] Create and manage packlists
+- [ ] Add Packlist title to AddGearScreen
+- [ ] Style category table in Packlist
+- [ ] View a packlist
 - [ ] Search Gear Closet
+- [ ] Landing screen
+- [ ] Signup flow
+- [ ] Splash screen
+- [ ] Anon signin/signup
+
 - [ ] Display + Upload GearItem image
-- [ ] Create and manage gear lists
-- [ ] Anon signin
 - [ ] Google Auth
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.

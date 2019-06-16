@@ -1,10 +1,8 @@
-import { AntDesign, MaterialCommunityIcons } from '@expo/vector-icons'
-import { WeightUnitSelector } from 'components/WeightUnitSelector'
+import { WeightUnitelector } from 'components/WeightUnitSelector'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { Platform, StyleSheet, View } from 'react-native'
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { TextInput } from 'react-native-paper'
 import {
   NavigationParams,
@@ -12,8 +10,7 @@ import {
   NavigationState,
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
-import { theme } from 'styles/theme'
-import { GearItem, WeightUnits } from 'utils/types'
+import { GearItem, WeightUnit } from 'utils/types'
 
 interface State {
   uid: string
@@ -21,12 +18,9 @@ interface State {
   description: string
   price: string
   weight: string
-  units: WeightUnits
-  quantity: number
+  units: WeightUnit
   photoURL: string
   linkURL: string
-  worn: boolean
-  consumable: boolean
   errorFields: string[]
 }
 
@@ -42,12 +36,9 @@ export class GearItemScreen extends Component<Props, State> {
     price: '',
     weight: '',
     linkURL: '',
-    worn: false,
-    consumable: false,
-    units: WeightUnits.OUNCES,
-    quantity: 0,
+    units: WeightUnit.OUNCES,
     photoURL: '',
-    errorFields: [],
+    errorFields: [] as string[],
   }
 
   componentWillMount() {
@@ -67,10 +58,7 @@ export class GearItemScreen extends Component<Props, State> {
         price: gearItem.price,
         weight: gearItem.weight,
         linkURL: gearItem.linkURL,
-        worn: gearItem.worn,
-        consumable: gearItem.consumable,
         units: gearItem.units,
-        quantity: gearItem.quantity,
         photoURL: gearItem.photoURL,
       })
     }
@@ -84,10 +72,7 @@ export class GearItemScreen extends Component<Props, State> {
       price,
       weight,
       linkURL,
-      worn,
-      consumable,
       units,
-      quantity,
       photoURL,
     } = this.state
 
@@ -100,17 +85,14 @@ export class GearItemScreen extends Component<Props, State> {
       const user = firebase.auth().currentUser
       firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .add({
           name,
           description,
           price,
           weight,
           linkURL,
-          worn,
-          consumable,
           units,
-          quantity,
           photoURL,
           userId: user && user.uid,
         })
@@ -129,10 +111,7 @@ export class GearItemScreen extends Component<Props, State> {
       price,
       weight,
       linkURL,
-      worn,
-      consumable,
       units,
-      quantity,
       photoURL,
     } = this.state
 
@@ -144,7 +123,7 @@ export class GearItemScreen extends Component<Props, State> {
     try {
       firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .doc(uid)
         .update({
           name,
@@ -152,10 +131,7 @@ export class GearItemScreen extends Component<Props, State> {
           price,
           weight,
           linkURL,
-          worn,
-          consumable,
           units,
-          quantity,
           photoURL,
         })
       navigation.navigate(Routes.GearCloset)
@@ -164,19 +140,7 @@ export class GearItemScreen extends Component<Props, State> {
     }
   }
 
-  toggleWorn = () => {
-    this.setState((state: State) => ({
-      worn: !state.worn,
-    }))
-  }
-
-  toggleConsumable = () => {
-    this.setState((state: State) => ({
-      consumable: !state.consumable,
-    }))
-  }
-
-  handleUnitSelect = (units: WeightUnits) => {
+  handleUnitSelect = (units: WeightUnit) => {
     this.setState({ units })
   }
 
@@ -188,8 +152,6 @@ export class GearItemScreen extends Component<Props, State> {
       weight,
       units,
       linkURL,
-      worn,
-      consumable,
       errorFields,
     } = this.state
 
@@ -207,6 +169,7 @@ export class GearItemScreen extends Component<Props, State> {
         />
         <TextInput
           autoCapitalize="sentences"
+          autoCorrect={false}
           maxLength={40}
           style={_styles.textInputContainer}
           label="Description"
@@ -240,30 +203,11 @@ export class GearItemScreen extends Component<Props, State> {
             onChangeText={val => this.setState({ weight: val })}
           />
           <View style={{ flex: 1 }}>
-            <WeightUnitSelector
+            <WeightUnitelector
               onValueChange={this.handleUnitSelect}
               initialValue={units}
             />
           </View>
-        </View>
-        <View style={_styles.buttonsRow}>
-          <TouchableOpacity onPress={this.toggleWorn} style={_styles.button}>
-            <AntDesign
-              name="skin"
-              size={35}
-              color={worn ? theme.colors.primary : theme.colors.disabled}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={this.toggleConsumable}
-            style={_styles.button}
-          >
-            <MaterialCommunityIcons
-              name="silverware-variant"
-              size={35}
-              color={consumable ? theme.colors.primary : theme.colors.disabled}
-            />
-          </TouchableOpacity>
         </View>
       </View>
     )
@@ -282,14 +226,5 @@ const _styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-  },
-  buttonsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 20,
-  },
-  button: {
-    marginHorizontal: 16,
   },
 })

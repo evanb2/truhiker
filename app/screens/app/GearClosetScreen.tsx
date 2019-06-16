@@ -1,11 +1,11 @@
+import { GearListItem } from 'components/GearListItem'
 import firebase from 'firebase'
 import 'firebase/auth'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import Swipeable from 'react-native-gesture-handler/Swipeable'
-import { IconButton, List, Searchbar, Title } from 'react-native-paper'
+import { IconButton, Searchbar, Title } from 'react-native-paper'
 import {
   NavigationParams,
   NavigationScreenProp,
@@ -23,46 +23,58 @@ export class GearClosetScreen extends Component<Props> {
   state = {
     gearItems: [],
     searchQuery: '',
+    gearRef: () => {},
   }
 
   componentDidMount() {
     this.attachGearCollectionListener()
   }
 
+  componentWillUnmount() {
+    const { gearRef } = this.state
+    // detach firestore listener
+    gearRef()
+  }
+
   attachGearCollectionListener = () => {
     try {
       const user = firebase.auth().currentUser
-      firebase
+      const gearRef = firebase
         .firestore()
-        .collection('gear')
+        .collection('gearItems')
         .where('userId', '==', user && user.uid)
-        .onSnapshot(querySnapshot => {
-          const gearItems: firebase.firestore.DocumentData[] = []
-          querySnapshot.forEach(doc =>
-            gearItems.push({ uid: doc.id, ...doc.data() })
-          )
-          console.log(gearItems)
-          this.setState({ gearItems })
-        })
+        .onSnapshot(
+          snapshot => {
+            const gearItems: firebase.firestore.DocumentData[] = []
+            snapshot.forEach(doc =>
+              gearItems.push({ uid: doc.id, ...doc.data() })
+            )
+            this.setState({ gearItems })
+          },
+          error => console.log(error)
+        )
+      this.setState({ gearRef })
     } catch (error) {
       console.log('fetch gear closet error: ', error)
     }
   }
 
-  _renderItem = ({ item }: { item: GearItem }) => {
+  handleGearItemPress = (gearItem: GearItem) => {
     const { navigation } = this.props
 
-    return (
-      <Swipeable>
-        <List.Item
-          title={item.name}
-          titleEllipsizeMode="tail"
-          onPress={() =>
-            navigation.navigate(Routes.GearItem, { gearItem: item })
-          }
-        />
-      </Swipeable>
-    )
+    navigation.navigate(Routes.GearItem, { gearItem })
+  }
+
+  handleGearItemDelete = (gearItem: GearItem) => {
+    try {
+      firebase
+        .firestore()
+        .collection('gearItems')
+        .doc(gearItem.uid)
+        .delete()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   render() {
@@ -79,17 +91,22 @@ export class GearClosetScreen extends Component<Props> {
           />
         </View>
         <Searchbar
+          style={{ marginHorizontal: 16, marginBottom: 8 }}
           placeholder="Search"
           value={searchQuery}
           onChangeText={query => this.setState({ searchQuery: query })}
         />
-        {/* SEARCH INPUT HERE */}
         <FlatList
           data={gearItems}
-          renderItem={this._renderItem}
+          renderItem={({ item }) => (
+            <GearListItem
+              gearItem={item}
+              onPress={this.handleGearItemPress}
+              onDelete={this.handleGearItemDelete}
+            />
+          )}
           keyExtractor={item => String(item.name)}
-          contentContainerStyle={{ paddingTop: 16 }}
-          ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
+          contentContainerStyle={{ paddingTop: 8 }}
         />
       </SafeAreaView>
     )
@@ -97,10 +114,14 @@ export class GearClosetScreen extends Component<Props> {
 }
 
 const _styles = StyleSheet.create({
-  screenContainer: { flex: 1, backgroundColor: 'white', marginHorizontal: 16 },
+  screenContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   headerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginHorizontal: 16,
   },
 })
