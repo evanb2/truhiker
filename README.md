@@ -8,7 +8,9 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Update GearItem
 - [x] Delete GearItem
 - [x] Style GearItem in list
-- [ ] Create and manage packlists
+- [x] Create and manage packlists
+- [ ] Add Packlist title to AddGearScreen
+- [ ] Style category table in Packlist
 - [ ] View a packlist
 - [ ] Search Gear Closet
 - [ ] Landing screen
