@@ -63,13 +63,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.attachGearItemsListener()
   }
 
-  // componentDidUpdate(prevState) {
-  //   const { packItems } = this.state
-  //   if (prevState.packItems !== packItems) {
-  //     this.updatePacklist()
-  //   }
-  // }
-
   componentWillUnmount() {
     const { gearCollectionRef, packlistRef } = this.state
     packlistRef()
@@ -113,18 +106,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       )
     this.setState({ gearCollectionRef })
   }
-
-  // updatePacklist = () => {
-  //   const { packItems } = this.state
-  //   const { navigation } = this.props
-  //   const { getParam } = navigation
-
-  //   const packlistRef = getParam('packlistRef')
-
-  //   packlistRef.update({
-  //     packItems,
-  //   })
-  // }
 
   addCategory = () => {
     const { newCategory, packlistRef } = this.state
