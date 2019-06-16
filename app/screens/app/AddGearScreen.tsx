@@ -1,19 +1,11 @@
-import { SimpleLineIcons } from '@expo/vector-icons'
+import { CategoryTable } from 'components/CategoryTable'
 import { GearListItem } from 'components/GearListItem'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { FlatList, TouchableOpacity } from 'react-native-gesture-handler'
-import {
-  Button,
-  DataTable,
-  FAB,
-  Modal,
-  Portal,
-  Surface,
-  TextInput,
-} from 'react-native-paper'
+import { FlatList, ScrollView } from 'react-native-gesture-handler'
+import { Button, FAB, Modal, Portal, TextInput } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { GearItem, PackItem } from 'utils/types'
@@ -132,6 +124,11 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     })
   }
 
+  openItemsModalForCategory = (category: string) => {
+    this.setState({ selectedCategory: category })
+    this.toggleItemsModal()
+  }
+
   toggleCategoryModal = () => {
     this.setState(state => ({
       categoryModal: !state.categoryModal,
@@ -161,38 +158,21 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
     return (
       <View style={_styles.screenContainer}>
-        {categories.map((category: string) => (
-          <Surface style={_styles.dataTableSurface} key={category}>
-            <DataTable>
-              <DataTable.Header>
-                <DataTable.Title>{category}</DataTable.Title>
-                <DataTable.Title numeric>Price</DataTable.Title>
-                <DataTable.Title numeric>Weight</DataTable.Title>
-              </DataTable.Header>
-
-              {packItems
-                .filter((packItem: PackItem) => packItem.category === category)
-                .map((gearItem: GearItem) => (
-                  <DataTable.Row key={gearItem.name}>
-                    <DataTable.Cell>{gearItem.name}</DataTable.Cell>
-                    <DataTable.Cell numeric>{gearItem.price}</DataTable.Cell>
-                    <DataTable.Cell numeric>
-                      {`${gearItem.weight} ${gearItem.units}`}
-                    </DataTable.Cell>
-                  </DataTable.Row>
-                ))}
-            </DataTable>
-            <TouchableOpacity
-              style={_styles.addItemButton}
-              onPress={() => {
-                this.setState({ selectedCategory: category })
-                this.toggleItemsModal()
-              }}
-            >
-              <SimpleLineIcons name="plus" size={20} />
-            </TouchableOpacity>
-          </Surface>
-        ))}
+        <ScrollView contentContainerStyle={_styles.screenContainer}>
+          {categories.map((category: string) => {
+            const categoryItems = packItems.filter(
+              (packItem: PackItem) => packItem.category === category
+            )
+            return (
+              <CategoryTable
+                key={category}
+                categoryName={category}
+                categoryItems={categoryItems}
+                onAddItems={this.openItemsModalForCategory}
+              />
+            )
+          })}
+        </ScrollView>
 
         <FAB
           icon="playlist-add"
@@ -246,7 +226,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 const _styles = StyleSheet.create({
   screenContainer: { flex: 1 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
-  addItemButton: { marginTop: 8, marginLeft: 16 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
   gearClosetModal: {
     borderTopRightRadius: 20,
