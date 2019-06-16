@@ -163,7 +163,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                   <DataTable.Row key={gearItem.name}>
                     <DataTable.Cell>{gearItem.name}</DataTable.Cell>
                     <DataTable.Cell numeric>{gearItem.price}</DataTable.Cell>
-                    <DataTable.Cell numeric>{gearItem.weight}</DataTable.Cell>
+                    <DataTable.Cell numeric>
+                      {`${gearItem.weight} ${gearItem.units}`}
+                    </DataTable.Cell>
                   </DataTable.Row>
                 ))}
             </DataTable>
@@ -201,8 +203,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 />
               )}
               keyExtractor={item => String(item.name)}
-              contentContainerStyle={{ paddingTop: 8 }}
-              ItemSeparatorComponent={() => <View style={{ height: 16 }} />}
             />
           </Modal>
           <Modal
