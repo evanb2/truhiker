@@ -1,16 +1,12 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import Lottie from 'lottie-react-native'
 import React, { Component } from 'react'
-import { ActivityIndicator, StatusBar, View } from 'react-native'
+import { View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
+import { theme } from 'styles/theme'
 
 export class AuthLoadingScreen extends Component<NavigationScreenProps> {
-  constructor(props: NavigationScreenProps) {
-    super(props)
-
-    this.bootstrapAsync()
-  }
-
   // Fetch the token from storage then navigate to our appropriate place
   bootstrapAsync = async () => {
     try {
@@ -33,9 +29,16 @@ export class AuthLoadingScreen extends Component<NavigationScreenProps> {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
+          backgroundColor: theme.colors.background,
         }}
       >
-        <ActivityIndicator />
+        <Lottie
+          style={{ width: 250, height: 250 }}
+          source={require('assets/animations/mountain-animation.json')}
+          autoPlay
+          loop={false}
+          onAnimationFinish={this.bootstrapAsync}
+        />
       </View>
     )
   }
