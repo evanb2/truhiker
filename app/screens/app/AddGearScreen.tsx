@@ -8,8 +8,8 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import { Button, FAB, Modal, Portal, TextInput } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
-import { GearItem, PackItem } from 'utils/types'
 import { theme } from 'styles/theme'
+import { GearItem, PackItem } from 'utils/types'
 
 interface State {
   newCategory: string

@@ -10,8 +10,8 @@ import {
   NavigationState,
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
-import { GearItem, WeightUnit } from 'utils/types'
 import { theme } from 'styles/theme'
+import { GearItem, WeightUnit } from 'utils/types'
 
 interface State {
   uid: string
