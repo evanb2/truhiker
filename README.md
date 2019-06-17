@@ -9,12 +9,12 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Delete GearItem
 - [x] Style GearItem in list
 - [x] Create and manage packlists
+- [x] View a packlist
+- [ ] Signup flow
 - [ ] Add Packlist title to AddGearScreen
 - [ ] Style category table in Packlist
-- [x] View a packlist
 - [ ] Search Gear Closet
 - [ ] Landing screen
-- [ ] Signup flow
 - [ ] Splash screen
 - [ ] Anon signin/signup
 
