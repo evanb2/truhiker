@@ -10,12 +10,13 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Style GearItem in list
 - [x] Create and manage packlists
 - [x] View a packlist
-- [ ] Signup flow
+- [x] Signup flow
+- [x] Style category table in Packlist
+- [x] Splash screen
+- [x] Create AppIcon
 - [ ] Add Packlist title to AddGearScreen
-- [ ] Style category table in Packlist
 - [ ] Search Gear Closet
 - [ ] Landing screen
-- [ ] Splash screen
 - [ ] Anon signin/signup
 
 - [ ] Display + Upload GearItem image
