@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "TruHiker",
+    "description": "A mobile app for gear nerds and gram-counters.",
     "slug": "tru-hiker",
     "privacy": "public",
     "sdkVersion": "33.0.0",
