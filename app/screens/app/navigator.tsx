@@ -53,13 +53,13 @@ const AppTabNav = createMaterialTopTabNavigator(
       inactiveTintColor: 'grey',
       style: {
         backgroundColor: 'white',
-        borderTopColor: 'black',
+        borderTopColor: theme.colors.primary,
         borderTopWidth: 1,
         height: IS_IPHONE_X ? 80 : 73,
       },
       showIcon: true,
       indicatorStyle: {
-        backgroundColor: 'white',
+        backgroundColor: 'transparent',
       },
     },
     defaultNavigationOptions: ({ navigation }) => ({

@@ -4,6 +4,7 @@ import React, { Component } from 'react'
 import { View } from 'react-native'
 import { Button } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
+import { theme } from 'styles/theme'
 
 export class SettingsScreen extends Component<NavigationScreenProps> {
   logout = () => {
@@ -12,7 +13,14 @@ export class SettingsScreen extends Component<NavigationScreenProps> {
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: theme.colors.backdrop,
+        }}
+      >
         <Button mode="contained" onPress={this.logout}>
           Logout
         </Button>

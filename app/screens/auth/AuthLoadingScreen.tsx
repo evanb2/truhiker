@@ -30,14 +30,12 @@ export class AuthLoadingScreen extends Component<NavigationScreenProps> {
       // @TODO replace this (copied from react-navigation docs)
       <View
         style={{
-          height: '100%',
-          display: 'flex',
-          flexDirection: 'column',
+          flex: 1,
           justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <ActivityIndicator />
-        <StatusBar barStyle="default" />
       </View>
     )
   }

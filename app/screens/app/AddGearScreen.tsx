@@ -9,6 +9,7 @@ import { Button, FAB, Modal, Portal, TextInput } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { GearItem, PackItem } from 'utils/types'
+import { theme } from 'styles/theme'
 
 interface State {
   newCategory: string
@@ -235,7 +236,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 }
 
 const _styles = StyleSheet.create({
-  screenContainer: { flex: 1 },
+  screenContainer: { flex: 1, backgroundColor: theme.colors.backdrop },
   scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },

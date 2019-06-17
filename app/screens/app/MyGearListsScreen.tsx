@@ -6,6 +6,7 @@ import { FlatList } from 'react-native-gesture-handler'
 import { IconButton, List, Title } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
+import { theme } from 'styles/theme'
 
 export class MyGearListsScreen extends Component<NavigationScreenProps> {
   state = {
@@ -83,7 +84,7 @@ export class MyGearListsScreen extends Component<NavigationScreenProps> {
 const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.backdrop,
   },
   headerRow: {
     flexDirection: 'row',

@@ -11,6 +11,7 @@ import {
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { GearItem, WeightUnit } from 'utils/types'
+import { theme } from 'styles/theme'
 
 interface State {
   uid: string
@@ -217,7 +218,7 @@ export class GearItemScreen extends Component<Props, State> {
 const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.backdrop,
     paddingHorizontal: 16,
     paddingTop: 16,
   },

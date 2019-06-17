@@ -1,9 +1,9 @@
 import firebase from 'firebase'
-// import 'firebase/auth'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
+import { theme } from 'styles/theme'
 
 export default class SignupScreen extends Component<NavigationScreenProps> {
   state = {
@@ -81,5 +81,9 @@ export default class SignupScreen extends Component<NavigationScreenProps> {
 }
 
 const _styles = StyleSheet.create({
-  screenContainer: { flex: 1, padding: 16 },
+  screenContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: theme.colors.backdrop,
+  },
 })
