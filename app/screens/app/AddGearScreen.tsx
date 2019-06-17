@@ -215,6 +215,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
             contentContainerStyle={_styles.addCategoryModal}
           >
             <TextInput
+              mode="outlined"
               autoFocus
               autoCorrect={false}
               label="Category"
@@ -236,7 +237,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 }
 
 const _styles = StyleSheet.create({
-  screenContainer: { flex: 1, backgroundColor: theme.colors.backdrop },
+  screenContainer: { flex: 1, backgroundColor: theme.colors.background },
   scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },

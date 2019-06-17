@@ -117,7 +117,7 @@ export class GearClosetScreen extends Component<Props> {
 const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: theme.colors.backdrop,
+    backgroundColor: theme.colors.background,
   },
   headerRow: {
     flexDirection: 'row',

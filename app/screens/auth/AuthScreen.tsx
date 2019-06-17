@@ -49,7 +49,7 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: 8,
-            backgroundColor: theme.colors.backdrop,
+            backgroundColor: theme.colors.background,
           }}
         >
           <Title style={{ width: '100%', textAlign: 'center' }}>TruHiker</Title>

@@ -64,6 +64,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={_styles.screenContainer}>
           <TextInput
+            mode="outlined"
             autoFocus
             label="Name"
             style={_styles.inputs}
@@ -71,6 +72,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
             onChangeText={this.handleNameChange}
           />
           <TextInput
+            mode="outlined"
             multiline
             numberOfLines={10}
             label="Description"
@@ -90,7 +92,7 @@ const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
     padding: 16,
-    backgroundColor: theme.colors.backdrop,
+    backgroundColor: theme.colors.background,
   },
   inputs: {
     marginBottom: 8,

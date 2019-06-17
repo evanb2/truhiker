@@ -114,6 +114,10 @@ const AppStack = createStackNavigator(
       const title = getParam('title')
 
       return {
+        headerStyle: {
+          backgroundColor: theme.colors.background,
+          borderBottomWidth: 0,
+        },
         headerTitle: title,
         headerBackImage: (
           <SimpleLineIcons

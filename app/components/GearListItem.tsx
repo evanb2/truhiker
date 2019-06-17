@@ -125,11 +125,11 @@ const _styles = StyleSheet.create({
   },
   surface: {
     flex: 1,
-    elevation: 3,
+    elevation: 4,
     borderRadius: 10,
     padding: 16,
     margin: 8,
-    backgroundColor: colors.gunmetalGrey,
+    backgroundColor: 'lightgrey',
   },
   touchable: {
     width: '100%',
@@ -142,7 +142,6 @@ const _styles = StyleSheet.create({
     flex: 0.8,
     alignItems: 'flex-end',
   },
-  nameText: { color: 'white' },
-  descriptionText: { fontSize: 14, color: 'rgba(255, 255, 255, 0.8)' },
-  weightText: { fontSize: 16, color: 'white', paddingRight: 8 },
+  descriptionText: { fontSize: 14 },
+  weightText: { fontSize: 16, paddingRight: 8 },
 })

@@ -18,7 +18,7 @@ export class SettingsScreen extends Component<NavigationScreenProps> {
           flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: theme.colors.backdrop,
+          backgroundColor: theme.colors.background,
         }}
       >
         <Button mode="contained" onPress={this.logout}>

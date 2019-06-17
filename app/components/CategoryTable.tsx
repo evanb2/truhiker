@@ -41,13 +41,7 @@ export class CategoryTable extends Component<Props> {
 
     return (
       <Surface style={_styles.surface}>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
+        <View style={_styles.tableHeaderRow}>
           <Subheading style={{ fontWeight: 'bold', marginLeft: 2 }}>
             {categoryName}
           </Subheading>
@@ -86,22 +80,25 @@ export class CategoryTable extends Component<Props> {
 const _styles = StyleSheet.create({
   surface: {
     borderRadius: 10,
-    elevation: 4,
+    elevation: 6,
     margin: 8,
     padding: 8,
+    backgroundColor: 'lightgrey',
   },
   tableHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
   },
   tableItemRow: {
     marginVertical: 4,
+    padding: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
     borderRadius: 10,
-    padding: 8,
-    backgroundColor: theme.colors.disabled,
+    borderWidth: 1,
+    borderColor: theme.colors.primary,
+    backgroundColor: 'burlywood',
   },
 })
