@@ -12,6 +12,7 @@ import {
   NavigationState,
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
+import { theme } from 'styles/theme'
 import { GearItem } from 'utils/types'
 
 interface Props {
@@ -116,7 +117,7 @@ export class GearClosetScreen extends Component<Props> {
 const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.background,
   },
   headerRow: {
     flexDirection: 'row',

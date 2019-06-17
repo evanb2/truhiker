@@ -10,6 +10,7 @@ import {
 import { TextInput } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
+import { theme } from 'styles/theme'
 
 interface State {
   name: string
@@ -61,8 +62,9 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
 
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={{ flex: 1, margin: 16 }}>
+        <View style={_styles.screenContainer}>
           <TextInput
+            mode="outlined"
             autoFocus
             label="Name"
             style={_styles.inputs}
@@ -70,6 +72,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
             onChangeText={this.handleNameChange}
           />
           <TextInput
+            mode="outlined"
             multiline
             numberOfLines={10}
             label="Description"
@@ -86,6 +89,11 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
 }
 
 const _styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: theme.colors.background,
+  },
   inputs: {
     marginBottom: 8,
   },

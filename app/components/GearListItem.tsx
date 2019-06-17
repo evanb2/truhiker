@@ -1,8 +1,4 @@
-import {
-  AntDesign,
-  MaterialCommunityIcons,
-  SimpleLineIcons,
-} from '@expo/vector-icons'
+import { SimpleLineIcons } from '@expo/vector-icons'
 import * as Haptics from 'expo-haptics'
 import React, { PureComponent } from 'react'
 import { Alert, Animated, StyleSheet, View } from 'react-native'
@@ -18,7 +14,7 @@ const AnimatedIcon = Animated.createAnimatedComponent(SimpleLineIcons)
 interface Props {
   gearItem: GearItem
   onPress: (gearItem: GearItem) => void
-  onDelete: (gearItem: GearItem) => void
+  onDelete?: (gearItem: GearItem) => void
 }
 
 export class GearListItem extends PureComponent<Props> {
@@ -45,7 +41,7 @@ export class GearListItem extends PureComponent<Props> {
       },
       {
         text: 'Delete',
-        onPress: () => onDelete(gearItem),
+        onPress: () => onDelete && onDelete(gearItem),
         style: 'destructive',
       },
     ])
@@ -85,15 +81,15 @@ export class GearListItem extends PureComponent<Props> {
   }
 
   render() {
-    const { gearItem, onPress } = this.props
-    const { name, description, weight, units, consumable, worn } = gearItem
+    const { gearItem, onPress, onDelete } = this.props
+    const { name, description, weight, units } = gearItem
 
     return (
       <Swipeable
         ref={ref => {
           this.SwipeableRow = ref
         }}
-        renderRightActions={this.renderRightActions}
+        renderRightActions={onDelete && this.renderRightActions}
         onSwipeableRightWillOpen={this.triggerWarning}
         onSwipeableClose={this.triggerImpactMedium}
         friction={2}
@@ -110,25 +106,6 @@ export class GearListItem extends PureComponent<Props> {
             </View>
             <View style={_styles.rightColumn}>
               <Text style={_styles.weightText}>{`${weight} ${units}`}</Text>
-              {(worn || consumable) && (
-                <View style={_styles.iconContainer}>
-                  {worn && (
-                    <AntDesign
-                      name="skin"
-                      size={20}
-                      color={colors.lightGreen}
-                    />
-                  )}
-                  {consumable && (
-                    <MaterialCommunityIcons
-                      name="silverware-variant"
-                      size={20}
-                      style={worn && { marginLeft: 8 }}
-                      color={colors.lightGreen}
-                    />
-                  )}
-                </View>
-              )}
             </View>
           </TouchableOpacity>
         </Surface>
@@ -148,11 +125,11 @@ const _styles = StyleSheet.create({
   },
   surface: {
     flex: 1,
-    elevation: 3,
+    elevation: 4,
     borderRadius: 10,
     padding: 16,
     margin: 8,
-    backgroundColor: colors.gunmetalGrey,
+    backgroundColor: 'lightgrey',
   },
   touchable: {
     width: '100%',
@@ -165,16 +142,6 @@ const _styles = StyleSheet.create({
     flex: 0.8,
     alignItems: 'flex-end',
   },
-  nameText: { color: 'white' },
-  descriptionText: { fontSize: 14, color: 'rgba(255, 255, 255, 0.8)' },
-  weightText: { fontSize: 16, color: 'white', paddingRight: 8 },
-  iconContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-    marginTop: 4,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-  },
+  descriptionText: { fontSize: 14 },
+  weightText: { fontSize: 16, paddingRight: 8 },
 })

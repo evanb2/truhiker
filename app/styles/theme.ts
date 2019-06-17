@@ -9,8 +9,8 @@ export const theme: Theme = {
   colors: {
     ...DefaultTheme.colors,
     primary: colors.gunmetalGrey,
-    accent: colors.lightGreen,
+    accent: 'darkseagreen',
     error: colors.danger,
-    background: 'white',
+    background: 'floralwhite',
   },
 }

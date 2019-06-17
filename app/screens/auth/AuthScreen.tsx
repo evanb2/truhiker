@@ -1,25 +1,16 @@
-import { FontAwesome5 } from '@expo/vector-icons'
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 import React, { Component } from 'react'
 import { Keyboard, TouchableWithoutFeedback, View } from 'react-native'
 import { Button, TextInput, Title, TouchableRipple } from 'react-native-paper'
-import {
-  NavigationScreenOptions,
-  NavigationScreenProps,
-} from 'react-navigation'
-import { colors } from 'styles/colors'
+import { NavigationScreenProps } from 'react-navigation'
+import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
-import googleSignin from 'utils/googleSignin'
 
 interface State {
   email: string
   password: string
 }
 export class AuthScreen extends Component<NavigationScreenProps, State> {
-  static navigationOptions: NavigationScreenOptions = {
-    header: null,
-  }
-
   state = {
     email: '',
     password: '',
@@ -34,40 +25,22 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
   }
 
   /**
-   * Register new user using email/password.
-   */
-  signUp = (): void => {
-    const { email, password } = this.state
-    const { navigation } = this.props
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        navigation.navigate('Register')
-      })
-      .catch(error => {
-        console.log(error)
-      })
-  }
-
-  /**
    * SignIn user using email/password.
    */
   signIn = (): void => {
     const { email, password } = this.state
-    const { navigation } = this.props
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        navigation.navigate('Home')
-      })
       .catch(error => {
         console.log(error)
       })
   }
 
   render() {
+    const { navigation } = this.props
+
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View
@@ -75,10 +48,11 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
             flex: 1,
             justifyContent: 'center',
             alignItems: 'center',
-            marginHorizontal: 8,
+            paddingHorizontal: 8,
+            backgroundColor: theme.colors.background,
           }}
         >
-          <Title style={{ width: '100%', textAlign: 'center' }}>truHiker</Title>
+          <Title style={{ width: '100%', textAlign: 'center' }}>TruHiker</Title>
           <TextInput
             style={{ width: '100%', marginVertical: 4 }}
             mode={'outlined'}
@@ -104,35 +78,17 @@ export class AuthScreen extends Component<NavigationScreenProps, State> {
               rippleColor={theme.colors.primary}
               onPress={this.signIn}
             >
-              <Button mode={'contained'}>Sign In</Button>
-            </TouchableRipple>
-            <TouchableRipple
-              style={{ width: 200, marginVertical: 8, borderRadius: 4 }}
-              rippleColor={colors.googleRed}
-              onPress={googleSignin}
-            >
-              <Button
-                color={colors.googleRed}
-                mode={'outlined'}
-                style={{ backgroundColor: 'white' }}
-                icon={() => (
-                  <FontAwesome5
-                    color={colors.googleRed}
-                    name={'google'}
-                    solid
-                  />
-                )}
-              >
-                Google
+              <Button mode={'contained'} uppercase={false}>
+                Sign In
               </Button>
             </TouchableRipple>
           </View>
           <TouchableRipple
             style={{ position: 'absolute', bottom: 36, borderRadius: 4 }}
-            onPress={this.signUp}
+            onPress={() => navigation.navigate(Routes.Signup)}
             rippleColor={theme.colors.primary}
           >
-            <Button>Sign Up</Button>
+            <Button uppercase={false}>Sign Up</Button>
           </TouchableRipple>
         </View>
       </TouchableWithoutFeedback>

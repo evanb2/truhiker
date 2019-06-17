@@ -10,6 +10,7 @@ import {
   NavigationState,
 } from 'react-navigation'
 import { Routes } from 'screens/routes'
+import { theme } from 'styles/theme'
 import { GearItem, WeightUnit } from 'utils/types'
 
 interface State {
@@ -158,6 +159,7 @@ export class GearItemScreen extends Component<Props, State> {
     return (
       <View style={_styles.screenContainer}>
         <TextInput
+          mode="outlined"
           autoFocus
           autoCapitalize="sentences"
           maxLength={40}
@@ -168,6 +170,7 @@ export class GearItemScreen extends Component<Props, State> {
           onChangeText={val => this.setState({ name: val })}
         />
         <TextInput
+          mode="outlined"
           autoCapitalize="sentences"
           autoCorrect={false}
           maxLength={40}
@@ -177,6 +180,7 @@ export class GearItemScreen extends Component<Props, State> {
           onChangeText={val => this.setState({ description: val })}
         />
         <TextInput
+          mode="outlined"
           keyboardType={Platform.OS === 'ios' ? 'url' : 'default'}
           autoCorrect={false}
           autoCapitalize="none"
@@ -187,6 +191,7 @@ export class GearItemScreen extends Component<Props, State> {
         />
         <View style={_styles.textInputRow}>
           <TextInput
+            mode="outlined"
             keyboardType="decimal-pad"
             maxLength={7}
             style={[_styles.textInputContainer, { flex: 1, marginRight: 4 }]}
@@ -195,6 +200,7 @@ export class GearItemScreen extends Component<Props, State> {
             onChangeText={val => this.setState({ price: val })}
           />
           <TextInput
+            mode="outlined"
             keyboardType="decimal-pad"
             maxLength={8}
             style={[_styles.textInputContainer, { flex: 1, marginLeft: 4 }]}
@@ -217,7 +223,7 @@ export class GearItemScreen extends Component<Props, State> {
 const _styles = StyleSheet.create({
   screenContainer: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.background,
     paddingHorizontal: 16,
     paddingTop: 16,
   },
