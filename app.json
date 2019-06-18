@@ -25,6 +25,7 @@
       "**/*"
     ],
     "ios": {
+      "bundleIdentifier": "app.truhiker",
       "supportsTablet": false
     }
   }
