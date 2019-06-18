@@ -2,7 +2,7 @@
 
 Create and share your pack lists, submit your lists for community shakedowns.
 
-### Proposed Feature List:
+### Feature Roadmap:
 
 - [x] Add GearItem
 - [x] Update GearItem
@@ -14,6 +14,8 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Style category table in Packlist
 - [x] Splash screen
 - [x] Create AppIcon
+- [ ] Toggle consumable/worn items in Packlist
+- [ ] Adjust GearItem quantity in Packlist
 - [ ] Add Packlist title to AddGearScreen
 - [ ] Search Gear Closet
 - [ ] Landing screen
