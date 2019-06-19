@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import { Button, TextInput } from 'react-native-paper'
+import { Button, TextInput, HelperText } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { theme } from 'styles/theme'
 
@@ -57,6 +57,7 @@ export default class SignupScreen extends Component<NavigationScreenProps> {
           autoCorrect={false}
           secureTextEntry={true}
         />
+        <HelperText>* Must be at least 6 characters</HelperText>
         <TextInput
           style={{ width: '100%', marginVertical: 4 }}
           mode={'outlined'}
@@ -73,7 +74,7 @@ export default class SignupScreen extends Component<NavigationScreenProps> {
           disabled={disabled}
           onPress={this.signUp}
         >
-          Signup
+          Start Packing
         </Button>
       </View>
     )
