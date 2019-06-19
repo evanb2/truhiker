@@ -20,6 +20,8 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Search Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
+- [ ] Forgot password flow
+- [ ] Email/phone verification
 
 - [ ] Display + Upload GearItem image
 - [ ] Google Auth
