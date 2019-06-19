@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "upload:ios": "expo upload:ios --apple-id evanb2@mac.com --app-name TruHiker"
   },
   "dependencies": {
     "expo": "^33.0.0",
