@@ -1,20 +1,19 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
 import * as Haptics from 'expo-haptics'
 import React, { PureComponent } from 'react'
-import { Alert, Animated, StyleSheet, View } from 'react-native'
+import { Animated, StyleSheet, View } from 'react-native'
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { Caption, Subheading, Surface, Text } from 'react-native-paper'
-import { colors } from 'styles/colors'
 import { theme } from 'styles/theme'
-import { GearItem } from 'utils/types'
+import { GearItem, PackItem } from 'utils/types'
 
 const AnimatedIcon = Animated.createAnimatedComponent(SimpleLineIcons)
 
 interface Props {
   gearItem: GearItem
   onPress: (gearItem: GearItem) => void
-  onDelete?: (gearItem: GearItem) => void
+  onDelete?: (gearItem: GearItem | PackItem) => void
 }
 
 export class GearListItem extends PureComponent<Props> {
@@ -30,21 +29,10 @@ export class GearListItem extends PureComponent<Props> {
    * @param {object} measurement The measurement to delete
    * @returns {void}
    */
-  deleteAlert = () => {
+  deleteAction = () => {
     const { gearItem, onDelete } = this.props
-
-    Alert.alert('Delete Gear', 'Are you sure you want to delete this item?', [
-      {
-        text: 'Cancel',
-        onPress: this.close,
-        style: 'cancel',
-      },
-      {
-        text: 'Delete',
-        onPress: () => onDelete && onDelete(gearItem),
-        style: 'destructive',
-      },
-    ])
+    onDelete(gearItem)
+    this.close()
   }
 
   triggerWarning = () => {
@@ -68,7 +56,7 @@ export class GearListItem extends PureComponent<Props> {
     return (
       <RectButton
         style={_styles.rightAction}
-        onPress={() => this.deleteAlert()}
+        onPress={() => this.deleteAction()}
       >
         <AnimatedIcon
           name="trash"
@@ -101,7 +89,7 @@ export class GearListItem extends PureComponent<Props> {
             onPress={() => onPress(gearItem)}
           >
             <View style={_styles.leftColumn}>
-              <Subheading style={_styles.nameText}>{name}</Subheading>
+              <Subheading>{name}</Subheading>
               <Caption style={_styles.descriptionText}>{description}</Caption>
             </View>
             <View style={_styles.rightColumn}>
