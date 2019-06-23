@@ -4,11 +4,17 @@ import { GearListItem } from 'components/GearListItem'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { FAB, Modal, Portal } from 'react-native-paper'
+import {
+  Button,
+  FAB,
+  Modal,
+  Paragraph,
+  Portal,
+  Title,
+} from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
-import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
 import { GearItem, PackItem } from 'utils/types'
 
@@ -32,6 +38,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     gearCollectionRef: () => {},
     packlist: {
       name: '',
+      description: '',
       categories: [],
       packItems: [],
     },
@@ -39,19 +46,11 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
   componentWillMount() {
     const { navigation } = this.props
-    const { setParams, getParam } = navigation
+    const { getParam } = navigation
 
     const packlistId = getParam('packlistId')
 
     this.attachPacklistListener(packlistId)
-
-    setParams({
-      rightText: 'Done',
-      rightAction: () => navigation.navigate(Routes.MyGearLists),
-    })
-  }
-
-  componentDidMount() {
     this.attachGearItemsListener()
   }
 
@@ -170,8 +169,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   render() {
+    const { navigation } = this.props
     const { categoryModal, itemModal, gearCloset, packlist } = this.state
-    const { categories, packItems } = packlist
+    const { name, description, categories, packItems } = packlist
 
     const _gearCloset = gearCloset.filter(
       (gearItem: GearItem) =>
@@ -180,7 +180,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
     return (
       <View style={_styles.screenContainer}>
+        <SafeAreaView style={_styles.headerContainer}>
+          <Title style={_styles.titleText}>{name}</Title>
+          <Button uppercase={false} onPress={() => navigation.goBack()}>
+            Done
+          </Button>
+        </SafeAreaView>
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
+          <Paragraph>{description}</Paragraph>
           {categories.map((category: string) => {
             const categoryItems = packItems.filter(
               (packItem: PackItem) => packItem.category === category
@@ -235,13 +242,19 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
 const _styles = StyleSheet.create({
   screenContainer: { flex: 1, backgroundColor: theme.colors.background },
+  headerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  titleText: { paddingLeft: 8, marginVertical: 10 },
   scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
   gearClosetModal: {
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20,
-    backgroundColor: 'white',
+    backgroundColor: theme.colors.primary,
     height: 400,
     bottom: 0,
     right: 0,
