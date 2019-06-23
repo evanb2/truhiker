@@ -187,7 +187,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           </Button>
         </SafeAreaView>
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
-          <Paragraph>{description}</Paragraph>
+          <Paragraph style={_styles.descriptionText}>{description}</Paragraph>
           {categories.map((category: string) => {
             const categoryItems = packItems.filter(
               (packItem: PackItem) => packItem.category === category
@@ -248,6 +248,9 @@ const _styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   titleText: { paddingLeft: 8, marginVertical: 10 },
+  descriptionText: {
+    padding: 8,
+  },
   scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
