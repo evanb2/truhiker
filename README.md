@@ -17,11 +17,14 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Toggle consumable/worn items in Packlist
 - [ ] Adjust GearItem quantity in Packlist
 - [ ] Add Packlist title to AddGearScreen
+- [ ] Add pie chart and total category weights view
+- [ ] Way to change order of categories/items in categories
 - [ ] Search Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
 - [ ] Forgot password flow
 - [ ] Email/phone verification
+- [ ] Error handling
 
 - [ ] Display + Upload GearItem image
 - [ ] Google Auth
