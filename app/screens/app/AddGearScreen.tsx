@@ -24,12 +24,12 @@ interface State {
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
-    categoryModal: false,
     selectedCategory: '',
+    categoryModal: false,
     itemModal: false,
-    gearCollectionRef: () => {},
     gearCloset: [],
     packlistRef: () => {},
+    gearCollectionRef: () => {},
     packlist: {
       name: '',
       categories: [],
@@ -101,16 +101,18 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   addCategory = (newCategory: string) => {
     const { packlistRef } = this.state
 
-    packlistRef.update({
-      categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
-    })
+    packlistRef
+      .update({
+        categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
+      })
+      .catch((error: Error) => console.log(error))
 
     this.setState({
       categoryModal: false,
     })
   }
 
-  addItemWithCategory = (gearItem: GearItem) => {
+  addItemToCategory = (gearItem: GearItem) => {
     const { packlistRef, selectedCategory } = this.state
 
     const packItem = {
@@ -118,9 +120,11 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       category: selectedCategory,
     }
 
-    packlistRef.update({
-      packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
-    })
+    packlistRef
+      .update({
+        packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
+      })
+      .catch((error: Error) => console.log(error))
   }
 
   handleDeleteCategory = (category: string) => {
@@ -138,6 +142,19 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.toggleItemsModal()
   }
 
+  handlePackItemPress = (packItem: PackItem) => {
+    console.log('handlePackItemPress', ' => ', packItem)
+    // show modal to edit PackItem
+  }
+
+  handleRemoveItemFromCategory = (packItem: PackItem) => {
+    const { packlistRef } = this.state
+
+    packlistRef
+      .update({
+        packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
+      })
+      .catch((error: Error) => console.log(error))
   }
 
   toggleItemsModal = () => {
@@ -175,6 +192,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 categoryItems={categoryItems}
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
+                onPressItem={this.handlePackItemPress}
+                onRemoveItem={this.handleRemoveItemFromCategory}
               />
             )
           })}
@@ -197,7 +216,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
               renderItem={({ item }) => (
                 <GearListItem
                   gearItem={item}
-                  onPress={this.addItemWithCategory}
+                  onPress={this.addItemToCategory}
                 />
               )}
               keyExtractor={item => String(item.name)}

@@ -1,9 +1,9 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
+import { GearListItem } from 'components/GearListItem'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Subheading, Surface, Text } from 'react-native-paper'
-import { theme } from 'styles/theme'
 import { PackItem, WeightUnit } from 'utils/types'
 
 interface Props {
@@ -11,6 +11,8 @@ interface Props {
   categoryItems: PackItem[]
   onAddItems: (category: string) => void
   onDeleteCategory: (category: string) => void
+  onPressItem: (packItem: PackItem) => void
+  onRemoveItem: (packItem: PackItem) => void
 }
 
 export class CategoryTable extends Component<Props> {
@@ -20,6 +22,8 @@ export class CategoryTable extends Component<Props> {
       categoryItems,
       onAddItems,
       onDeleteCategory,
+      onPressItem,
+      onRemoveItem,
     } = this.props
 
     const totalWeight = () => {
@@ -55,15 +59,12 @@ export class CategoryTable extends Component<Props> {
           </TouchableOpacity>
         </View>
         {categoryItems.map((packItem: PackItem) => (
-          <View style={_styles.tableItemRow} key={packItem.uid}>
-            <View style={{ flex: 1 }}>
-              <Text>{packItem.name}</Text>
-              <Text>{packItem.description}</Text>
-            </View>
-            <View style={{ flex: 0.3, alignItems: 'flex-end' }}>
-              <Text>{`${packItem.weight} ${packItem.units}`}</Text>
-            </View>
-          </View>
+          <GearListItem
+            key={packItem.uid}
+            gearItem={packItem}
+            onPress={onPressItem}
+            onDelete={onRemoveItem}
+          />
         ))}
         <View
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
@@ -88,22 +89,11 @@ const _styles = StyleSheet.create({
     elevation: 6,
     margin: 8,
     padding: 8,
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'darkkhaki',
   },
   tableHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-  tableItemRow: {
-    marginVertical: 4,
-    padding: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: theme.colors.primary,
-    backgroundColor: 'burlywood',
   },
 })
