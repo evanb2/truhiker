@@ -1,3 +1,4 @@
+import { AddCategoryModal } from 'components/AddCategoryModal'
 import { CategoryTable } from 'components/CategoryTable'
 import { GearListItem } from 'components/GearListItem'
 import firebase from 'firebase'
@@ -5,14 +6,13 @@ import 'firebase/firestore'
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import { Button, FAB, Modal, Portal, TextInput } from 'react-native-paper'
+import { FAB, Modal, Portal } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
 import { GearItem, PackItem } from 'utils/types'
 
 interface State {
-  newCategory: string
   selectedCategory: string
   categoryModal: boolean
   itemModal: boolean
@@ -24,7 +24,6 @@ interface State {
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
-    newCategory: '',
     categoryModal: false,
     selectedCategory: '',
     itemModal: false,
@@ -99,15 +98,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.setState({ gearCollectionRef })
   }
 
-  addCategory = () => {
-    const { newCategory, packlistRef } = this.state
+  addCategory = (newCategory: string) => {
+    const { packlistRef } = this.state
 
     packlistRef.update({
       categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
     })
 
     this.setState({
-      newCategory: '',
       categoryModal: false,
     })
   }
@@ -140,10 +138,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.toggleItemsModal()
   }
 
-  toggleCategoryModal = () => {
-    this.setState(state => ({
-      categoryModal: !state.categoryModal,
-    }))
   }
 
   toggleItemsModal = () => {
@@ -152,14 +146,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     }))
   }
 
+  toggleCategoryModal = () => {
+    this.setState(state => ({
+      categoryModal: !state.categoryModal,
+    }))
+  }
+
   render() {
-    const {
-      newCategory,
-      categoryModal,
-      itemModal,
-      gearCloset,
-      packlist,
-    } = this.state
+    const { categoryModal, itemModal, gearCloset, packlist } = this.state
     const { categories, packItems } = packlist
 
     const _gearCloset = gearCloset.filter(
@@ -209,28 +203,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
               keyExtractor={item => String(item.name)}
             />
           </Modal>
-          <Modal
-            visible={categoryModal}
-            onDismiss={this.toggleCategoryModal}
-            contentContainerStyle={_styles.addCategoryModal}
-          >
-            <TextInput
-              mode="outlined"
-              autoFocus
-              autoCorrect={false}
-              label="Category"
-              value={newCategory}
-              onChangeText={val => this.setState({ newCategory: val })}
-            />
-            <Button
-              style={{ marginTop: 4 }}
-              uppercase={false}
-              onPress={this.addCategory}
-            >
-              Add
-            </Button>
-          </Modal>
         </Portal>
+        <AddCategoryModal
+          onAddCategory={this.addCategory}
+          isVisible={categoryModal}
+          toggleModal={this.toggleCategoryModal}
+        />
       </View>
     )
   }
@@ -251,11 +229,5 @@ const _styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     paddingTop: 8,
-  },
-  addCategoryModal: {
-    backgroundColor: 'white',
-    margin: 8,
-    padding: 8,
-    borderRadius: 10,
   },
 })
