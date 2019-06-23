@@ -19,15 +19,30 @@ export class AddCategoryModal extends Component<Props, State> {
     isVisible: false,
   }
 
+  _handleAddCategory = () => {
+    const { newCategory } = this.state
+    const { onAddCategory } = this.props
+
+    onAddCategory(newCategory)
+
+    this.setState({ newCategory: '' })
+  }
+
+  _onDismiss = () => {
+    const { toggleModal } = this.props
+    toggleModal()
+    this.setState({ newCategory: '' })
+  }
+
   render() {
     const { newCategory } = this.state
-    const { onAddCategory, isVisible, toggleModal } = this.props
+    const { isVisible } = this.props
 
     return (
       <Portal>
         <Modal
           visible={isVisible}
-          onDismiss={toggleModal}
+          onDismiss={this._onDismiss}
           contentContainerStyle={_styles.addCategoryModal}
         >
           <TextInput
@@ -41,7 +56,7 @@ export class AddCategoryModal extends Component<Props, State> {
           <Button
             style={{ marginTop: 4 }}
             uppercase={false}
-            onPress={() => onAddCategory(newCategory)}
+            onPress={this._handleAddCategory}
           >
             Add
           </Button>
