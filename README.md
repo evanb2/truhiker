@@ -19,6 +19,7 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Add Packlist title to AddGearScreen
 - [ ] Add pie chart and total category weights view
 - [ ] Way to change order of categories/items in categories
+- [ ] Style list item in MyGearListsScreen
 - [ ] Search Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
