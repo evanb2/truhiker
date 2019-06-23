@@ -22,22 +22,27 @@ export class CategoryTable extends Component<Props> {
       onDeleteCategory,
     } = this.props
 
-    const totalWeight = categoryItems
-      .map(item => {
-        const weight = Number(item.weight)
-        if (item.units === WeightUnit.GRAMS) {
-          return weight / 453.592
-        }
-        if (item.units === WeightUnit.KILOGRAMS) {
-          return weight * 2.205
-        }
-        if (item.units === WeightUnit.OUNCES) {
-          return weight / 16
-        }
-        return weight
-      })
-      .reduce((prevVal, current) => prevVal + current)
-      .toFixed(2)
+    const totalWeight = () => {
+      if (categoryItems.length === 0) {
+        return 0
+      }
+      return categoryItems
+        .map(item => {
+          const weight = Number(item.weight)
+          if (item.units === WeightUnit.GRAMS) {
+            return weight / 453.592
+          }
+          if (item.units === WeightUnit.KILOGRAMS) {
+            return weight * 2.205
+          }
+          if (item.units === WeightUnit.OUNCES) {
+            return weight / 16
+          }
+          return weight
+        })
+        .reduce((prevVal, current) => prevVal + current)
+        .toFixed(2)
+    }
 
     return (
       <Surface style={_styles.surface}>
@@ -68,7 +73,7 @@ export class CategoryTable extends Component<Props> {
           </TouchableOpacity>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>
             <Text style={{ fontWeight: 'bold', marginRight: 4 }}>
-              {`${totalWeight} lbs`}
+              {`${totalWeight()} lbs`}
             </Text>
           </View>
         </View>
