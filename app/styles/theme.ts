@@ -11,6 +11,6 @@ export const theme: Theme = {
     primary: colors.gunmetalGrey,
     accent: '#91B8D6',
     error: colors.danger,
-    background: 'floralwhite',
+    background: 'white',
   },
 }

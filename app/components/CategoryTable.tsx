@@ -89,7 +89,7 @@ const _styles = StyleSheet.create({
     elevation: 6,
     margin: 8,
     padding: 8,
-    backgroundColor: 'darkkhaki',
+    backgroundColor: 'white',
   },
   tableHeaderRow: {
     flexDirection: 'row',

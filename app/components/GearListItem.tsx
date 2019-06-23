@@ -125,11 +125,11 @@ const _styles = StyleSheet.create({
   },
   surface: {
     flex: 1,
-    elevation: 4,
+    elevation: 2,
     borderRadius: 10,
     padding: 16,
     margin: 8,
-    backgroundColor: 'lightgrey',
+    backgroundColor: 'white',
   },
   touchable: {
     width: '100%',
