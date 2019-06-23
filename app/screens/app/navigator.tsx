@@ -102,6 +102,9 @@ const AppStack = createStackNavigator(
     },
     [Routes.AddGear]: {
       screen: AddGearScreen,
+      navigationOptions: {
+        header: null,
+      },
     },
   },
   {
