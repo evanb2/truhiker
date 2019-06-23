@@ -14,12 +14,13 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Style category table in Packlist
 - [x] Splash screen
 - [x] Create AppIcon
+- [x] Add Packlist title/description to AddGearScreen
+- [x] Remove items from Packlist
 - [ ] Toggle consumable/worn items in Packlist
 - [ ] Adjust GearItem quantity in Packlist
-- [ ] Add Packlist title to AddGearScreen
 - [ ] Add pie chart and total category weights view
-- [ ] Way to change order of categories/items in categories
 - [ ] Style list item in MyGearListsScreen
+- [ ] Way to change order of categories/items in categories
 - [ ] Search Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
