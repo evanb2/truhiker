@@ -1,6 +1,7 @@
 import { AddCategoryModal } from 'components/AddCategoryModal'
 import { CategoryTable } from 'components/CategoryTable'
 import { GearClosetModal } from 'components/GearClosetModal'
+import { PackItemModal } from 'components/PackItemModal'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
@@ -13,8 +14,10 @@ import { GearItem, PackItem } from 'utils/types'
 
 interface State {
   selectedCategory: string
+  selectedPackItem: PackItem | {}
   categoryModal: boolean
   itemModal: boolean
+  packItemModal: boolean
   gearCollectionRef: firebase.firestore.DocumentReference | {}
   packlistRef: firebase.firestore.DocumentReference | {}
   gearCloset: firebase.firestore.DocumentData[]
@@ -24,8 +27,10 @@ interface State {
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
     selectedCategory: '',
+    selectedPackItem: {},
     categoryModal: false,
     itemModal: false,
+    packItemModal: false,
     gearCloset: [],
     packlistRef: () => {},
     gearCollectionRef: () => {},
@@ -110,6 +115,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     const packItem = {
       ...gearItem,
       category: selectedCategory,
+      quantity: 1,
     }
 
     packlistRef
@@ -137,6 +143,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   handlePackItemPress = (packItem: PackItem) => {
     console.log('handlePackItemPress', ' => ', packItem)
     // show modal to edit PackItem
+    this.setState({ selectedPackItem: packItem })
+    this.togglePackItemModal()
   }
 
   handleRemoveItemFromCategory = (packItem: PackItem) => {
@@ -161,9 +169,30 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     }))
   }
 
+  togglePackItemModal = () => {
+    this.setState(state => ({
+      packItemModal: !state.packItemModal,
+    }))
+  }
+
+  handleToggleConsumable = () => {
+    //
+  }
+
+  handleToggleWorn = () => {
+    //
+  }
+
   render() {
     const { navigation } = this.props
-    const { categoryModal, itemModal, gearCloset, packlist } = this.state
+    const {
+      selectedPackItem,
+      categoryModal,
+      itemModal,
+      packItemModal,
+      gearCloset,
+      packlist,
+    } = this.state
     const { name, description, categories, packItems } = packlist
 
     const _gearCloset = gearCloset.filter(
@@ -205,6 +234,13 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onPress={this.toggleCategoryModal}
         />
 
+        <PackItemModal
+          isVisible={packItemModal}
+          onDismissModal={this.togglePackItemModal}
+          onToggleConsumable={this.handleToggleConsumable}
+          onToggleWorn={this.handleToggleWorn}
+          packItem={selectedPackItem}
+        />
         <GearClosetModal
           isVisible={itemModal}
           gearItems={_gearCloset}
@@ -212,8 +248,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           toggleModal={this.toggleItemsModal}
         />
         <AddCategoryModal
-          onAddCategory={this.addCategory}
           isVisible={categoryModal}
+          onAddCategory={this.addCategory}
           toggleModal={this.toggleCategoryModal}
         />
       </View>
