@@ -16,7 +16,6 @@ interface State {
 export class AddCategoryModal extends Component<Props, State> {
   state = {
     newCategory: '',
-    isVisible: false,
   }
 
   _handleAddCategory = () => {
