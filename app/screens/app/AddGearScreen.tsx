@@ -1,19 +1,12 @@
 import { AddCategoryModal } from 'components/AddCategoryModal'
 import { CategoryTable } from 'components/CategoryTable'
-import { GearListItem } from 'components/GearListItem'
+import { GearClosetModal } from 'components/GearClosetModal'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
-import { FlatList, ScrollView } from 'react-native-gesture-handler'
-import {
-  Button,
-  FAB,
-  Modal,
-  Paragraph,
-  Portal,
-  Title,
-} from 'react-native-paper'
+import { ScrollView } from 'react-native-gesture-handler'
+import { Button, FAB, Paragraph, Title } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { theme } from 'styles/theme'
 import { GearItem, PackItem } from 'utils/types'
@@ -212,24 +205,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onPress={this.toggleCategoryModal}
         />
 
-        <Portal>
-          <Modal
-            visible={itemModal}
-            onDismiss={this.toggleItemsModal}
-            contentContainerStyle={_styles.gearClosetModal}
-          >
-            <FlatList
-              data={_gearCloset}
-              renderItem={({ item }) => (
-                <GearListItem
-                  gearItem={item}
-                  onPress={this.addItemToCategory}
-                />
-              )}
-              keyExtractor={item => String(item.name)}
-            />
-          </Modal>
-        </Portal>
+        <GearClosetModal
+          isVisible={itemModal}
+          gearItems={_gearCloset}
+          onPressItem={this.addItemToCategory}
+          toggleModal={this.toggleItemsModal}
+        />
         <AddCategoryModal
           onAddCategory={this.addCategory}
           isVisible={categoryModal}
@@ -254,15 +235,4 @@ const _styles = StyleSheet.create({
   scrollContainer: { paddingTop: 8, paddingBottom: 80 },
   dataTableSurface: { elevation: 3, padding: 8, margin: 4 },
   addCategoryButton: { position: 'absolute', bottom: 16, right: 16 },
-  gearClosetModal: {
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-    backgroundColor: theme.colors.primary,
-    height: 400,
-    bottom: 0,
-    right: 0,
-    left: 0,
-    position: 'absolute',
-    paddingTop: 8,
-  },
 })
