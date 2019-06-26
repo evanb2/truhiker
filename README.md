@@ -16,11 +16,12 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Create AppIcon
 - [x] Add Packlist title/description to AddGearScreen
 - [x] Remove items from Packlist
+- [x] Configure TextInput "Next" action in GearItemScreen
+- [x] Add timestamps to docs
+- [ ] Look into using Subcollections for Packlist categories
 - [ ] Toggle consumable/worn items in Packlist
 - [ ] Adjust GearItem quantity in Packlist
-- [ ] Add timestamps to docs
 - [ ] Display price in GearListItem
-- [ ] Configure TextInput "Next" action in GearItemScreen
 - [ ] Add pie chart and total category weights view
 - [ ] Style list item in MyGearListsScreen
 - [ ] Way to change order of categories/items in categories
