@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
 import React, { Component } from 'react'
-import { Platform } from 'react-native'
+import { Platform, StatusBar } from 'react-native'
 import { Provider as PaperProvider } from 'react-native-paper'
 import AppContainer from 'screens/AppContainer'
 import { theme } from 'styles/theme'
@@ -20,6 +20,8 @@ const firebaseConfig = {
 }
 
 firebase.initializeApp(firebaseConfig)
+
+StatusBar.setBarStyle('dark-content')
 
 export default class App extends Component {
   render() {
