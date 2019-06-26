@@ -96,6 +96,7 @@ export class GearItemScreen extends Component<Props, State> {
           units,
           photoURL,
           userId: user && user.uid,
+          created: firebase.firestore.Timestamp.now(),
         })
       navigation.navigate(Routes.GearCloset)
     } catch (error) {
@@ -134,6 +135,7 @@ export class GearItemScreen extends Component<Props, State> {
           linkURL,
           units,
           photoURL,
+          updated: firebase.firestore.Timestamp.now(),
         })
       navigation.navigate(Routes.GearCloset)
     } catch (error) {
@@ -168,8 +170,13 @@ export class GearItemScreen extends Component<Props, State> {
           error={errorFields.includes('name')}
           value={name}
           onChangeText={val => this.setState({ name: val })}
+          returnKeyType="next"
+          onSubmitEditing={() => this.DescriptionInput.focus()}
         />
         <TextInput
+          ref={ref => {
+            this.DescriptionInput = ref
+          }}
           mode="outlined"
           autoCapitalize="sentences"
           autoCorrect={false}
@@ -178,8 +185,13 @@ export class GearItemScreen extends Component<Props, State> {
           label="Description"
           value={description}
           onChangeText={val => this.setState({ description: val })}
+          returnKeyType="next"
+          onSubmitEditing={() => this.LinkInput.focus()}
         />
         <TextInput
+          ref={ref => {
+            this.LinkInput = ref
+          }}
           mode="outlined"
           keyboardType={Platform.OS === 'ios' ? 'url' : 'default'}
           autoCorrect={false}
@@ -188,9 +200,14 @@ export class GearItemScreen extends Component<Props, State> {
           label="Link"
           value={linkURL}
           onChangeText={val => this.setState({ linkURL: val })}
+          returnKeyType="next"
+          onSubmitEditing={() => this.PriceInput.focus()}
         />
         <View style={_styles.textInputRow}>
           <TextInput
+            ref={ref => {
+              this.PriceInput = ref
+            }}
             mode="outlined"
             keyboardType="decimal-pad"
             maxLength={7}
