@@ -44,6 +44,7 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
         userId: user && user.uid,
         categories: [],
         packItems: [],
+        created: firebase.firestore.Timestamp.now(),
       })
 
     navigation.navigate(Routes.AddGear, { packlistId: packlistRef.id })
