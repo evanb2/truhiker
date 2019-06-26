@@ -106,7 +106,7 @@ export class GearClosetScreen extends Component<Props> {
               onDelete={this.handleGearItemDelete}
             />
           )}
-          keyExtractor={item => String(item.name)}
+          keyExtractor={item => String(item.uid)}
           contentContainerStyle={{ paddingTop: 8 }}
         />
       </SafeAreaView>
