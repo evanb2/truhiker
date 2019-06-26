@@ -101,6 +101,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     packlistRef
       .update({
         categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
+        updated: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) => console.log(error))
 
@@ -121,6 +122,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     packlistRef
       .update({
         packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
+        updated: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) => console.log(error))
   }
@@ -131,6 +133,18 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     packlistRef
       .update({
         categories: firebase.firestore.FieldValue.arrayRemove(category),
+        updated: firebase.firestore.Timestamp.now(),
+      })
+      .catch((error: Error) => console.log(error))
+  }
+
+  handleRemoveItemFromCategory = (packItem: PackItem) => {
+    const { packlistRef } = this.state
+
+    packlistRef
+      .update({
+        packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
+        updated: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) => console.log(error))
   }
@@ -145,16 +159,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     // show modal to edit PackItem
     this.setState({ selectedPackItem: packItem })
     this.togglePackItemModal()
-  }
-
-  handleRemoveItemFromCategory = (packItem: PackItem) => {
-    const { packlistRef } = this.state
-
-    packlistRef
-      .update({
-        packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
-      })
-      .catch((error: Error) => console.log(error))
   }
 
   toggleItemsModal = () => {
