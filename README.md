@@ -18,17 +18,23 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Remove items from Packlist
 - [ ] Toggle consumable/worn items in Packlist
 - [ ] Adjust GearItem quantity in Packlist
+- [ ] Add timestamps to docs
+- [ ] Display price in GearListItem
+- [ ] Configure TextInput "Next" action in GearItemScreen
 - [ ] Add pie chart and total category weights view
 - [ ] Style list item in MyGearListsScreen
 - [ ] Way to change order of categories/items in categories
 - [ ] Search Gear Closet
+- [ ] Open gear links in WebView
+- [ ] Display + Upload GearItem image
+- [ ] Create a new GearItem when adding items to a category
+- [ ] Cloud function to update item in  Packlist when updated in the Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
 - [ ] Forgot password flow
 - [ ] Email/phone verification
 - [ ] Error handling
 
-- [ ] Display + Upload GearItem image
 - [ ] Google Auth
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
