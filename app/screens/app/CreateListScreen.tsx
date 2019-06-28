@@ -42,8 +42,6 @@ export class CreateListScreen extends Component<NavigationScreenProps, State> {
         name,
         description,
         userId: user && user.uid,
-        categories: [],
-        packItems: [],
         created: firebase.firestore.Timestamp.now(),
       })
 

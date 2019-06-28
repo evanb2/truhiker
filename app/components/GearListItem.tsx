@@ -1,4 +1,5 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
+import { LinearGradient } from 'expo'
 import * as Haptics from 'expo-haptics'
 import React, { PureComponent } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
@@ -31,8 +32,10 @@ export class GearListItem extends PureComponent<Props> {
    */
   deleteAction = () => {
     const { gearItem, onDelete } = this.props
-    onDelete(gearItem)
-    this.close()
+    if (onDelete) {
+      onDelete(gearItem)
+      this.close()
+    }
   }
 
   triggerWarning = () => {
@@ -83,19 +86,29 @@ export class GearListItem extends PureComponent<Props> {
         friction={2}
       >
         <Surface style={_styles.surface}>
-          <TouchableOpacity
-            style={_styles.touchable}
-            hitSlop={{ top: 16, bottom: 16, right: 16, left: 16 }}
-            onPress={() => onPress(gearItem)}
+          <LinearGradient
+            colors={['#fff', '#fff']}
+            style={{
+              borderRadius: 10,
+              width: '100%',
+              height: '100%',
+              padding: 16,
+            }}
           >
-            <View style={_styles.leftColumn}>
-              <Subheading>{name}</Subheading>
-              <Caption style={_styles.descriptionText}>{description}</Caption>
-            </View>
-            <View style={_styles.rightColumn}>
-              <Text style={_styles.weightText}>{`${weight} ${units}`}</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={_styles.touchable}
+              hitSlop={{ top: 16, bottom: 16, right: 16, left: 16 }}
+              onPress={() => onPress(gearItem)}
+            >
+              <View style={_styles.leftColumn}>
+                <Subheading>{name}</Subheading>
+                <Caption style={_styles.descriptionText}>{description}</Caption>
+              </View>
+              <View style={_styles.rightColumn}>
+                <Text style={_styles.weightText}>{`${weight} ${units}`}</Text>
+              </View>
+            </TouchableOpacity>
+          </LinearGradient>
         </Surface>
       </Swipeable>
     )
@@ -114,10 +127,8 @@ const _styles = StyleSheet.create({
   surface: {
     flex: 1,
     elevation: 2,
-    borderRadius: 10,
-    padding: 16,
     margin: 8,
-    backgroundColor: 'white',
+    borderRadius: 10,
   },
   touchable: {
     width: '100%',

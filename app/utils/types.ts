@@ -20,7 +20,6 @@ export interface GearItem {
 }
 
 export interface PackItem extends GearItem {
-  category: string
   worn: boolean
   consumable: boolean
   quantity: number
@@ -28,14 +27,19 @@ export interface PackItem extends GearItem {
 
 export interface Packlist {
   name: string
-  categories: string[]
-  packItems: PackItem[]
+  description: string
   units: WeightUnit
-  totalPackWeight: 0
-  baseWeight: 0
-  totalConsumableWeight: 0
-  totalWornWeight: 0
+  totalPackWeight: number
+  baseWeight: number
+  totalConsumableWeight: number
+  totalWornWeight: number
   userId: string
+}
+
+export interface Category {
+  name: string
+  packItems: PackItem[]
+  totalWeight: number
 }
 
 // export enum Region {

@@ -10,7 +10,7 @@ import { ScrollView } from 'react-native-gesture-handler'
 import { Button, FAB, Paragraph, Title } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { theme } from 'styles/theme'
-import { GearItem, PackItem } from 'utils/types'
+import { Category, GearItem, PackItem, Packlist, WeightUnit } from 'utils/types'
 
 interface State {
   selectedCategory: string
@@ -18,10 +18,12 @@ interface State {
   categoryModal: boolean
   itemModal: boolean
   packItemModal: boolean
-  gearCollectionRef: firebase.firestore.DocumentReference | {}
-  packlistRef: firebase.firestore.DocumentReference | {}
+  gearCollectionRef: firebase.firestore.CollectionReference
+  packlistRef: firebase.firestore.DocumentReference
   gearCloset: firebase.firestore.DocumentData[]
-  packlist: firebase.firestore.DocumentData
+  packlist: Packlist
+  categories: Category[]
+  categoriesRef: firebase.firestore.CollectionReference
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
@@ -32,13 +34,19 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     itemModal: false,
     packItemModal: false,
     gearCloset: [],
-    packlistRef: () => {},
-    gearCollectionRef: () => {},
+    packlistRef: firebase.firestore().doc(''),
+    gearCollectionRef: firebase.firestore().collection(''),
+    categoriesRef: firebase.firestore().collection(''),
+    categories: [],
     packlist: {
       name: '',
       description: '',
-      categories: [],
-      packItems: [],
+      units: WeightUnit.POUNDS,
+      totalPackWeight: 0,
+      baseWeight: 0,
+      totalConsumableWeight: 0,
+      totalWornWeight: 0,
+      userId: '',
     },
   }
 
@@ -49,6 +57,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     const packlistId = getParam('packlistId')
 
     this.attachPacklistListener(packlistId)
+    this.attachCategoriesListener(packlistId)
     this.attachGearItemsListener()
   }
 
@@ -75,6 +84,25 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.setState({ packlistRef })
   }
 
+  attachCategoriesListener = async (packlistId: string) => {
+    const categoriesRef = await firebase
+      .firestore()
+      .doc(packlistId)
+      .collection('categories')
+      .onSnapshot(
+        snapshot => {
+          const categories: Category[] = []
+          snapshot.forEach(category => categories.push(category.data()))
+          this.setState({ categories })
+        },
+        error => {
+          console.log(error)
+        }
+      )
+
+    this.setState({ categoriesRef })
+  }
+
   attachGearItemsListener = async () => {
     const user = firebase.auth().currentUser
     const gearCollectionRef = await firebase
@@ -99,9 +127,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     const { packlistRef } = this.state
 
     packlistRef
-      .update({
-        categories: firebase.firestore.FieldValue.arrayUnion(newCategory),
-        updated: firebase.firestore.Timestamp.now(),
+      .collection('categories')
+      .add({
+        name: newCategory,
+        packItems: [],
+        totalWeight: 0,
+        created: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) => console.log(error))
 
@@ -196,13 +227,19 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       packItemModal,
       gearCloset,
       packlist,
+      categories,
+      categoriesRef,
     } = this.state
-    const { name, description, categories, packItems } = packlist
+    const { name, description } = packlist
 
-    const _gearCloset = gearCloset.filter(
-      (gearItem: GearItem) =>
-        !packItems.find((packItem: PackItem) => packItem.name === gearItem.name)
-    )
+    // const packItems = categoriesRef.onSnapshot(snapshot => {
+    //   snapshot.
+    // })
+
+    // const _gearCloset = gearCloset.filter(
+    //   (gearItem: GearItem) =>
+    //     !packItems.find((packItem: PackItem) => packItem.name === gearItem.name)
+    // )
 
     return (
       <View style={_styles.screenContainer}>
@@ -214,15 +251,15 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         </SafeAreaView>
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
           <Paragraph style={_styles.descriptionText}>{description}</Paragraph>
-          {categories.map((category: string) => {
-            const categoryItems = packItems.filter(
-              (packItem: PackItem) => packItem.category === category
-            )
+          {categories.map((category: Category) => {
+            // const categoryItems = packItems.filter(
+            //   (packItem: PackItem) => packItem.category === category
+            // )
             return (
               <CategoryTable
-                key={category}
-                categoryName={category}
-                categoryItems={categoryItems}
+                key={category.name}
+                categoryName={category.name}
+                categoryItems={category.packItems}
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
                 onPressItem={this.handlePackItemPress}
@@ -245,12 +282,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onToggleWorn={this.handleToggleWorn}
           packItem={selectedPackItem}
         />
-        <GearClosetModal
+        {/* <GearClosetModal
           isVisible={itemModal}
           gearItems={_gearCloset}
           onPressItem={this.addItemToCategory}
           toggleModal={this.toggleItemsModal}
-        />
+        /> */}
         <AddCategoryModal
           isVisible={categoryModal}
           onAddCategory={this.addCategory}
