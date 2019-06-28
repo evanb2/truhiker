@@ -36,6 +36,10 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Email/phone verification
 - [ ] Error handling
 
+- [ ] Edit Catgory name
+- [ ] Some way of marking "wishlist" items (so they don't show up when adding items to lists)
+- [ ] Ability to switch category when GearCloset modal is open
+
 - [ ] Google Auth
 - [ ] Share public pack lists.
 - [ ] Allow others to leave general or item-specific comments on your public lists.
