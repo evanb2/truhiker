@@ -19,11 +19,11 @@ interface State {
   itemModal: boolean
   packItemModal: boolean
   gearCollectionRef: firebase.firestore.CollectionReference
+  categoriesRef: firebase.firestore.CollectionReference
   packlistRef: firebase.firestore.DocumentReference
   gearCloset: firebase.firestore.DocumentData[]
   packlist: Packlist
   categories: Category[]
-  categoriesRef: firebase.firestore.CollectionReference
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
@@ -34,9 +34,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     itemModal: false,
     packItemModal: false,
     gearCloset: [],
-    packlistRef: firebase.firestore().doc(''),
-    gearCollectionRef: firebase.firestore().collection(''),
-    categoriesRef: firebase.firestore().collection(''),
+    packlistRef: null,
+    gearCollectionRef: null,
+    categoriesRef: null,
     categories: [],
     packlist: {
       name: '',
@@ -62,8 +62,10 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   componentWillUnmount() {
-    const { gearCollectionRef } = this.state
+    const { gearCollectionRef, packlistRef, categoriesRef } = this.state
     gearCollectionRef()
+    packlistRef()
+    categoriesRef()
   }
 
   attachPacklistListener = async (packlistId: string) => {
@@ -71,15 +73,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       .firestore()
       .collection('packlists')
       .doc(packlistId)
-
-    packlistRef.onSnapshot(
-      snapshot => {
-        this.setState({ packlist: snapshot.data() })
-      },
-      error => {
-        console.log(error)
-      }
-    )
+      .onSnapshot(
+        snapshot => {
+          this.setState({ packlist: snapshot.data() })
+        },
+        error => {
+          console.log('attachPacklistListener: ', error)
+        }
+      )
 
     this.setState({ packlistRef })
   }
@@ -87,16 +88,18 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   attachCategoriesListener = async (packlistId: string) => {
     const categoriesRef = await firebase
       .firestore()
+      .collection('packlists')
       .doc(packlistId)
       .collection('categories')
       .onSnapshot(
         snapshot => {
           const categories: Category[] = []
           snapshot.forEach(category => categories.push(category.data()))
+          console.log('categories', ' => ', categories)
           this.setState({ categories })
         },
         error => {
-          console.log(error)
+          console.log('attachCategoriesListener: ', error)
         }
       )
 
@@ -118,8 +121,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           })
           this.setState({ gearCloset })
         },
-        error => console.log(error)
+        error => console.log('attachGearItemsListener: ', error)
       )
+
     this.setState({ gearCollectionRef })
   }
 
@@ -134,7 +138,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         totalWeight: 0,
         created: firebase.firestore.Timestamp.now(),
       })
-      .catch((error: Error) => console.log(error))
+      .catch((error: Error) => console.log('addCategory: ', error))
 
     this.setState({
       categoryModal: false,
@@ -155,7 +159,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
         updated: firebase.firestore.Timestamp.now(),
       })
-      .catch((error: Error) => console.log(error))
+      .catch((error: Error) => console.log('addItemToCategory', error))
   }
 
   handleDeleteCategory = (category: string) => {
@@ -166,7 +170,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         categories: firebase.firestore.FieldValue.arrayRemove(category),
         updated: firebase.firestore.Timestamp.now(),
       })
-      .catch((error: Error) => console.log(error))
+      .catch((error: Error) => console.log('handleDeleteCategory', error))
   }
 
   handleRemoveItemFromCategory = (packItem: PackItem) => {
@@ -177,7 +181,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
         updated: firebase.firestore.Timestamp.now(),
       })
-      .catch((error: Error) => console.log(error))
+      .catch((error: Error) =>
+        console.log('handleRemoveItemFromCategory', error)
+      )
   }
 
   handleAddItems = (category: string) => {
@@ -252,9 +258,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
           <Paragraph style={_styles.descriptionText}>{description}</Paragraph>
           {categories.map((category: Category) => {
-            // const categoryItems = packItems.filter(
-            //   (packItem: PackItem) => packItem.category === category
-            // )
             return (
               <CategoryTable
                 key={category.name}
