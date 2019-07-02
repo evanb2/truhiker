@@ -1,6 +1,6 @@
 import { SimpleLineIcons } from '@expo/vector-icons'
-import { LinearGradient } from 'expo'
 import * as Haptics from 'expo-haptics'
+import { LinearGradient } from 'expo-linear-gradient'
 import React, { PureComponent } from 'react'
 import { Animated, StyleSheet, View } from 'react-native'
 import { RectButton, TouchableOpacity } from 'react-native-gesture-handler'
