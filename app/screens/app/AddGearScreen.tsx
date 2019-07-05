@@ -238,14 +238,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     } = this.state
     const { name, description } = packlist
 
-    // const packItems = categoriesRef.onSnapshot(snapshot => {
-    //   snapshot.
-    // })
+    const packItems = categories.flatMap(
+      (category: Category) => category.packItems
+    )
 
-    // const _gearCloset = gearCloset.filter(
-    //   (gearItem: GearItem) =>
-    //     !packItems.find((packItem: PackItem) => packItem.name === gearItem.name)
-    // )
+    const _gearCloset = gearCloset.filter(
+      (gearItem: GearItem) =>
+        !packItems.find((packItem: PackItem) => packItem.name === gearItem.name)
+    )
 
     return (
       <View style={_styles.screenContainer}>
@@ -285,12 +285,12 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onToggleWorn={this.handleToggleWorn}
           packItem={selectedPackItem}
         />
-        {/* <GearClosetModal
+        <GearClosetModal
           isVisible={itemModal}
           gearItems={_gearCloset}
           onPressItem={this.addItemToCategory}
           toggleModal={this.toggleItemsModal}
-        /> */}
+        />
         <AddCategoryModal
           isVisible={categoryModal}
           onAddCategory={this.addCategory}
