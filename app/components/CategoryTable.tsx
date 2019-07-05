@@ -4,11 +4,10 @@ import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Subheading, Surface, Text } from 'react-native-paper'
-import { PackItem, WeightUnit } from 'utils/types'
+import { Category, PackItem, WeightUnit } from 'utils/types'
 
 interface Props {
-  categoryName: string
-  categoryItems: PackItem[]
+  category: Category
   onAddItems: (category: string) => void
   onDeleteCategory: (category: string) => void
   onPressItem: (packItem: PackItem) => void
@@ -18,19 +17,20 @@ interface Props {
 export class CategoryTable extends Component<Props> {
   render() {
     const {
-      categoryName,
-      categoryItems,
+      category,
       onAddItems,
       onDeleteCategory,
       onPressItem,
       onRemoveItem,
     } = this.props
 
+    const { name, packItems } = category
+
     const totalWeight = () => {
-      if (categoryItems.length === 0) {
+      if (packItems.length === 0) {
         return 0
       }
-      return categoryItems
+      return packItems
         .map(item => {
           const weight = Number(item.weight)
           if (item.units === WeightUnit.GRAMS) {
@@ -52,13 +52,13 @@ export class CategoryTable extends Component<Props> {
       <Surface style={_styles.surface}>
         <View style={_styles.tableHeaderRow}>
           <Subheading style={{ fontWeight: 'bold', marginLeft: 2 }}>
-            {categoryName}
+            {name}
           </Subheading>
-          <TouchableOpacity onPress={() => onAddItems(categoryName)}>
+          <TouchableOpacity onPress={() => onAddItems(name)}>
             <SimpleLineIcons name="plus" size={20} />
           </TouchableOpacity>
         </View>
-        {categoryItems.map((packItem: PackItem) => (
+        {packItems.map((packItem: PackItem) => (
           <GearListItem
             key={packItem.uid}
             gearItem={packItem}
@@ -69,7 +69,7 @@ export class CategoryTable extends Component<Props> {
         <View
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
         >
-          <TouchableOpacity onPress={() => onDeleteCategory(categoryName)}>
+          <TouchableOpacity onPress={() => onDeleteCategory(name)}>
             <SimpleLineIcons name="trash" size={20} />
           </TouchableOpacity>
           <View style={{ flex: 1, alignItems: 'flex-end' }}>

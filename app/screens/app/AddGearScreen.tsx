@@ -261,8 +261,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
             return (
               <CategoryTable
                 key={category.name}
-                categoryName={category.name}
-                categoryItems={category.packItems}
+                category={category}
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
                 onPressItem={this.handlePackItemPress}
