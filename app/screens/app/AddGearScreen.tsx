@@ -151,9 +151,13 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   addCategory = (newCategory: string) => {
-    const { packlistRef } = this.state
+    const { packlist } = this.state
+    const { uid } = packlist
 
-    packlistRef
+    firebase
+      .firestore()
+      .collection('packlists')
+      .doc(uid)
       .collection('categories')
       .add({
         name: newCategory,
@@ -174,7 +178,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
     const packItem = {
       ...gearItem,
-      // category: selectedCategory,
       consumable: false,
       worn: false,
       quantity: 1,
@@ -277,7 +280,6 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       gearCloset,
       packlist,
       categories,
-      categoriesRef,
       selectedCategory,
     } = this.state
     const { name, description } = packlist
