@@ -26,6 +26,7 @@ export interface PackItem extends GearItem {
 }
 
 export interface Packlist {
+  uid: string
   name: string
   description: string
   units: WeightUnit
@@ -37,6 +38,7 @@ export interface Packlist {
 }
 
 export interface Category {
+  uid: string
   name: string
   packItems: PackItem[]
   totalWeight: number
