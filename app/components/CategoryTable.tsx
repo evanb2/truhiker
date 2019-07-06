@@ -61,14 +61,18 @@ export function CategoryTable(props: Props) {
           <SimpleLineIcons name="plus" size={20} />
         </TouchableOpacity>
       </View>
-      {packItems.map((packItem: PackItem) => (
-        <GearListItem
-          key={packItem.uid}
-          gearItem={packItem}
-          onPress={onPressItem}
-          onDelete={_onRemoveItem}
-        />
-      ))}
+      {packItems.length > 0 ? (
+        packItems.map((packItem: PackItem) => (
+          <GearListItem
+            key={packItem.uid}
+            gearItem={packItem}
+            onPress={onPressItem}
+            onDelete={_onRemoveItem}
+          />
+        ))
+      ) : (
+        <Subheading style={{ textAlign: 'center' }}>No Items</Subheading>
+      )}
       <View
         style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
       >
