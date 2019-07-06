@@ -9,9 +9,9 @@ import { Category, PackItem, WeightUnit } from 'utils/types'
 interface Props {
   category: Category
   onAddItems: (category: Category) => void
-  onDeleteCategory: (category: string) => void
+  onDeleteCategory: (category: Category) => void
   onPressItem: (packItem: PackItem) => void
-  onRemoveItem: (packItem: PackItem) => void
+  onRemovePackItem: (packItem: PackItem, category: Category) => void
 }
 
 export function CategoryTable(props: Props) {
@@ -20,7 +20,7 @@ export function CategoryTable(props: Props) {
     onAddItems,
     onDeleteCategory,
     onPressItem,
-    onRemoveItem,
+    onRemovePackItem,
   } = props
 
   const { name, packItems } = category
@@ -47,6 +47,10 @@ export function CategoryTable(props: Props) {
       .toFixed(2)
   }
 
+  const _onRemoveItem = (packItem: PackItem) => {
+    onRemovePackItem(packItem, category)
+  }
+
   return (
     <Surface style={_styles.surface}>
       <View style={_styles.tableHeaderRow}>
@@ -62,13 +66,13 @@ export function CategoryTable(props: Props) {
           key={packItem.uid}
           gearItem={packItem}
           onPress={onPressItem}
-          onDelete={onRemoveItem}
+          onDelete={_onRemoveItem}
         />
       ))}
       <View
         style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
       >
-        <TouchableOpacity onPress={() => onDeleteCategory(name)}>
+        <TouchableOpacity onPress={() => onDeleteCategory(category)}>
           <SimpleLineIcons name="trash" size={20} />
         </TouchableOpacity>
         <View style={{ flex: 1, alignItems: 'flex-end' }}>

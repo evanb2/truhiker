@@ -193,27 +193,39 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       .catch((error: Error) => console.log('addItemToCategory', error))
   }
 
-  handleDeleteCategory = (category: string) => {
-    const { packlistRef } = this.state
+  handleDeleteCategory = (category: Category) => {
+    const { packlist } = this.state
+    const { uid } = packlist
 
-    packlistRef
-      .update({
-        categories: firebase.firestore.FieldValue.arrayRemove(category),
-        updated: firebase.firestore.Timestamp.now(),
-      })
+    firebase
+      .firestore()
+      .collection('packlists')
+      .doc(uid)
+      .collection('categories')
+      .doc(category.uid)
+      .delete()
       .catch((error: Error) => console.log('handleDeleteCategory', error))
   }
 
-  handleRemoveItemFromCategory = (packItem: PackItem) => {
-    const { packlistRef } = this.state
+  handleRemovePackItemFromCategory = (
+    packItem: PackItem,
+    category: Category
+  ) => {
+    const { packlist } = this.state
+    const { uid } = packlist
 
-    packlistRef
+    firebase
+      .firestore()
+      .collection('packlists')
+      .doc(uid)
+      .collection('categories')
+      .doc(category.uid)
       .update({
         packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
         updated: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) =>
-        console.log('handleRemoveItemFromCategory', error)
+        console.log('handleRemovePackItemFromCategory', error)
       )
   }
 
@@ -297,7 +309,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
                 onPressItem={this.handlePackItemPress}
-                onRemoveItem={this.handleRemoveItemFromCategory}
+                onRemovePackItem={this.handleRemovePackItemFromCategory}
               />
             )
           })}
@@ -315,6 +327,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onToggleConsumable={this.handleToggleConsumable}
           onToggleWorn={this.handleToggleWorn}
           packItem={selectedPackItem}
+          onDecreaseQuantity={() => {}}
+          onIncreaseQuantity={() => {}}
         />
         <GearClosetModal
           category={selectedCategory}
