@@ -2,11 +2,12 @@ import { GearListItem } from 'components/GearListItem'
 import React from 'react'
 import { StyleSheet } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import { Modal, Portal } from 'react-native-paper'
+import { Modal, Portal, Title } from 'react-native-paper'
 import { theme } from 'styles/theme'
-import { GearItem } from 'utils/types'
+import { Category, GearItem } from 'utils/types'
 
 interface Props {
+  category: Category
   isVisible: boolean
   gearItems: GearItem[]
   toggleModal: () => void
@@ -18,6 +19,7 @@ export function GearClosetModal({
   gearItems,
   toggleModal,
   onPressItem,
+  category,
 }: Props) {
   return (
     <Portal>
@@ -26,6 +28,9 @@ export function GearClosetModal({
         onDismiss={toggleModal}
         contentContainerStyle={_styles.modalContainer}
       >
+        <Title style={{ color: 'white', textAlign: 'center' }}>
+          {category.name}
+        </Title>
         <FlatList
           data={gearItems}
           renderItem={({ item }) => (

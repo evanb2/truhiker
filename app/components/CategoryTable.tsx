@@ -8,7 +8,7 @@ import { Category, PackItem, WeightUnit } from 'utils/types'
 
 interface Props {
   category: Category
-  onAddItems: (category: string) => void
+  onAddItems: (category: Category) => void
   onDeleteCategory: (category: string) => void
   onPressItem: (packItem: PackItem) => void
   onRemoveItem: (packItem: PackItem) => void
@@ -54,7 +54,7 @@ export class CategoryTable extends Component<Props> {
           <Subheading style={{ fontWeight: 'bold', marginLeft: 2 }}>
             {name}
           </Subheading>
-          <TouchableOpacity onPress={() => onAddItems(name)}>
+          <TouchableOpacity onPress={() => onAddItems(category)}>
             <SimpleLineIcons name="plus" size={20} />
           </TouchableOpacity>
         </View>
