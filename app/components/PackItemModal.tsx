@@ -6,7 +6,7 @@ import {
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
-import { Modal, Portal, Subheading, Text } from 'react-native-paper'
+import { Modal, Portal, Text, Title } from 'react-native-paper'
 import { theme } from 'styles/theme'
 import { PackItem } from 'utils/types'
 
@@ -38,7 +38,7 @@ export function PackItemModal({
         onDismiss={onDismissModal}
         contentContainerStyle={_styles.modalContainer}
       >
-        <Subheading style={{ textAlign: 'center' }}>{name}</Subheading>
+        <Title style={{ textAlign: 'center' }}>{name}</Title>
         <View style={_styles.buttonsRow}>
           <View style={{ flex: 1 }} />
           <View

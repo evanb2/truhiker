@@ -13,14 +13,14 @@ import { theme } from 'styles/theme'
 import { Category, GearItem, PackItem, Packlist, WeightUnit } from 'utils/types'
 
 interface State {
-  selectedCategory: string
-  selectedPackItem: PackItem | {}
+  selectedCategory: Category
+  selectedPackItem: PackItem
   categoryModal: boolean
   itemModal: boolean
   packItemModal: boolean
-  gearCollectionRef: firebase.firestore.CollectionReference
-  categoriesRef: firebase.firestore.CollectionReference
-  packlistRef: firebase.firestore.DocumentReference
+  gearCollectionRef: firebase.firestore.CollectionReference | null
+  categoriesRef: firebase.firestore.CollectionReference | null
+  packlistRef: firebase.firestore.DocumentReference | null
   gearCloset: firebase.firestore.DocumentData[]
   packlist: Packlist
   categories: Category[]
@@ -28,8 +28,6 @@ interface State {
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
   state = {
-    selectedCategory: '',
-    selectedPackItem: {},
     categoryModal: false,
     itemModal: false,
     packItemModal: false,
@@ -38,7 +36,28 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     gearCollectionRef: null,
     categoriesRef: null,
     categories: [],
+    selectedCategory: {
+      uid: '',
+      name: '',
+      packItems: [],
+      totalWeight: 0,
+    },
+    selectedPackItem: {
+      uid: '',
+      name: '',
+      description: '',
+      worn: false,
+      consumable: false,
+      quantity: 0,
+      price: '',
+      weight: '',
+      units: WeightUnit.OUNCES,
+      photoURL: '',
+      linkURL: '',
+      userId: '',
+    },
     packlist: {
+      uid: '',
       name: '',
       description: '',
       units: WeightUnit.POUNDS,
@@ -75,7 +94,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       .doc(packlistId)
       .onSnapshot(
         snapshot => {
-          this.setState({ packlist: snapshot.data() })
+          this.setState({
+            packlist: { ...snapshot.data(), uid: snapshot.id },
+          })
         },
         error => {
           console.log('attachPacklistListener: ', error)
@@ -94,7 +115,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       .onSnapshot(
         snapshot => {
           const categories: Category[] = []
-          snapshot.forEach(category => categories.push(category.data()))
+          snapshot.forEach(category =>
+            categories.push({ ...category.data(), uid: category.id })
+          )
           console.log('categories', ' => ', categories)
           this.setState({ categories })
         },
@@ -146,15 +169,23 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
   }
 
   addItemToCategory = (gearItem: GearItem) => {
-    const { packlistRef, selectedCategory } = this.state
+    const { selectedCategory, packlist } = this.state
+    const { uid } = packlist
 
     const packItem = {
       ...gearItem,
-      category: selectedCategory,
+      // category: selectedCategory,
+      consumable: false,
+      worn: false,
       quantity: 1,
     }
 
-    packlistRef
+    firebase
+      .firestore()
+      .collection('packlists')
+      .doc(uid)
+      .collection('categories')
+      .doc(selectedCategory.uid)
       .update({
         packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
         updated: firebase.firestore.Timestamp.now(),
@@ -186,7 +217,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       )
   }
 
-  handleAddItems = (category: string) => {
+  handleAddItems = (category: Category) => {
     this.setState({ selectedCategory: category })
     this.toggleItemsModal()
   }
@@ -235,6 +266,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       packlist,
       categories,
       categoriesRef,
+      selectedCategory,
     } = this.state
     const { name, description } = packlist
 
@@ -260,7 +292,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           {categories.map((category: Category) => {
             return (
               <CategoryTable
-                key={category.name}
+                key={category.uid}
                 category={category}
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
@@ -285,6 +317,7 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           packItem={selectedPackItem}
         />
         <GearClosetModal
+          category={selectedCategory}
           isVisible={itemModal}
           gearItems={_gearCloset}
           onPressItem={this.addItemToCategory}
