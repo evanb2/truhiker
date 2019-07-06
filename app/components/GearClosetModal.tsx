@@ -34,7 +34,7 @@ export function GearClosetModal({
         <FlatList
           data={gearItems}
           renderItem={({ item }) => (
-            <GearListItem gearItem={item} onPress={onPressItem} />
+            <GearListItem<GearItem> gearItem={item} onPress={onPressItem} />
           )}
           keyExtractor={(item: GearItem) => String(item.uid)}
         />

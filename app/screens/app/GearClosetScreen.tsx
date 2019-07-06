@@ -100,7 +100,7 @@ export class GearClosetScreen extends Component<Props> {
         <FlatList
           data={gearItems}
           renderItem={({ item }) => (
-            <GearListItem
+            <GearListItem<GearItem>
               gearItem={item}
               onPress={this.handleGearItemPress}
               onDelete={this.handleGearItemDelete}

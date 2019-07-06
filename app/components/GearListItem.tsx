@@ -7,23 +7,25 @@ import { RectButton, TouchableOpacity } from 'react-native-gesture-handler'
 import Swipeable from 'react-native-gesture-handler/Swipeable'
 import { Caption, Subheading, Surface, Text } from 'react-native-paper'
 import { theme } from 'styles/theme'
-import { GearItem, PackItem } from 'utils/types'
+import { GearItem } from 'utils/types'
 
 const AnimatedIcon = Animated.createAnimatedComponent(SimpleLineIcons)
 
-interface Props {
-  gearItem: GearItem
-  onPress: (gearItem: GearItem) => void
-  onDelete?: (gearItem: GearItem | PackItem) => void
+interface Props<ItemType> {
+  gearItem: ItemType
+  onPress: (item: ItemType) => void
+  onDelete?: (item: ItemType) => void
 }
 
-export class GearListItem extends PureComponent<Props> {
-  // SwipeableRow: React.RefObject<Swipeable> = React.createRef()
+export class GearListItem<ItemType extends GearItem> extends PureComponent<
+  Props<ItemType>
+> {
+  SwipeableRow: React.RefObject<Swipeable> = React.createRef()
   /**
    * Animate row back to closed, hides delete button.
    * @returns {void}
    */
-  close = () => this.SwipeableRow.close()
+  close = () => this.SwipeableRow.current && this.SwipeableRow.current.close()
 
   /**
    * Opens Alert dialog to confirm delete.
@@ -77,9 +79,7 @@ export class GearListItem extends PureComponent<Props> {
 
     return (
       <Swipeable
-        ref={ref => {
-          this.SwipeableRow = ref
-        }}
+        ref={this.SwipeableRow}
         renderRightActions={onDelete && this.renderRightActions}
         onSwipeableRightWillOpen={this.triggerWarning}
         onSwipeableClose={this.triggerImpactMedium}

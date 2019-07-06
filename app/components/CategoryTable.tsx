@@ -63,7 +63,7 @@ export function CategoryTable(props: Props) {
       </View>
       {packItems.length > 0 ? (
         packItems.map((packItem: PackItem) => (
-          <GearListItem
+          <GearListItem<PackItem>
             key={packItem.uid}
             gearItem={packItem}
             onPress={onPressItem}

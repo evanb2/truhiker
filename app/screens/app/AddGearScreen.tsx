@@ -18,9 +18,9 @@ interface State {
   categoryModal: boolean
   itemModal: boolean
   packItemModal: boolean
-  gearCollectionRef: firebase.firestore.CollectionReference | null
-  categoriesRef: firebase.firestore.CollectionReference | null
-  packlistRef: firebase.firestore.DocumentReference | null
+  gearCollectionRef: () => void
+  categoriesRef: () => void
+  packlistRef: () => void
   gearCloset: firebase.firestore.DocumentData[]
   packlist: Packlist
   categories: Category[]
@@ -32,9 +32,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     itemModal: false,
     packItemModal: false,
     gearCloset: [],
-    packlistRef: null,
-    gearCollectionRef: null,
-    categoriesRef: null,
+    packlistRef: () => {},
+    gearCollectionRef: () => {},
+    categoriesRef: () => {},
     categories: [],
     selectedCategory: {
       uid: '',
@@ -95,7 +95,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       .onSnapshot(
         snapshot => {
           this.setState({
-            packlist: { ...snapshot.data(), uid: snapshot.id },
+            // @TODO revisit Packlist assertion
+            packlist: { ...(snapshot.data() as Packlist), uid: snapshot.id },
           })
         },
         error => {
@@ -116,7 +117,11 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         snapshot => {
           const categories: Category[] = []
           snapshot.forEach(category =>
-            categories.push({ ...category.data(), uid: category.id })
+            categories.push({
+              // @TODO revisit Category assertion
+              ...(category.data() as Category),
+              uid: category.id,
+            })
           )
           console.log('categories', ' => ', categories)
           this.setState({ categories })
