@@ -33,7 +33,7 @@ export function CategoryTable(props: Props) {
     }
     return categoryItems
       .map(item => {
-        const weight = Number(item.weight)
+        const weight = Number(item.weight) * item.quantity
         if (item.units === WeightUnit.GRAMS) {
           return weight / 453.592
         }
