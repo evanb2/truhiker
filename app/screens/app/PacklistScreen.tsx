@@ -183,6 +183,19 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
     })
   }
 
+  handleDeleteCategory = (category: Category) => {
+    const { packlistRef } = this.state
+
+    packlistRef
+      .update({
+        categories: firebase.firestore.FieldValue.arrayRemove(category),
+        updated: firebase.firestore.Timestamp.now(),
+      })
+      .catch((error: Error) => console.log('handleDeleteCategory', error))
+
+    // @TODO remove PackItems in this category
+  }
+
   addItemToCategory = (gearItem: GearItem) => {
     const { selectedCategory, packlist } = this.state
     const { uid } = packlist
@@ -205,20 +218,6 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
         updated: firebase.firestore.Timestamp.now(),
       })
       .catch((error: Error) => console.log('addItemToCategory', error))
-  }
-
-  handleDeleteCategory = (category: Category) => {
-    const { packlist } = this.state
-    const { uid } = packlist
-
-    firebase
-      .firestore()
-      .collection('packlists')
-      .doc(uid)
-      .collection('categories')
-      .doc(category.uid)
-      .delete()
-      .catch((error: Error) => console.log('handleDeleteCategory', error))
   }
 
   handleRemovePackItemFromCategory = (
