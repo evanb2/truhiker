@@ -286,7 +286,18 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
   }
 
   handleToggleConsumable = () => {
-    //
+    const { packlistRef, selectedPackItem } = this.state
+
+    packlistRef
+      .collection('packItems')
+      .doc(selectedPackItem.uid)
+      .update({
+        consumable: !selectedPackItem.consumable,
+      })
+      .then(() => {
+        packlistRef.update({ updated: firebase.firestore.Timestamp.now() })
+      })
+      .catch(error => console.log('handleToggleConsumable', error))
   }
 
   handleToggleWorn = () => {
