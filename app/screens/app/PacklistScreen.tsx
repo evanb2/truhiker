@@ -290,7 +290,18 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
   }
 
   handleToggleWorn = () => {
-    //
+    const { packlistRef, selectedPackItem } = this.state
+
+    packlistRef
+      .collection('packItems')
+      .doc(selectedPackItem.uid)
+      .update({
+        worn: !selectedPackItem.worn,
+      })
+      .then(() => {
+        packlistRef.update({ updated: firebase.firestore.Timestamp.now() })
+      })
+      .catch(error => console.log('handleToggleWorn', error))
   }
 
   handleQuantity = (value: number) => {
