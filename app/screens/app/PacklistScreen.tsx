@@ -58,6 +58,7 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
       photoURL: '',
       linkURL: '',
       userId: '',
+      gearItemId: '',
     },
     packlist: {
       uid: '',
@@ -196,28 +197,26 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
     // @TODO remove PackItems in this category
   }
 
-  addItemToCategory = (gearItem: GearItem) => {
-    const { selectedCategory, packlist } = this.state
-    const { uid } = packlist
+  handleAddPackItemToCategory = (gearItem: GearItem) => {
+    const { selectedCategory, packlistRef } = this.state
+    const { uid, ...fields } = gearItem
 
     const packItem = {
-      ...gearItem,
+      ...fields,
       consumable: false,
       worn: false,
       quantity: 1,
+      category: selectedCategory.name,
+      gearItemId: uid,
     }
 
-    firebase
-      .firestore()
-      .collection('packlists')
-      .doc(uid)
-      .collection('categories')
-      .doc(selectedCategory.uid)
-      .update({
-        packItems: firebase.firestore.FieldValue.arrayUnion(packItem),
-        updated: firebase.firestore.Timestamp.now(),
+    packlistRef
+      .collection('packItems')
+      .add(packItem)
+      .then(() => {
+        packlistRef.update({ updated: firebase.firestore.Timestamp.now() })
       })
-      .catch((error: Error) => console.log('addItemToCategory', error))
+      .catch((error: Error) => console.log('handleAddPackItemToCategory', error))
   }
 
   handleRemovePackItemFromCategory = (
@@ -373,7 +372,7 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
           category={selectedCategory}
           isVisible={itemModal}
           gearItems={_gearCloset}
-          onPressItem={this.addItemToCategory}
+          onPressItem={this.handleAddPackItemToCategory}
           toggleModal={this.toggleItemsModal}
         />
         <AddCategoryModal

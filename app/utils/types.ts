@@ -24,7 +24,7 @@ export interface PackItem extends GearItem {
   consumable: boolean
   quantity: number
   category: string
-  // gearItemId: string
+  gearItemId: string
 }
 
 export interface Packlist {
