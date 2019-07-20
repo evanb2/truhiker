@@ -52,7 +52,7 @@ export class MyGearListsScreen extends Component<NavigationScreenProps> {
         descriptionEllipsizeMode="tail"
         right={props => <List.Icon {...props} icon="chevron-right" />}
         onPress={() =>
-          navigation.navigate(Routes.AddGear, { packlistId: item.uid })
+          navigation.navigate(Routes.Packlist, { packlistId: item.uid })
         }
       />
     )

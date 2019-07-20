@@ -6,11 +6,11 @@ import {
   createMaterialTopTabNavigator,
   createStackNavigator,
 } from 'react-navigation'
-import { AddGearScreen } from 'screens/app/AddGearScreen'
 import { CreateListScreen } from 'screens/app/CreateListScreen'
 import { GearClosetScreen } from 'screens/app/GearClosetScreen'
 import { GearItemScreen } from 'screens/app/GearItemScreen'
 import { MyGearListsScreen } from 'screens/app/MyGearListsScreen'
+import { PacklistScreen } from 'screens/app/PacklistScreen'
 import { SettingsScreen } from 'screens/app/SettingsScreen'
 import { Routes } from 'screens/routes'
 import { theme } from 'styles/theme'
@@ -100,8 +100,8 @@ const AppStack = createStackNavigator(
         title: 'New Packlist',
       },
     },
-    [Routes.AddGear]: {
-      screen: AddGearScreen,
+    [Routes.Packlist]: {
+      screen: PacklistScreen,
       navigationOptions: {
         header: null,
       },

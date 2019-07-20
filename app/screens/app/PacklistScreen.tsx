@@ -27,7 +27,7 @@ interface State {
   packItems: PackItem[]
 }
 
-export class AddGearScreen extends Component<NavigationScreenProps, State> {
+export class PacklistScreen extends Component<NavigationScreenProps, State> {
   state = {
     categoryModal: false,
     itemModal: false,
@@ -248,10 +248,10 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     this.toggleItemsModal()
   }
 
-  handlePackItemPress = (packItem: PackItem) => {
+  handlePackItemPress = (packItem: PackItem, category: Category) => {
     console.log('handlePackItemPress', ' => ', packItem)
     // show modal to edit PackItem
-    this.setState({ selectedPackItem: packItem })
+    this.setState({ selectedPackItem: packItem, selectedCategory: category })
     this.togglePackItemModal()
   }
 
@@ -279,6 +279,33 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
 
   handleToggleWorn = () => {
     //
+  }
+
+  handleQuantity = (value: number) => {
+    const { packlist, selectedCategory, selectedPackItem } = this.state
+    const { uid } = packlist
+
+    selectedCategory.packItems.forEach((item: PackItem) => {
+      if (item.uid === selectedPackItem.uid) {
+        const newPackItem = {
+          ...item,
+          quantity: item.quantity + value,
+        }
+        return newPackItem
+      }
+      return item
+    })
+
+    firebase
+      .firestore()
+      .collection('packlists')
+      .doc(uid)
+      .collection('categories')
+      .doc(selectedCategory.uid)
+      .update({
+        packItems: selectedCategory.packItems,
+      })
+      .catch(error => console.log('handleQuantity', error))
   }
 
   render() {
@@ -340,8 +367,8 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
           onToggleConsumable={this.handleToggleConsumable}
           onToggleWorn={this.handleToggleWorn}
           packItem={selectedPackItem}
-          onDecreaseQuantity={() => {}}
-          onIncreaseQuantity={() => {}}
+          onChangeQuantity={this.handleQuantity}
+          // category={}
         />
         <GearClosetModal
           category={selectedCategory}

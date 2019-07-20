@@ -5,7 +5,7 @@ export enum Routes {
   Settings = 'Settings',
   MyGearLists = 'MyGearLists',
   CreateList = 'CreateList',
-  AddGear = 'AddGear',
+  Packlist = 'Packlist',
   Signup = 'Signup',
   Auth = 'Auth',
 }
