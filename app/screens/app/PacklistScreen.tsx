@@ -21,6 +21,7 @@ interface State {
   gearItemsListener: () => void
   packlistListener: () => void
   packItemsListener: () => void
+  selectedPackItemListener: () => void
   packlistRef: firebase.firestore.DocumentReference
   gearCloset: firebase.firestore.DocumentData[]
   packlist: Packlist
@@ -40,6 +41,7 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
     packlistListener: () => {},
     gearItemsListener: () => {},
     packItemsListener: () => {},
+    selectedPackItemListener: () => {},
     selectedCategory: {
       name: '',
       totalWeight: 0,
@@ -98,10 +100,12 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
       gearItemsListener,
       packlistListener,
       packItemsListener,
+      selectedPackItemListener,
     } = this.state
     gearItemsListener()
     packlistListener()
     packItemsListener()
+    selectedPackItemListener()
   }
 
   attachPacklistListener = async (
@@ -238,10 +242,28 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
     this.toggleItemsModal()
   }
 
-  handlePackItemPress = (packItem: PackItem, category: Category) => {
+  handlePackItemPress = (packItem: PackItem) => {
     console.log('handlePackItemPress', ' => ', packItem)
     // show modal to edit PackItem
-    this.setState({ selectedPackItem: packItem, selectedCategory: category })
+    const { packlistRef } = this.state
+
+    const selectedPackItemListener = packlistRef
+      .collection('packItems')
+      .doc(packItem.uid)
+      .onSnapshot(
+        snapshot => {
+          this.setState({
+            selectedPackItem: {
+              ...(snapshot.data() as PackItem),
+              uid: snapshot.id,
+            },
+          })
+        },
+        error => console.log('handlePackItemPress: ', error)
+      )
+
+    this.setState({ selectedPackItemListener })
+
     this.togglePackItemModal()
   }
 
@@ -272,28 +294,18 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
   }
 
   handleQuantity = (value: number) => {
-    const { packlist, selectedCategory, selectedPackItem } = this.state
-    const { uid } = packlist
+    const { packlistRef, selectedPackItem } = this.state
 
-    selectedCategory.packItems.forEach((item: PackItem) => {
-      if (item.uid === selectedPackItem.uid) {
-        const newPackItem = {
-          ...item,
-          quantity: item.quantity + value,
-        }
-        return newPackItem
-      }
-      return item
-    })
-
-    firebase
-      .firestore()
-      .collection('packlists')
-      .doc(uid)
-      .collection('categories')
-      .doc(selectedCategory.uid)
+    packlistRef
+      .collection('packItems')
+      .doc(selectedPackItem.uid)
       .update({
-        packItems: selectedCategory.packItems,
+        quantity: firebase.firestore.FieldValue.increment(value),
+      })
+      .then(() => {
+        packlistRef.update({
+          updated: firebase.firestore.Timestamp.now(),
+        })
       })
       .catch(error => console.log('handleQuantity', error))
   }

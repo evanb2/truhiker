@@ -16,8 +16,7 @@ interface Props {
   onToggleWorn: () => void
   onToggleConsumable: () => void
   onDismissModal: () => void
-  onIncreaseQuantity: () => void
-  onDecreaseQuantity: () => void
+  onChangeQuantity: (value: number) => void
 }
 
 export function PackItemModal({
@@ -26,8 +25,7 @@ export function PackItemModal({
   onToggleWorn,
   onToggleConsumable,
   onDismissModal,
-  onIncreaseQuantity,
-  onDecreaseQuantity,
+  onChangeQuantity,
 }: Props) {
   const { name, consumable, worn, quantity } = packItem
 
@@ -71,11 +69,11 @@ export function PackItemModal({
           </View>
 
           <View style={{ flex: 1, alignItems: 'center' }}>
-            <TouchableOpacity onPress={onIncreaseQuantity}>
+            <TouchableOpacity onPress={() => onChangeQuantity(1)}>
               <SimpleLineIcons name="arrow-up" size={30} />
             </TouchableOpacity>
             <Text style={{ textAlign: 'center' }}>{quantity}</Text>
-            <TouchableOpacity onPress={onDecreaseQuantity}>
+            <TouchableOpacity onPress={() => onChangeQuantity(-1)}>
               <SimpleLineIcons name="arrow-down" size={30} />
             </TouchableOpacity>
           </View>

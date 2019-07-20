@@ -12,7 +12,7 @@ interface Props {
   onAddItems: (category: Category) => void
   onDeleteCategory: (category: Category) => void
   onPressItem: (packItem: PackItem) => void
-  onRemovePackItem: (packItem: PackItem, category: Category) => void
+  onRemovePackItem: (packItem: PackItem) => void
 }
 
 export function CategoryTable(props: Props) {
@@ -49,10 +49,6 @@ export function CategoryTable(props: Props) {
       .toFixed(2)
   }
 
-  const _onRemoveItem = (packItem: PackItem) => {
-    onRemovePackItem(packItem, category)
-  }
-
   return (
     <Surface style={_styles.surface}>
       <View style={_styles.tableHeaderRow}>
@@ -68,8 +64,8 @@ export function CategoryTable(props: Props) {
           <GearListItem<PackItem>
             key={packItem.uid}
             gearItem={packItem}
-            onPress={onPressItem}
-            onDelete={_onRemoveItem}
+            onPress={() => onPressItem(packItem)}
+            onDelete={() => onRemovePackItem(packItem)}
           />
         ))
       ) : (
