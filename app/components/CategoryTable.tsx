@@ -8,6 +8,7 @@ import { Category, PackItem, WeightUnit } from 'utils/types'
 
 interface Props {
   category: Category
+  categoryItems: PackItem[]
   onAddItems: (category: Category) => void
   onDeleteCategory: (category: Category) => void
   onPressItem: (packItem: PackItem) => void
@@ -17,19 +18,20 @@ interface Props {
 export function CategoryTable(props: Props) {
   const {
     category,
+    categoryItems,
     onAddItems,
     onDeleteCategory,
     onPressItem,
     onRemovePackItem,
   } = props
 
-  const { name, packItems } = category
+  const { name } = category
 
   const totalWeight = () => {
-    if (packItems.length === 0) {
+    if (categoryItems.length === 0) {
       return 0
     }
-    return packItems
+    return categoryItems
       .map(item => {
         const weight = Number(item.weight)
         if (item.units === WeightUnit.GRAMS) {
@@ -61,8 +63,8 @@ export function CategoryTable(props: Props) {
           <SimpleLineIcons name="plus" size={20} />
         </TouchableOpacity>
       </View>
-      {packItems.length > 0 ? (
-        packItems.map((packItem: PackItem) => (
+      {categoryItems.length > 0 ? (
+        categoryItems.map((packItem: PackItem) => (
           <GearListItem<PackItem>
             key={packItem.uid}
             gearItem={packItem}
