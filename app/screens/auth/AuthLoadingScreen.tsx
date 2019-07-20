@@ -4,7 +4,6 @@ import Lottie from 'lottie-react-native'
 import React, { Component } from 'react'
 import { View } from 'react-native'
 import { NavigationScreenProps } from 'react-navigation'
-import { theme } from 'styles/theme'
 
 export class AuthLoadingScreen extends Component<NavigationScreenProps> {
   // Fetch the token from storage then navigate to our appropriate place
