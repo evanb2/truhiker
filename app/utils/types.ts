@@ -23,6 +23,8 @@ export interface PackItem extends GearItem {
   worn: boolean
   consumable: boolean
   quantity: number
+  category: string
+  // gearItemId: string
 }
 
 export interface Packlist {
@@ -35,12 +37,11 @@ export interface Packlist {
   totalConsumableWeight: number
   totalWornWeight: number
   userId: string
+  categories: Category[]
 }
 
 export interface Category {
-  uid: string
   name: string
-  packItems: PackItem[]
   totalWeight: number
 }
 
