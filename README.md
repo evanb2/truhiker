@@ -20,7 +20,7 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Add timestamps to docs
 - [ ] Look into using Subcollections for Packlist categories
 - [ ] Toggle consumable/worn items in Packlist
-- [ ] Adjust GearItem quantity in Packlist
+- [ ] Adjust PackItem quantity in Packlist
 - [ ] Display price in GearListItem
 - [ ] Add pie chart and total category weights view
 - [ ] Style list item in MyGearListsScreen
@@ -29,7 +29,7 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Open gear links in WebView
 - [ ] Display + Upload GearItem image
 - [ ] Create a new GearItem when adding items to a category
-- [ ] Cloud function to update item in  Packlist when updated in the Gear Closet
+- [ ] Cloud function to update item in Packlist when updated in the Gear Closet
 - [ ] Landing screen
 - [ ] Anon signin/signup
 - [ ] Forgot password flow
@@ -40,13 +40,19 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Some way of marking "wishlist" items (so they don't show up when adding items to lists)
 - [ ] Ability to switch category when GearCloset modal is open
 
-- [ ] Google Auth
-- [ ] Share public pack lists.
-- [ ] Allow others to leave general or item-specific comments on your public lists.
-- [ ] Share planned hikes/trips with users near your designated location.
-- [ ] Subscribe to receive notifications when a user is planning a hike near you
 - [ ] Allow users to search pack list db for lists containing a specific item
+- [ ] Search Packlists by a type/tag
+- [ ] Search Packlists by base weight
+- [ ]
+
 - [ ] Allow users to rate public pack lists (?)
+- [ ] Share public pack lists.
+- [ ] Allow others to leave comments on your public lists.
+
+?
+- [ ] Google Auth
+- [ ] Subscribe to receive notifications when a user is planning a hike near you
+- [ ] Share planned hikes/trips with users near your designated location.
 
 ### Bugs / Solutions
 ```bash
