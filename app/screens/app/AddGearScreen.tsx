@@ -18,12 +18,13 @@ interface State {
   categoryModal: boolean
   itemModal: boolean
   packItemModal: boolean
-  gearCollectionRef: () => void
-  categoriesRef: () => void
-  packlistRef: () => void
+  gearItemsListener: () => void
+  packlistListener: () => void
+  packItemsListener: () => void
+  packlistRef: firebase.firestore.DocumentReference
   gearCloset: firebase.firestore.DocumentData[]
   packlist: Packlist
-  categories: Category[]
+  packItems: PackItem[]
 }
 
 export class AddGearScreen extends Component<NavigationScreenProps, State> {
@@ -32,20 +33,22 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     itemModal: false,
     packItemModal: false,
     gearCloset: [],
-    packlistRef: () => {},
-    gearCollectionRef: () => {},
-    categoriesRef: () => {},
-    categories: [],
+    packlistRef: firebase
+      .firestore()
+      .collection('packlists')
+      .doc(),
+    packlistListener: () => {},
+    gearItemsListener: () => {},
+    packItemsListener: () => {},
     selectedCategory: {
-      uid: '',
       name: '',
-      packItems: [],
       totalWeight: 0,
     },
     selectedPackItem: {
       uid: '',
       name: '',
       description: '',
+      category: '',
       worn: false,
       consumable: false,
       quantity: 0,
@@ -66,7 +69,9 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       totalConsumableWeight: 0,
       totalWornWeight: 0,
       userId: '',
+      categories: [],
     },
+    packItems: [],
   }
 
   componentWillMount() {
@@ -74,69 +79,76 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
     const { getParam } = navigation
 
     const packlistId = getParam('packlistId')
+    const packlistRef = firebase
+      .firestore()
+      .collection('packlists')
+      .doc(packlistId)
+    this.setState({
+      packlistRef,
+    })
 
-    this.attachPacklistListener(packlistId)
-    this.attachCategoriesListener(packlistId)
+    this.attachPacklistListener(packlistRef)
+    this.attachPackItemsListener(packlistRef)
     this.attachGearItemsListener()
   }
 
   componentWillUnmount() {
-    const { gearCollectionRef, packlistRef, categoriesRef } = this.state
-    gearCollectionRef()
-    packlistRef()
-    categoriesRef()
+    const {
+      gearItemsListener,
+      packlistListener,
+      packItemsListener,
+    } = this.state
+    gearItemsListener()
+    packlistListener()
+    packItemsListener()
   }
 
-  attachPacklistListener = async (packlistId: string) => {
-    const packlistRef = await firebase
-      .firestore()
-      .collection('packlists')
-      .doc(packlistId)
-      .onSnapshot(
-        snapshot => {
-          this.setState({
-            // @TODO revisit Packlist assertion
-            packlist: { ...(snapshot.data() as Packlist), uid: snapshot.id },
-          })
-        },
-        error => {
-          console.log('attachPacklistListener: ', error)
-        }
-      )
+  attachPacklistListener = async (
+    packlistRef: firebase.firestore.DocumentReference
+  ) => {
+    const packlistListener = await packlistRef.onSnapshot(
+      snapshot => {
+        this.setState({
+          // @TODO revisit Packlist assertion
+          packlist: { ...(snapshot.data() as Packlist), uid: snapshot.id },
+        })
+      },
+      error => {
+        console.log('attachPacklistListener: ', error)
+      }
+    )
 
-    this.setState({ packlistRef })
+    this.setState({ packlistListener })
   }
 
-  attachCategoriesListener = async (packlistId: string) => {
-    const categoriesRef = await firebase
-      .firestore()
-      .collection('packlists')
-      .doc(packlistId)
-      .collection('categories')
+  attachPackItemsListener = async (
+    packlistRef: firebase.firestore.DocumentReference
+  ) => {
+    const packItemsListener = await packlistRef
+      .collection('packItems')
       .onSnapshot(
         snapshot => {
-          const categories: Category[] = []
-          snapshot.forEach(category =>
-            categories.push({
-              // @TODO revisit Category assertion
-              ...(category.data() as Category),
-              uid: category.id,
+          const packItems: PackItem[] = []
+          snapshot.forEach(packItem =>
+            packItems.push({
+              // @TODO revisit PackItem assertion
+              ...(packItem.data() as PackItem),
+              uid: packItem.id,
             })
           )
-          console.log('categories', ' => ', categories)
-          this.setState({ categories })
+          this.setState({ packItems })
         },
         error => {
-          console.log('attachCategoriesListener: ', error)
+          console.log('attachPackItemsListener: ', error)
         }
       )
 
-    this.setState({ categoriesRef })
+    this.setState({ packItemsListener })
   }
 
   attachGearItemsListener = async () => {
     const user = firebase.auth().currentUser
-    const gearCollectionRef = await firebase
+    const gearItemsListener = await firebase
       .firestore()
       .collection('gearItems')
       .where('userId', '==', user && user.uid)
@@ -152,25 +164,19 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         error => console.log('attachGearItemsListener: ', error)
       )
 
-    this.setState({ gearCollectionRef })
+    this.setState({ gearItemsListener })
   }
 
-  addCategory = (newCategory: string) => {
-    const { packlist } = this.state
-    const { uid } = packlist
+  addCategory = (name: string) => {
+    const { packlistRef } = this.state
 
-    firebase
-      .firestore()
-      .collection('packlists')
-      .doc(uid)
-      .collection('categories')
-      .add({
-        name: newCategory,
-        packItems: [],
+    packlistRef.update({
+      categories: firebase.firestore.FieldValue.arrayUnion({
+        name,
         totalWeight: 0,
-        created: firebase.firestore.Timestamp.now(),
-      })
-      .catch((error: Error) => console.log('addCategory: ', error))
+      }),
+      updated: firebase.firestore.Timestamp.now(),
+    })
 
     this.setState({
       categoryModal: false,
@@ -284,14 +290,10 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
       packItemModal,
       gearCloset,
       packlist,
-      categories,
       selectedCategory,
+      packItems,
     } = this.state
-    const { name, description } = packlist
-
-    const packItems = categories.flatMap(
-      (category: Category) => category.packItems
-    )
+    const { name, description, categories } = packlist
 
     const _gearCloset = gearCloset.filter(
       (gearItem: GearItem) =>
@@ -309,10 +311,14 @@ export class AddGearScreen extends Component<NavigationScreenProps, State> {
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
           <Paragraph style={_styles.descriptionText}>{description}</Paragraph>
           {categories.map((category: Category) => {
+            const categoryItems = packItems.filter(
+              (packItem: PackItem) => packItem.category === category.name
+            )
             return (
               <CategoryTable
-                key={category.uid}
+                key={category.name}
                 category={category}
+                categoryItems={categoryItems}
                 onAddItems={this.handleAddItems}
                 onDeleteCategory={this.handleDeleteCategory}
                 onPressItem={this.handlePackItemPress}
