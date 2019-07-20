@@ -216,26 +216,18 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
       .then(() => {
         packlistRef.update({ updated: firebase.firestore.Timestamp.now() })
       })
-      .catch((error: Error) => console.log('handleAddPackItemToCategory', error))
+      .catch((error: Error) =>
+        console.log('handleAddPackItemToCategory', error)
+      )
   }
 
-  handleRemovePackItemFromCategory = (
-    packItem: PackItem,
-    category: Category
-  ) => {
-    const { packlist } = this.state
-    const { uid } = packlist
+  handleRemovePackItemFromCategory = (packItem: PackItem) => {
+    const { packlistRef } = this.state
 
-    firebase
-      .firestore()
-      .collection('packlists')
-      .doc(uid)
-      .collection('categories')
-      .doc(category.uid)
-      .update({
-        packItems: firebase.firestore.FieldValue.arrayRemove(packItem),
-        updated: firebase.firestore.Timestamp.now(),
-      })
+    packlistRef
+      .collection('packItems')
+      .doc(packItem.uid)
+      .delete()
       .catch((error: Error) =>
         console.log('handleRemovePackItemFromCategory', error)
       )
