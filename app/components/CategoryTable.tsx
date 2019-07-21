@@ -4,7 +4,8 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { Subheading, Surface, Text } from 'react-native-paper'
-import { Category, PackItem, WeightUnit } from 'utils/types'
+import { calculateWeight } from 'utils/lib'
+import { Category, PackItem } from 'utils/types'
 
 interface Props {
   category: Category
@@ -26,28 +27,6 @@ export function CategoryTable(props: Props) {
   } = props
 
   const { name } = category
-
-  const totalWeight = () => {
-    if (categoryItems.length === 0) {
-      return 0
-    }
-    return categoryItems
-      .map(item => {
-        const weight = Number(item.weight) * item.quantity
-        if (item.units === WeightUnit.GRAMS) {
-          return weight / 453.592
-        }
-        if (item.units === WeightUnit.KILOGRAMS) {
-          return weight * 2.205
-        }
-        if (item.units === WeightUnit.OUNCES) {
-          return weight / 16
-        }
-        return weight
-      })
-      .reduce((prevVal, current) => prevVal + current)
-      .toFixed(2)
-  }
 
   return (
     <Surface style={_styles.surface}>
@@ -79,7 +58,7 @@ export function CategoryTable(props: Props) {
         </TouchableOpacity>
         <View style={{ flex: 1, alignItems: 'flex-end' }}>
           <Text style={{ fontWeight: 'bold', marginRight: 4 }}>
-            {`${totalWeight()} lbs`}
+            {`${calculateWeight(categoryItems)} lbs`}
           </Text>
         </View>
       </View>

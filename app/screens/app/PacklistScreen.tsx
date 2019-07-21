@@ -7,9 +7,10 @@ import 'firebase/firestore'
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
-import { Button, FAB, Paragraph, Title } from 'react-native-paper'
+import { Button, FAB, Paragraph, Subheading, Title } from 'react-native-paper'
 import { NavigationScreenProps } from 'react-navigation'
 import { theme } from 'styles/theme'
+import { calculateWeight } from 'utils/lib'
 import { Category, GearItem, PackItem, Packlist, WeightUnit } from 'utils/types'
 
 interface State {
@@ -361,6 +362,11 @@ export class PacklistScreen extends Component<NavigationScreenProps, State> {
         </SafeAreaView>
         <ScrollView contentContainerStyle={_styles.scrollContainer}>
           <Paragraph style={_styles.descriptionText}>{description}</Paragraph>
+          <View style={{ alignItems: 'center' }}>
+            <Subheading>
+              {`Total Weight: ${calculateWeight(packItems)} lbs`}
+            </Subheading>
+          </View>
           {categories.map((category: Category) => {
             const categoryItems = packItems.filter(
               (packItem: PackItem) => packItem.category === category.name
