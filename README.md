@@ -18,21 +18,21 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [x] Remove items from Packlist
 - [x] Configure TextInput "Next" action in GearItemScreen
 - [x] Add timestamps to docs
-- [ ] Look into using Subcollections for Packlist categories
-- [ ] Toggle consumable/worn items in Packlist
-- [ ] Adjust PackItem quantity in Packlist
+- [x] Toggle consumable/worn items in Packlist
+- [x] Adjust PackItem quantity in Packlist
+- [ ] Cloud function to update item in Packlist when updated in the Gear Closet
 - [ ] Display price in GearListItem
 - [ ] Add pie chart and total category weights view
 - [ ] Style list item in MyGearListsScreen
-- [ ] Way to change order of categories/items in categories
 - [ ] Search Gear Closet
+- [ ] Filter/Sort Gear Closet
 - [ ] Open gear links in WebView
+- [ ] Way to change order of categories/items in categories
 - [ ] Display + Upload GearItem image
 - [ ] Create a new GearItem when adding items to a category
-- [ ] Cloud function to update item in Packlist when updated in the Gear Closet
 - [ ] Landing screen
-- [ ] Anon signin/signup
 - [ ] Forgot password flow
+- [ ] Anon signin/signup
 - [ ] Email/phone verification
 - [ ] Error handling
 
@@ -43,7 +43,6 @@ Create and share your pack lists, submit your lists for community shakedowns.
 - [ ] Allow users to search pack list db for lists containing a specific item
 - [ ] Search Packlists by a type/tag
 - [ ] Search Packlists by base weight
-- [ ]
 
 - [ ] Allow users to rate public pack lists (?)
 - [ ] Share public pack lists.
